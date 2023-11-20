@@ -1,0 +1,21 @@
+@import "/src/utils/variables";
+@import "/src/utils/media";
+
+@mixin paragraph {
+  font-size: 14px;
+
+  @include media-mobile {
+    font-size: 12px;
+  }
+}
+
+.paragraph {
+  @include paragraph;
+
+  &_large {
+    font-size: 24px;
+    @include media-mobile {
+      font-size: 18px;
+    }
+  }
+}
