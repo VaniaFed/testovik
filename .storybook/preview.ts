@@ -1,3 +1,5 @@
+import "!style-loader!css-loader!sass-loader!../src/app/globals.scss";
+
 import type { Preview } from "@storybook/react";
 
 const preview: Preview = {
