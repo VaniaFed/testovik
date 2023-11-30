@@ -1,0 +1,55 @@
+/* stylelint-disable no-descending-specificity */
+@import "/src/utils/variables";
+@import "/src/utils/media";
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  column-gap: 19px;
+  cursor: pointer;
+
+  @include media-laptop {
+    column-gap: 11px;
+  }
+
+  @include media-mobile {
+    column-gap: 10px;
+  }
+
+  &_invalid {
+    outline: 3px solid $color-red;
+    outline-offset: 4px;
+  }
+}
+
+.checkbox__input {
+  display: none;
+
+  &:checked + .fake-control::after {
+    content: url("/checkbox-checked.svg");
+
+    @include media-mobile {
+      content: url("/checkbox-checked-mb.svg");
+    }
+  }
+}
+
+.fake-control {
+  position: relative;
+  display: block;
+  width: 26px;
+  height: 26px;
+
+  @include media-mobile {
+    width: 20px;
+    height: 20px;
+  }
+
+  &::after {
+    content: url("/checkbox.svg");
+
+    @include media-mobile {
+      content: url("/checkbox-mb.svg");
+    }
+  }
+}

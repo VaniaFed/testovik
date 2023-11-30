@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef } from "react";
 import classNames from "classnames/bind";
 
@@ -16,7 +18,8 @@ export const Modal: FC<Props> = ({
   header,
   children,
   footer,
-  closeModal,
+  closable = false,
+  closeModal = () => {},
   className,
 }) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -26,7 +29,9 @@ export const Modal: FC<Props> = ({
     <div className={cx("modal", className)}>
       <BoxContainer className={cx("modal__container")}>
         <div className={cx("modal__inner")} ref={ref}>
-          <CloseBtn className={cx("modal__close-btn")} onClose={closeModal} />
+          {closable && (
+            <CloseBtn className={cx("modal__close-btn")} onClose={closeModal} />
+          )}
           <header className={cx("modal__header")}>{header}</header>
           <section className={cx("modal__content")}>{children}</section>
           <footer className={cx("modal__footer")}>{footer}</footer>

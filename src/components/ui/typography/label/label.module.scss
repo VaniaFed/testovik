@@ -13,7 +13,7 @@
 
 .label_required {
   &::after {
-    content: url("/src/static/required.svg");
+    content: url("/required.svg");
     position: absolute;
     top: -12px;
     right: -12px;
