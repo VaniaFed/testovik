@@ -1,0 +1,30 @@
+@import "/src/utils/variables";
+@import "/src/utils/media";
+
+@mixin h1 {
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 700;
+
+  @include media-mobile {
+    font-size: 30px;
+  }
+}
+
+.h1 {
+  @include h1;
+}
+
+@mixin h2 {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+
+  @include media-mobile {
+    font-size: 24px;
+  }
+}
+
+.h2 {
+  @include h2;
+}

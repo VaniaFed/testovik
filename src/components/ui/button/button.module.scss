@@ -1,0 +1,66 @@
+@import "/src/utils/variables";
+@import "/src/utils/media";
+@import "/src/components/ui/typography/paragraph/paragraph.module";
+
+.button {
+  @include paragraph;
+  font-weight: 600;
+  padding: 5px 20px;
+  background-color: $color-white;
+  color: $color-black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.button_positive {
+  background-color: $color-green;
+  color: $color-white;
+
+  &:hover {
+    background-color: $color-green-hover;
+  }
+
+  &:active {
+    background-color: $color-green-active;
+  }
+}
+
+.button_attention {
+  background-color: $color-orange;
+  color: $color-white;
+
+  &:hover {
+    background-color: $color-orange-hover;
+  }
+
+  &:active {
+    background-color: $color-orange-active;
+  }
+}
+
+.button_negative {
+  background-color: transparent;
+  color: $color-red;
+
+  &:hover {
+    color: $color-red-hover;
+  }
+
+  &:active {
+    color: $color-red-active;
+  }
+}
+
+.button_secondary {
+  background-color: $color-gray;
+  color: $color-white;
+
+  &:hover {
+    background-color: $color-gray-hover;
+  }
+
+  &:active {
+    background-color: $color-gray-active;
+  }
+}

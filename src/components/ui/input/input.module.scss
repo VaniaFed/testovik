@@ -1,0 +1,48 @@
+/* stylelint-disable no-descending-specificity */
+@import "/src/utils/variables";
+@import "/src/utils/media";
+@import "/src/components/ui/typography/paragraph/paragraph.module";
+
+.input {
+  @include paragraph;
+  font-size: 20px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid $color-input-border;
+  border-radius: 10px;
+  background: $color-white;
+  appearance: none;
+  cursor: pointer;
+
+  @include media-mobile {
+    height: 48px;
+    padding: 10px 16px;
+  }
+
+  &:focus {
+    border-color: $color-gray-hover;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $color-gray;
+  }
+
+  &_invalid:not(&:focus) {
+    border: 2px solid $color-red;
+
+    &::placeholder {
+      color: $color-red;
+    }
+  }
+
+  &_solid {
+    height: 60px;
+    border: none;
+    background-color: $color-input-background;
+
+    @include media-mobile {
+      height: 48px;
+    }
+  }
+}

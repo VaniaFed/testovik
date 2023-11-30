@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import classNames from "classnames/bind";
+import { Header } from "@/components/ui/header";
+import { Footer } from "@/components/ui/footer";
 import "./globals.scss";
+import styles from "./layout.module.scss";
+
+const cx = classNames.bind(styles);
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +22,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={cx("page-layout", inter.className)}>
+        <Header className={cx("page-layout__header")} />
+        <main className={cx("page-layout__main")}>{children}</main>
+        <Footer className={cx("page-layout__footer")} />
+      </body>
     </html>
   );
 }
