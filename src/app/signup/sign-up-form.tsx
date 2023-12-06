@@ -1,20 +1,22 @@
 "use client";
 
 import React from "react";
+import { useRouter } from "next/navigation";
+import * as yup from "yup";
+
 import { Form } from "@/components/ui/form";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useSignUpForm } from "@/app/signup/use-sign-up-form";
+import { useCustomForm } from "@/hooks/use-custom-form";
 
 import { axios } from "@/lib/axios";
-import { useRouter } from "next/navigation";
 
 import type { FC } from "react";
 
 export const SignUpForm: FC<unknown> = () => {
   const router = useRouter();
-  const signUp = async (data) => {
+  const signUp = async (data: any) => {
     await axios
       .post(`${process.env.NEXT_PUBLIC_BASE_URL}/signup`, data)
       .then(() => {
@@ -25,7 +27,17 @@ export const SignUpForm: FC<unknown> = () => {
         console.warn(errMessage);
       });
   };
-  const { register, onSubmit, getValues, errors } = useSignUpForm();
+  const { register, onSubmit, getValues, errors } = useCustomForm({
+    username: yup.string().min(3).max(50).required(),
+    password: yup.string().min(6).max(50).required(),
+    password_confirmation: yup
+      .string()
+      .min(6)
+      .max(50)
+      .required()
+      .oneOf([yup.ref("password")], "Password does not match!"),
+    is_admin: yup.string(),
+  });
   return (
     <Form
       id="sign-up-form"
@@ -39,7 +51,7 @@ export const SignUpForm: FC<unknown> = () => {
         id="form-username"
         label="Логин"
         required
-        errMessage={errors.username?.message}
+        errMessage={errors.username?.message as string}
       >
         <Input id="form-username" solid autoFocus {...register("username")} />
       </Field>
@@ -47,7 +59,7 @@ export const SignUpForm: FC<unknown> = () => {
         id="form-password"
         label="Пароль"
         required
-        errMessage={errors.password?.message}
+        errMessage={errors.password?.message as string}
       >
         <Input id="form-password" solid {...register("password")} />
       </Field>
@@ -55,7 +67,7 @@ export const SignUpForm: FC<unknown> = () => {
         id="form-password-confirmation"
         label="Подтвердите пароль"
         required
-        errMessage={errors.password_confirmation?.message}
+        errMessage={errors.password_confirmation?.message as string}
       >
         <Input
           id="form-password-confirmation"
@@ -66,7 +78,7 @@ export const SignUpForm: FC<unknown> = () => {
       <Field
         id="form-is-admin"
         label="Хотите быть админом?"
-        errMessage={errors.is_admin?.message}
+        errMessage={errors.is_admin?.message as string}
       >
         <Checkbox id="form-is-admin" {...register("is_admin")}>
           Быть админом
