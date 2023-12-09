@@ -1,0 +1,9 @@
+@import "/src/utils/variables";
+@import "/src/utils/media";
+
+.panel {
+  display: flex;
+  gap: 18px;
+  padding: 30px 0px;
+  border-top: 1px solid $color-divider;
+}

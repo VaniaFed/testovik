@@ -4,12 +4,12 @@
 @import "/src/components/ui/typography/paragraph/paragraph.module";
 
 .input {
-  @include paragraph;
-  font-size: 20px;
+  @include paragraph_small;
   width: 100%;
-  padding: 20px;
+  height: 40px;
+  padding: 12px;
   border: 1px solid $color-input-border;
-  border-radius: 10px;
+  border-radius: 2px;
   background: $color-white;
   appearance: none;
   cursor: pointer;

@@ -8,24 +8,34 @@ import styles from "./login.module.scss";
 import type { FC } from "react";
 import type { Props } from "./props";
 import { Subtitle } from "@/components/ui/typography/subtitle";
+import { Link } from "@/components/ui/link";
 
 const cx = classNames.bind(styles);
 
 export const Login: FC<Props> = ({
-  loggedIn,
+  loggedIn = false,
   userName,
-  userType,
+  userRole,
   className,
 }) => {
   return (
     <div className={cx("login", className)}>
       {loggedIn ? (
-        <div>
-          <Subtitle light>{userType}</Subtitle>
-          <Label>{userName}</Label>
-        </div>
+        <>
+          <div className={cx("login__user")}>
+            <Label small className={cx("login__role")}>
+              {userRole}
+            </Label>
+            <Label>{userName}</Label>
+          </div>
+          <Link href="/signout" level="label">
+            Выйти
+          </Link>
+        </>
       ) : (
-        <Label>Войти</Label>
+        <Link href="/signin" level="label">
+          Войти
+        </Link>
       )}
     </div>
   );

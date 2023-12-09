@@ -8,6 +8,7 @@ import styles from "./field.module.scss";
 
 import type { FC } from "react";
 import type { Props } from "./props";
+import { Paragraph } from "@/components/ui/typography/paragraph";
 
 const cx = classNames.bind(styles);
 
@@ -28,9 +29,7 @@ export const Field: FC<Props> = ({
       )}
       {children}
       {errMessage.length > 0 && (
-        <Subtitle light className={cx("field__error")}>
-          {errMessage}
-        </Subtitle>
+        <Paragraph className={cx("field__error")}>{errMessage}</Paragraph>
       )}
     </div>
   );

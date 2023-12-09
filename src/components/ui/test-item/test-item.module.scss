@@ -1,0 +1,14 @@
+@import "/src/utils/variables";
+@import "/src/utils/media";
+
+.test-item {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  &__details {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+  }
+}

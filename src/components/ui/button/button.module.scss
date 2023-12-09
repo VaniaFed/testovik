@@ -5,12 +5,25 @@
 .button {
   @include paragraph;
   font-weight: 600;
-  padding: 5px 20px;
+  padding: 8px 30px;
   background-color: $color-white;
   color: $color-black;
   border: none;
-  border-radius: 10px;
+  border-radius: 7px;
   cursor: pointer;
+}
+
+.button_accent {
+  background-color: $color-accent;
+  color: $color-white;
+
+  &:hover {
+    background-color: $color-link-hover;
+  }
+
+  &:active {
+    background-color: $color-link-active;
+  }
 }
 
 .button_positive {

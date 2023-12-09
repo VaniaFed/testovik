@@ -1,4 +1,5 @@
 export interface Props {
-	children: React.ReactNode;
-	className?: string;
+  children: React.ReactNode;
+  small?: boolean;
+  className?: string;
 }

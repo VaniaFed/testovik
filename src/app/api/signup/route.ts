@@ -1,7 +1,7 @@
+import { NextResponse, type NextRequest } from "next/server";
+import { cookies } from "next/headers";
 import { axios } from "@/lib/axios";
 import { parseSessionId } from "@/lib/utils";
-import { cookies } from "next/headers";
-import { NextResponse, type NextRequest } from "next/server";
 
 interface User {
   username: string;
@@ -20,7 +20,6 @@ export async function POST(req: NextRequest) {
       headers: {
         "scope-key": "Rm36-GQ.Z(%rFfwAu:LvY7",
       },
-      withCredentials: true,
     }
   );
 

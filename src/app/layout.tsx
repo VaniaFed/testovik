@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import classNames from "classnames/bind";
+
+import { BoxContainer } from "@/components/layout/box-container";
 import { Header } from "@/components/ui/header";
 import { Footer } from "@/components/ui/footer";
-import "./globals.scss";
+
 import styles from "./layout.module.scss";
+
+import "./globals.scss";
 
 const cx = classNames.bind(styles);
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  weight: ["400", "500", "600", "900"],
+  adjustFontFallback: true,
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,10 +30,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={cx("page-layout", inter.className)}>
-        <Header className={cx("page-layout__header")} />
-        <main className={cx("page-layout__main")}>{children}</main>
-        <Footer className={cx("page-layout__footer")} />
+      <body className={cx(inter.className)}>
+        <div className={cx("layout")}>
+          <Header className={cx("layout__header")} />
+          <main className={cx("layout__main")}>
+            <BoxContainer>{children}</BoxContainer>
+          </main>
+          <Footer className={cx("layout__footer")} />
+        </div>
       </body>
     </html>
   );

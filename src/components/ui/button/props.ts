@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from 'react';
 
 export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-	variant?: 'positive' | 'attention' | 'negative' | 'secondary';
+	variant?: 'accent' | 'positive' | 'attention' | 'negative' | 'secondary';
 }

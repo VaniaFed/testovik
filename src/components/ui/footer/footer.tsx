@@ -8,6 +8,7 @@ import styles from "./footer.module.scss";
 
 import type { FC } from "react";
 import type { Props } from "./props";
+import { Paragraph } from "@/components/ui/typography/paragraph";
 
 export const Footer: FC<Props> = ({ className }) => {
   const cx = classNames.bind(styles);
@@ -16,7 +17,7 @@ export const Footer: FC<Props> = ({ className }) => {
     <footer className={cx("footer", className)}>
       <BoxContainer>
         <div className={cx("footer__inner")}>
-          <Logo href="/#" />
+          <Paragraph>Testovik 2023, все права защищены</Paragraph>
         </div>
       </BoxContainer>
     </footer>

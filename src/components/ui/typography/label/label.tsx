@@ -8,9 +8,9 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const Label: FC<Props> = ({ children, required = false, className, ...rest }) => {
+export const Label: FC<Props> = ({ children, required = false, small, className, ...rest }) => {
 	return (
-		<label className={cx('label', required && 'label_required', className)} {...rest}>
+		<label className={cx('label', required && 'label_required', small && 'label_small',className)} {...rest}>
 			{children}
 		</label>
 	);

@@ -2,12 +2,11 @@
 @import "/src/utils/media";
 
 @mixin h1 {
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 700;
+  font-size: 30px;
+  font-weight: 600;
 
   @include media-mobile {
-    font-size: 30px;
+    font-size: 24px;
   }
 }
 
@@ -16,15 +15,27 @@
 }
 
 @mixin h2 {
-  font-size: 32px;
-  font-style: normal;
+  font-size: 24px;
   font-weight: 400;
 
   @include media-mobile {
-    font-size: 24px;
+    font-size: 18px;
   }
 }
 
 .h2 {
   @include h2;
+}
+
+@mixin h3 {
+  font-size: 18px;
+  font-weight: 600;
+
+  @include media-mobile {
+    font-size: 14px;
+  }
+}
+
+.h3 {
+  @include h3;
 }

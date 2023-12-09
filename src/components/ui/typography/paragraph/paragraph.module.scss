@@ -13,3 +13,17 @@
 .paragraph {
   @include paragraph;
 }
+
+@mixin paragraph_small {
+  @include paragraph;
+
+  font-size: 14px;
+
+  @include media-mobile {
+    font-size: 12px;
+  }
+}
+
+.paragraph_small {
+  @include paragraph_small();
+}

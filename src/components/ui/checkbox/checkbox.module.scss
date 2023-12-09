@@ -4,8 +4,8 @@
 
 .checkbox {
   display: flex;
-  align-items: flex-start;
-  column-gap: 19px;
+  align-items: center;
+  column-gap: 12px;
   cursor: pointer;
 
   @include media-laptop {

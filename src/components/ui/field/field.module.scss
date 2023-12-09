@@ -4,12 +4,11 @@
 .field {
   &__label {
     display: inline-block;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   &__error {
-    margin-top: 8px;
-    margin-left: 8px;
+    margin-top: 12px;
     color: $color-red;
   }
 }

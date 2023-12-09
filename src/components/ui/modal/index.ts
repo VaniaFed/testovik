@@ -1,2 +1,2 @@
 export { Modal } from "./modal";
-export { ModalAdd } from "./modal-add/modal-add";
+export { ModalAddTest } from "./modal-add-test/modal-add-test";

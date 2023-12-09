@@ -13,7 +13,7 @@ const cx = classNames.bind(styles);
 export const Logo: FC<Props> = ({ href, className }) => {
   return (
     <Link underline={false} className={cx("logo", className)} href={href}>
-      <h1 className={cx("logo__text")}>На моей книжной полке</h1>
+      <h1 className={cx("logo__text")}>Testovik</h1>
     </Link>
   );
 };

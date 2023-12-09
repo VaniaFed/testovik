@@ -2,6 +2,7 @@
 @import "/src/utils/media";
 @import "/src/components/ui/typography/heading/heading.module";
 @import "/src/components/ui/typography/paragraph/paragraph.module";
+@import "/src/components/ui/typography/label/label.module";
 
 .link {
   display: inline-block;
@@ -29,6 +30,14 @@
   }
 }
 
+.link_level_h3 {
+  @include h3;
+
+  &::after {
+    height: 4px;
+  }
+}
+
 .link_level_paragraph {
   @include paragraph;
 
@@ -37,12 +46,24 @@
   }
 }
 
+.link_level_label {
+  @include label;
+
+  &::after {
+    height: 4px;
+  }
+}
+
 .link_color_black {
   color: $color-black;
   fill: $color-black;
 
+  &:hover {
+    color: $color-link-hover;
+  }
+
   &:active {
-    color: $color-green;
+    color: $color-link-active;
   }
 
   &::after {
@@ -54,20 +75,20 @@
   }
 
   &:active::after {
-    background: $color-green;
+    background: $color-link-active;
   }
 }
 
-.link_color_green {
-  color: $color-green;
+.link_color_blue {
+  color: $color-link;
   fill: $color-black;
 
   &:hover {
-    color: $color-green-hover;
+    color: $color-link-hover;
   }
 
   &:active {
-    color: $color-green-active;
+    color: $color-link-active;
   }
 
   &::after {
@@ -75,11 +96,11 @@
   }
 
   &:hover::after {
-    color: $color-green-hover;
+    color: $color-link-hover;
   }
 
   &:active::after {
-    color: $color-green-active;
+    color: $color-link-active;
   }
 }
 
