@@ -38,9 +38,10 @@ type Question =
   | QuestionWithOneAnswers
   | QuestionWithNumberAnswer;
 
-interface User {
-  login: string;
-  role: "admin" | "user";
+export interface User {
+  id: string;
+  username: string;
+  is_admin: boolean;
 }
 
 export interface TestDetails {

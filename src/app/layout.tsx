@@ -9,6 +9,7 @@ import { Footer } from "@/components/ui/footer";
 import styles from "./layout.module.scss";
 
 import "./globals.scss";
+import { Providers } from "@/components/utils/providers";
 
 const cx = classNames.bind(styles);
 
@@ -29,16 +30,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={cx(inter.className)}>
-        <div className={cx("layout")}>
-          <Header className={cx("layout__header")} />
-          <main className={cx("layout__main")}>
-            <BoxContainer>{children}</BoxContainer>
-          </main>
-          <Footer className={cx("layout__footer")} />
-        </div>
-      </body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={cx(inter.className)}>
+          <div className={cx("layout")}>
+            <Header className={cx("layout__header")} />
+            <main className={cx("layout__main")}>
+              <BoxContainer>{children}</BoxContainer>
+            </main>
+            <Footer className={cx("layout__footer")} />
+          </div>
+        </body>
+      </html>
+    </Providers>
   );
 }
