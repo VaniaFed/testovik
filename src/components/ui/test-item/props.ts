@@ -1,6 +1,7 @@
 export interface Props {
 	title: string;
 	testId: number;
-	questionNumber: string;
+	questionNumber: number;
+	canEdit: boolean;
 	className?: string;
 }

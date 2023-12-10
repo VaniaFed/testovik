@@ -6,22 +6,26 @@ import styles from './test-item.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
 import { Heading } from '@/components/ui/typography/heading';
-import { Subtitle } from '@/components/ui/typography/subtitle';
+import { Label } from '@/components/ui/typography/label';
 import { Link } from '@/components/ui/link';
 
 const cx = classNames.bind(styles);
 
-export const TestItem: FC<Props> = ({ title, testId, questionNumber, className }) => {
+export const TestItem: FC<Props> = ({ title, testId, questionNumber, canEdit, className }) => {
 	return (
 		<div className={cx('test-item', className)}>
 			<Link href={`/tests/${testId}`} level="h3" color="black">
-				<Heading size="3">{title}</Heading>
+				<Heading size="2" className={cx('test-item__title')}>
+					{title}
+				</Heading>
 			</Link>
 			<div className={cx('test-item__details')}>
-				<Subtitle>{questionNumber} вопросов</Subtitle>
-				<Link href={`/tests/${testId}/edit`} level="paragraph" color="blue">
-					Редактировать
-				</Link>
+				<Label className={cx('test-item__question-number')}>{questionNumber} вопросов</Label>
+				{canEdit && (
+					<Link href={`/tests/${testId}/edit`} level="paragraph" color="blue">
+						Редактировать
+					</Link>
+				)}
 			</div>
 		</div>
 	);

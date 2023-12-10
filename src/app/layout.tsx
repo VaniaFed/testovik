@@ -32,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					<div className={cx('layout')}>
 						<Header className={cx('layout__header')} />
 						<main className={cx('layout__main')}>
-							<BoxContainer>{children}</BoxContainer>
+							<BoxContainer className={cx('layout__container')}>{children}</BoxContainer>
 						</main>
 						<Footer className={cx('layout__footer')} />
 					</div>

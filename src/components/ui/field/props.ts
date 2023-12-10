@@ -5,4 +5,5 @@ export interface Props {
 	children: React.ReactNode;
 	errMessage?: string;
 	className?: string;
+	labelClassName?: string;
 }

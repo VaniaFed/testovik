@@ -1,0 +1,25 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.tests-page {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100%;
+
+	&__title {
+		margin-top: 24px;
+		margin-bottom: 30px;
+	}
+
+	&__sort {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		cursor: pointer;
+
+		&-label {
+			cursor: pointer;
+		}
+	}
+}

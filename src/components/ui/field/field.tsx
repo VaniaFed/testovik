@@ -12,11 +12,19 @@ import { Paragraph } from '@/components/ui/typography/paragraph';
 
 const cx = classNames.bind(styles);
 
-export const Field: FC<Props> = ({ children, id, label = '', required, errMessage = '', className }) => {
+export const Field: FC<Props> = ({
+	children,
+	id,
+	label = '',
+	required,
+	errMessage = '',
+	className,
+	labelClassName,
+}) => {
 	return (
 		<div className={cx('field', className)}>
 			{label?.length > 0 && (
-				<Label required={required} htmlFor={id} className={cx('field__label')}>
+				<Label required={required} htmlFor={id} className={cx('field__label', labelClassName)}>
 					{label}
 				</Label>
 			)}

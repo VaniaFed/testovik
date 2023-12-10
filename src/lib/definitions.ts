@@ -1,3 +1,17 @@
+interface Answer {
+	id: number;
+	text: string;
+	is_right: boolean;
+}
+
+interface Question {
+	id: number;
+	title: string;
+	answer: number;
+	answers: Answer[];
+	question_type: 'single' | 'multiple' | 'number';
+}
+
 export interface Test {
 	id: number;
 	created_at: string;
@@ -5,37 +19,29 @@ export interface Test {
 	questions: Question[];
 }
 
-// interface Question {
-//   title: string;
-//   type: QuestionType;
-//   answers: string | string[];
-//   rightAnswers: string | string[];
-//   suggestedAnswers?: string | string[];
-// }
-
 // type: 'question-with-a-few-answers';
 
-interface QuestionWithAFewAnswers {
-	title: string;
-	answerType: 'few';
-	rightAnswers: string[];
-}
+// interface QuestionWithAFewAnswers {
+// 	title: string;
+// 	answerType: 'few';
+// 	rightAnswers: string[];
+// }
 
-interface QuestionWithOneAnswers {
-	title: string;
-	answerType: 'one';
-	rightAnswer: string;
-}
+// interface QuestionWithOneAnswers {
+// 	title: string;
+// 	answerType: 'one';
+// 	rightAnswer: string;
+// }
 
-interface QuestionWithNumberAnswer {
-	title: string;
-	answerType: 'number';
-	rightAnswer: number;
-}
+// interface QuestionWithNumberAnswer {
+// 	title: string;
+// 	answerType: 'number';
+// 	rightAnswer: number;
+// }
 
-type Question = QuestionWithAFewAnswers | QuestionWithOneAnswers | QuestionWithNumberAnswer;
+// type Question = QuestionWithAFewAnswers | QuestionWithOneAnswers | QuestionWithNumberAnswer;
 
-export interface TestDetails {
+export interface Pagination {
 	total_pages: number;
 	total_count: number;
 }
