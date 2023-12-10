@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 export const Label: FC<Props> = ({ children, required = false, small, className, ...rest }) => {
 	return (
-		<label className={cx('label', required && 'label_required', small && 'label_small',className)} {...rest}>
+		<label className={cx('label', required && 'label_required', small && 'label_small', className)} {...rest}>
 			{children}
 		</label>
 	);

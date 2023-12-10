@@ -1,14 +1,14 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 .tests-page {
-  &__filter {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
+	&__filter {
+		display: flex;
+		flex-direction: column;
+		gap: 18px;
+	}
 
-  &__content {
-    margin-top: 24px;
-  }
+	&__content {
+		margin-top: 24px;
+	}
 }

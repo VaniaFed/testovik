@@ -1,12 +1,12 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 .main-layout {
-  display: flex;
-  flex-direction: column;
-  row-gap: 135px;
+	display: flex;
+	flex-direction: column;
+	row-gap: 135px;
 
-  @include media-mobile {
-    row-gap: 75px;
-  }
+	@include media-mobile {
+		row-gap: 75px;
+	}
 }

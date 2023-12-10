@@ -1,13 +1,13 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 .logo__text {
-  font-size: 24px;
-  font-weight: 900;
-  color: $color-accent;
-  text-transform: uppercase;
+	font-size: 24px;
+	font-weight: 900;
+	color: $color-accent;
+	text-transform: uppercase;
 
-  &:active {
-    color: $color-link-active;
-  }
+	&:active {
+		color: $color-link-active;
+	}
 }

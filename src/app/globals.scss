@@ -1,33 +1,36 @@
-@import "/src/utils/variables";
+@import '/src/utils/variables';
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
 }
 
 html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  height: 100%;
-  font: normal 20px Inter, Arial, sans-serif;
-  color: $color-black;
+	max-width: 100vw;
+	overflow-x: hidden;
+	height: 100%;
+	font:
+		normal 20px Inter,
+		Arial,
+		sans-serif;
+	color: $color-black;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+	color: inherit;
+	text-decoration: none;
 }
 
 input,
 textarea,
 button {
-  font-family: inherit;
+	font-family: inherit;
 }
 
 @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+	html {
+		color-scheme: dark;
+	}
 }

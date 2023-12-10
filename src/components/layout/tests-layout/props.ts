@@ -1,5 +1,5 @@
 export interface Props {
-  tests: any[];
-  meta: any;
-  className?: string;
+	tests: any[];
+	meta: any;
+	className?: string;
 }

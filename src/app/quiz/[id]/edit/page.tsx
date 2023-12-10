@@ -1,3 +1,3 @@
 export default function QuizEditPage() {
-  return <div>edit</div>;
+	return <div>edit</div>;
 }

@@ -1,6 +1,6 @@
-import { cookies } from 'next/headers';
+// import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-import { axios } from '@/lib/axios';
+// import { axios } from '@/lib/axios';
 
 export async function GET() {
 	//   const cookie = cookies().get("_session_id");

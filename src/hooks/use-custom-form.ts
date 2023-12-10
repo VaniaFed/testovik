@@ -30,7 +30,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-export const useCustomForm = (schema) => {
+export const useCustomForm = (schema: yup.AnyObject) => {
 	const formSchema = yup.object(schema).required();
 
 	interface FormFields extends yup.InferType<typeof formSchema> {}

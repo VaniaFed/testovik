@@ -14,17 +14,21 @@ export function* fetchUserSaga(): Generator {
 }
 
 export function* signUpSaga({ payload }: PayloadAction<SignUpRequest>): Generator {
-	const user = yield call(authApi.signUp, payload);
+	// const user = yield call(authApi.signUp, payload);
+
+	console.log(payload);
 
 	yield put(fetchUser());
 }
 
 export function* signInSaga({ payload }: PayloadAction<SignInRequest>): Generator {
-	const user = yield call(authApi.signIn, payload);
+	// const user = yield call(authApi.signIn, payload);
+
+	console.log(payload);
 
 	yield put(fetchUser());
 }
 
 export function* logOutSaga() {
-	const user = (yield call(authApi.logOut)) as User;
+	// const user = (yield call(authApi.logOut)) as User;
 }

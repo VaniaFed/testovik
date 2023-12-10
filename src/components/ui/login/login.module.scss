@@ -1,17 +1,17 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 .login {
-  display: flex;
-  gap: 42px;
+	display: flex;
+	gap: 42px;
 
-  &__user {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  }
+	&__user {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+	}
 
-  &__role {
-    color: $color-gray;
-  }
+	&__role {
+		color: $color-gray;
+	}
 }

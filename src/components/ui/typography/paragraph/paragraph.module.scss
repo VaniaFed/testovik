@@ -1,29 +1,29 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 @mixin paragraph {
-  font-size: 16px;
-  line-height: 150%;
+	font-size: 16px;
+	line-height: 150%;
 
-  @include media-mobile {
-    font-size: 14px;
-  }
+	@include media-mobile {
+		font-size: 14px;
+	}
 }
 
 .paragraph {
-  @include paragraph;
+	@include paragraph;
 }
 
 @mixin paragraph_small {
-  @include paragraph;
+	@include paragraph;
 
-  font-size: 14px;
+	font-size: 14px;
 
-  @include media-mobile {
-    font-size: 12px;
-  }
+	@include media-mobile {
+		font-size: 12px;
+	}
 }
 
 .paragraph_small {
-  @include paragraph_small();
+	@include paragraph_small();
 }

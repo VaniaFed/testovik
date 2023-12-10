@@ -1,8 +1,8 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+	display: flex;
+	flex-direction: column;
+	gap: 18px;
 }

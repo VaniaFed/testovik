@@ -1,79 +1,79 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
-@import "/src/components/ui/typography/paragraph/paragraph.module";
+@import '/src/utils/variables';
+@import '/src/utils/media';
+@import '/src/components/ui/typography/paragraph/paragraph.module';
 
 .button {
-  @include paragraph;
-  font-weight: 600;
-  padding: 8px 30px;
-  background-color: $color-white;
-  color: $color-black;
-  border: none;
-  border-radius: 7px;
-  cursor: pointer;
+	@include paragraph;
+	font-weight: 600;
+	padding: 8px 30px;
+	background-color: $color-white;
+	color: $color-black;
+	border: none;
+	border-radius: 7px;
+	cursor: pointer;
 }
 
 .button_accent {
-  background-color: $color-accent;
-  color: $color-white;
+	background-color: $color-accent;
+	color: $color-white;
 
-  &:hover {
-    background-color: $color-link-hover;
-  }
+	&:hover {
+		background-color: $color-link-hover;
+	}
 
-  &:active {
-    background-color: $color-link-active;
-  }
+	&:active {
+		background-color: $color-link-active;
+	}
 }
 
 .button_positive {
-  background-color: $color-green;
-  color: $color-white;
+	background-color: $color-green;
+	color: $color-white;
 
-  &:hover {
-    background-color: $color-green-hover;
-  }
+	&:hover {
+		background-color: $color-green-hover;
+	}
 
-  &:active {
-    background-color: $color-green-active;
-  }
+	&:active {
+		background-color: $color-green-active;
+	}
 }
 
 .button_attention {
-  background-color: $color-orange;
-  color: $color-white;
+	background-color: $color-orange;
+	color: $color-white;
 
-  &:hover {
-    background-color: $color-orange-hover;
-  }
+	&:hover {
+		background-color: $color-orange-hover;
+	}
 
-  &:active {
-    background-color: $color-orange-active;
-  }
+	&:active {
+		background-color: $color-orange-active;
+	}
 }
 
 .button_negative {
-  background-color: transparent;
-  color: $color-red;
+	background-color: transparent;
+	color: $color-red;
 
-  &:hover {
-    color: $color-red-hover;
-  }
+	&:hover {
+		color: $color-red-hover;
+	}
 
-  &:active {
-    color: $color-red-active;
-  }
+	&:active {
+		color: $color-red-active;
+	}
 }
 
 .button_secondary {
-  background-color: $color-gray;
-  color: $color-white;
+	background-color: $color-gray;
+	color: $color-white;
 
-  &:hover {
-    background-color: $color-gray-hover;
-  }
+	&:hover {
+		background-color: $color-gray-hover;
+	}
 
-  &:active {
-    background-color: $color-gray-active;
-  }
+	&:active {
+		background-color: $color-gray-active;
+	}
 }
