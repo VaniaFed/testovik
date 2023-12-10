@@ -1,31 +1,33 @@
-import { User } from '@/lib/definitions';
+import { User, Status } from '@/types/auth';
 import { createAction, createSlice } from '@reduxjs/toolkit';
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface AuthState {
-	user: User | undefined;
-	loading: boolean;
+	user: User | undefined | null;
+	status: Status;
 	error?: string;
 }
 
 const initialState: AuthState = {
 	user: undefined,
-	loading: false,
+	status: 'IDLE',
 };
 
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		setUserLoading(state, action: PayloadAction<boolean>) {
-			state.loading = action.payload;
+		setUserPending(state) {
+			state.status = 'PENDING';
 		},
 		fetchUserSuccess(state, action: PayloadAction<User>) {
 			state.user = action.payload;
+			state.status = 'SUCCEEDED';
 		},
 		fetchUserError(state, action: PayloadAction<string>) {
 			state.error = action.payload;
+			state.status = 'FAILED';
 		},
 	},
 });

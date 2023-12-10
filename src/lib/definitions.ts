@@ -1,8 +1,8 @@
 export interface Test {
-  id: number;
-  created_at: string;
-  title: string;
-  questions: Question[];
+	id: number;
+	created_at: string;
+	title: string;
+	questions: Question[];
 }
 
 // interface Question {
@@ -16,35 +16,26 @@ export interface Test {
 // type: 'question-with-a-few-answers';
 
 interface QuestionWithAFewAnswers {
-  title: string;
-  answerType: "few";
-  rightAnswers: string[];
+	title: string;
+	answerType: 'few';
+	rightAnswers: string[];
 }
 
 interface QuestionWithOneAnswers {
-  title: string;
-  answerType: "one";
-  rightAnswer: string;
+	title: string;
+	answerType: 'one';
+	rightAnswer: string;
 }
 
 interface QuestionWithNumberAnswer {
-  title: string;
-  answerType: "number";
-  rightAnswer: number;
+	title: string;
+	answerType: 'number';
+	rightAnswer: number;
 }
 
-type Question =
-  | QuestionWithAFewAnswers
-  | QuestionWithOneAnswers
-  | QuestionWithNumberAnswer;
-
-export interface User {
-  id: string;
-  username: string;
-  is_admin: boolean;
-}
+type Question = QuestionWithAFewAnswers | QuestionWithOneAnswers | QuestionWithNumberAnswer;
 
 export interface TestDetails {
-  total_pages: number;
-  total_count: number;
+	total_pages: number;
+	total_count: number;
 }

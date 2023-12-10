@@ -9,3 +9,11 @@ export interface SignUpRequest extends SignInRequest {
 }
 
 export interface LogOutRequest {}
+
+export type Status = 'IDLE' | 'PENDING' | 'FAILED' | 'SUCCEEDED';
+
+export interface User {
+	id: string;
+	username: string;
+	is_admin: boolean;
+}

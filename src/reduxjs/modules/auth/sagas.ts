@@ -1,13 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { call, put } from 'redux-saga/effects';
-import { fetchUser, fetchUserSuccess, setUserLoading } from '@/reduxjs/modules/auth/actions';
+import { call, delay, put } from 'redux-saga/effects';
+import { fetchUser, fetchUserSuccess, setUserPending } from '@/reduxjs/modules/auth/actions';
 import { authApi } from '@/services/auth';
 
-import type { SignInRequest, SignUpRequest } from '@/types/auth';
-import { User } from '@/lib/definitions';
+import type { SignInRequest, SignUpRequest, User } from '@/types/auth';
 
 export function* fetchUserSaga(): Generator {
-	yield put(setUserLoading(true));
+	yield put(setUserPending());
+	yield delay(2000);
 	const user: User = (yield call(authApi.getCurrentUser)) as User;
 
 	yield put(fetchUserSuccess(user));

@@ -1,9 +1,15 @@
-import { RootState } from "@/reduxjs/store";
-import { isUser } from "@/lib/type-guards";
-import type { User } from "@/lib/definitions";
+import { RootState } from '@/reduxjs/store';
+import { isUser } from '@/lib/type-guards';
 
-export const selectUser = (state: RootState): User | undefined => {
-  if (isUser(state.user.user)) {
-    return state.user.user;
-  }
+import type { User, Status } from '@/types/auth';
+
+export const selectUser = (state: RootState): User | undefined | null => {
+	if (isUser(state.auth.user)) {
+		return state.auth.user;
+	}
+	return undefined;
+};
+
+export const selectStatus = (state: RootState): Status => {
+	return state.auth.status;
 };

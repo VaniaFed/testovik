@@ -1,6 +1,5 @@
 import { axios } from '@/lib/axios';
-import type { User } from '@/lib/definitions';
-import { SignInRequest, SignUpRequest } from '@/types/auth';
+import type { SignInRequest, SignUpRequest, User } from '@/types/auth';
 
 // TODO: add return types
 

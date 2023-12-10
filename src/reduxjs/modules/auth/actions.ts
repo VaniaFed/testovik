@@ -2,7 +2,7 @@ import { authSlice } from '@/reduxjs/modules/auth/reducer';
 import { LogOutRequest, SignInRequest, SignUpRequest } from '@/types/auth';
 import { PayloadAction, createAction } from '@reduxjs/toolkit';
 
-export const { setUserLoading, fetchUserSuccess, fetchUserError } = authSlice.actions;
+export const { setUserPending, fetchUserSuccess, fetchUserError } = authSlice.actions;
 
 export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
 export const SIGN_IN_REQUEST = 'SIGN_IN_REQUEST';
