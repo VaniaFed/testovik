@@ -1,7 +1,7 @@
-import { User, Status } from '@/types/auth';
-import { createAction, createSlice } from '@reduxjs/toolkit';
-
+import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import type { User } from '@/reduxjs/modules/auth/types';
+import type { Status } from '@/types/auth';
 
 export interface AuthState {
 	user: User | undefined | null;
@@ -29,10 +29,11 @@ export const authSlice = createSlice({
 			state.error = action.payload;
 			state.status = 'FAILED';
 		},
+		logoutSuccess(state) {
+			state.user = null;
+			state.status = 'SUCCEEDED';
+		},
 	},
 });
-
-export const FETCH_USER_REQUEST = 'FETCH_USER_REQUEST';
-export const fetchUser = createAction(FETCH_USER_REQUEST);
 
 export default authSlice.reducer;

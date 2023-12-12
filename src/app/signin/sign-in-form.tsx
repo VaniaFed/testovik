@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
@@ -9,23 +10,19 @@ import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { useCustomForm } from '@/hooks/use-custom-form';
 
-import { axios } from '@/lib/axios';
-
 import type { FC } from 'react';
+import type { SignInRequest } from '@/reduxjs/modules/auth/types';
+import { signIn } from '@/reduxjs/modules/auth/actions';
 
 export const SignInForm: FC<unknown> = () => {
 	const router = useRouter();
 
-	const signIn = async (data: any) => {
-		await axios
-			.post(`${process.env.NEXT_PUBLIC_BASE_URL}/signIn`, data)
-			.then(() => {
-				router.push('/');
-			})
-			.catch((errMessage) => {
-				console.warn('error while signing in: ');
-				console.warn(errMessage);
-			});
+	const dispatch = useDispatch();
+
+	const onSignIn = (e: React.FormEvent) => (data: SignInRequest) => {
+		e.preventDefault();
+		dispatch(signIn(data));
+		// TODO: then redirect to /
 	};
 
 	const { register, onSubmit, getValues, errors } = useCustomForm({
@@ -38,10 +35,10 @@ export const SignInForm: FC<unknown> = () => {
 			id="sign-up-form"
 			onSubmit={(e) =>
 				onSubmit(e, () => {
-					signIn(getValues());
+					// TODO: temporarily any
+					onSignIn(getValues() as any);
 				})
-			}
-		>
+			}>
 			<Field id="form-username" label="Логин" required errMessage={errors.username?.message as string}>
 				<Input
 					id="form-username"

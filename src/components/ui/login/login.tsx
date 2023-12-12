@@ -11,7 +11,7 @@ import { Link } from '@/components/ui/link';
 
 const cx = classNames.bind(styles);
 
-export const Login: FC<Props> = ({ loggedIn = false, userName, userRole, className }) => {
+export const Login: FC<Props> = ({ loggedIn = false, userName, userRole, onLogOut, className }) => {
 	return (
 		<div className={cx('login', className)}>
 			{loggedIn ? (
@@ -22,7 +22,7 @@ export const Login: FC<Props> = ({ loggedIn = false, userName, userRole, classNa
 						</Label>
 						<Label>{userName}</Label>
 					</div>
-					<Link href="/signout" level="label">
+					<Link onClick={onLogOut} isExternal level="label">
 						Выйти
 					</Link>
 				</>

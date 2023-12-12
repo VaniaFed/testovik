@@ -20,56 +20,61 @@ import styles from './tests-page.module.scss';
 import type { FC } from 'react';
 import { Label } from '@/components/ui/typography/label';
 import Image from 'next/image';
-import { selectUser } from '@/reduxjs/modules/auth/selectors';
+import { useAuth } from '@/hooks/use-auth';
+import { Loader } from '@/components/ui/loader';
 
 const cx = classNames.bind(styles);
 
 export const TestsPage: FC<unknown> = () => {
+	const { user, status } = useAuth(false);
+	const tests = useAppSelector(selectAllTests);
 	const { isModalShown, showModal, hideModal } = useModal(false);
 
 	const dispatch = useAppDispatch();
-	const tests = useAppSelector(selectAllTests);
-	const user = useAppSelector(selectUser);
-	const pagination = useAppSelector(selectPagination);
 
-	const isAdmin = user?.is_admin;
 	useEffect(() => {
 		dispatch(fetchAllTests());
 	}, [dispatch]);
 
 	return (
-		<div className={cx('tests-page')}>
-			<div className={cx('tests-page__content')}>
-				<Filter className={cx('tests-page__filter')} />
-				<Heading size="1" className={cx('tests-page__title')}>
-					Тесты
-				</Heading>
-				<div className={cx('tests-page__sort')}>
-					<Label className={cx('tests-page__sort-label')}>Сначала новые</Label>
-					<Image src={'/sort.svg'} width={24} height={24} alt="Сначала новые" />
+		<>
+			{status === 'PENDING' ? (
+				<Loader />
+			) : (
+				<div className={cx('tests-page')}>
+					<div className={cx('tests-page__content')}>
+						<Filter className={cx('tests-page__filter')} />
+						<Heading size="1" className={cx('tests-page__title')}>
+							Тесты
+						</Heading>
+						<div className={cx('tests-page__sort')}>
+							<Label className={cx('tests-page__sort-label')}>Сначала новые</Label>
+							<Image src={'/sort.svg'} width={24} height={24} alt="Сначала новые" />
+						</div>
+						<div className={cx('tests-page__list')}>
+							{tests && tests.length > 0 ? (
+								tests.map((test, key) => (
+									<TestItem
+										title={test.title}
+										testId={test.id}
+										questionNumber={test.questions.length}
+										key={key}
+										canEdit={user ? user.is_admin : false}
+									/>
+								))
+							) : (
+								<Paragraph>Тестов нет</Paragraph>
+							)}
+						</div>
+					</div>
+					<Panel>
+						<Button variant="accent" onClick={showModal}>
+							Добавить тест
+						</Button>
+					</Panel>
+					{isModalShown && <ModalAddTest closable onClose={hideModal} />}
 				</div>
-				<div className={cx('tests-page__list')}>
-					{tests && tests.length > 0 ? (
-						tests.map((test, key) => (
-							<TestItem
-								title={test.title}
-								testId={test.id}
-								questionNumber={test.questions.length}
-								key={key}
-								canEdit={isAdmin as boolean}
-							/>
-						))
-					) : (
-						<Paragraph>Тестов нет</Paragraph>
-					)}
-				</div>
-			</div>
-			<Panel>
-				<Button variant="accent" onClick={showModal}>
-					Добавить тест
-				</Button>
-			</Panel>
-			{isModalShown && <ModalAddTest closable onClose={hideModal} />}
-		</div>
+			)}
+		</>
 	);
 };

@@ -11,6 +11,9 @@ import { Paragraph } from '@/components/ui/typography/paragraph';
 import { useCustomForm } from '@/hooks/use-custom-form';
 
 import type { FC } from 'react';
+import { signUp } from '@/reduxjs/modules/auth/actions';
+import { useAppDispatch } from '@/reduxjs/hooks';
+import { SignUpRequest } from '@/reduxjs/modules/auth/types';
 
 export const SignUpForm: FC<unknown> = () => {
 	const { register, onSubmit, getValues, errors } = useCustomForm({
@@ -25,9 +28,14 @@ export const SignUpForm: FC<unknown> = () => {
 		is_admin: yup.string(),
 	});
 
-	const onSignUp = () => {
-		const values = getValues();
-		console.log(values);
+	const dispatch = useAppDispatch();
+
+	// data: SignUpRequest
+	const onSignUp = (formData: any) => {
+		console.log(formData);
+
+		// because I don't know how to make getValues() return the correct type
+		dispatch(signUp(getValues() as any));
 	};
 
 	return (
@@ -54,8 +62,7 @@ export const SignUpForm: FC<unknown> = () => {
 				id="form-password-confirmation"
 				label="Подтвердите пароль"
 				required
-				errMessage={errors.password_confirmation?.message as string}
-			>
+				errMessage={errors.password_confirmation?.message as string}>
 				<Input
 					id="form-password-confirmation"
 					type="password"

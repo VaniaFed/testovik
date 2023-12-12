@@ -15,11 +15,12 @@ import { Modal } from '../modal';
 
 import type { FC } from 'react';
 import type { Props } from './props';
-import { axios } from '@/lib/axios';
+import { axiosProxy } from '@/utils/axios';
 import { Test } from '@/lib/definitions';
 
+// TODO: use saga instead
 const createTest = async (data: Pick<Test, 'title'>) => {
-	const res = await axios.post(`${process.env.NEXT_PUBLIC_BASE_URL}/tests`, data);
+	const res = await axiosProxy.post('/tests', data);
 
 	return await res.data;
 };
@@ -51,8 +52,7 @@ export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }
 			closable={closable}
 			closeModal={() => {
 				onClose();
-			}}
-		>
+			}}>
 			<Form
 				id="add-test-form"
 				onSubmit={(e) => {
@@ -61,8 +61,7 @@ export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }
 							console.log(res);
 						});
 					});
-				}}
-			>
+				}}>
 				<Field id="test-name" label="Название теста" errMessage={errors.title?.message as string}>
 					<Input id="test-name" placeholder="География 7 класс" autoFocus {...register('title')} />
 				</Field>

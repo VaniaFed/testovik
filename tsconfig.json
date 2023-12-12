@@ -33,7 +33,7 @@
 			"@/hooks/": ["./src/hooks"]
 		},
 		"strictNullChecks": true,
-		"strictFunctionTypes": false
+		"strictFunctionTypes": true
 	},
 
 	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

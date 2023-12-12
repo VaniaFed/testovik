@@ -2,14 +2,17 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { Test, Pagination } from '@/lib/definitions';
 import type { Status } from '@/types/auth';
 
-interface InitialState {
+export interface TestsState {
 	list: Test[];
+	current: Test | null | undefined;
 	pagination: Pagination;
 	status: Status;
 	error: string | null;
 }
-const initialState: InitialState = {
+
+const initialState: TestsState = {
 	list: [],
+	current: undefined,
 	pagination: {
 		total_count: 0,
 		total_pages: 0,
@@ -24,6 +27,11 @@ export const testsSlice = createSlice({
 	reducers: {
 		fetchAllTestsSuccess(state, action) {
 			state.list = action.payload.list;
+			state.pagination = action.payload.pagination;
+			state.status = 'SUCCEEDED';
+		},
+		fetchTestByIdSuccess(state, action) {
+			state.current = action.payload.current;
 			state.pagination = action.payload.pagination;
 			state.status = 'SUCCEEDED';
 		},

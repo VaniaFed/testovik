@@ -1,34 +1,32 @@
-import { PayloadAction } from '@reduxjs/toolkit';
-import { call, delay, put } from 'redux-saga/effects';
-import { fetchUser, fetchUserSuccess, setUserPending } from '@/reduxjs/modules/auth/actions';
+import { call, put } from 'redux-saga/effects';
+import { fetchUserSuccess, logoutSuccess, setUserPending } from '@/reduxjs/modules/auth/actions';
 import { authApi } from '@/services/auth';
+import type { SignInAction, SignUpAction } from './types';
+import type { User } from '@/reduxjs/modules/auth/types';
 
-import type { SignInRequest, SignUpRequest, User } from '@/types/auth';
-
-export function* fetchUserSaga(): Generator {
+export function* fetchUserSaga() {
 	yield put(setUserPending());
-	yield delay(2000);
-	const user: User = (yield call(authApi.getCurrentUser)) as User;
+
+	const user: User = yield call(authApi.getCurrentUser);
 
 	yield put(fetchUserSuccess(user));
 }
 
-export function* signUpSaga({ payload }: PayloadAction<SignUpRequest>): Generator {
-	// const user = yield call(authApi.signUp, payload);
+export function* signUpSaga({ payload }: SignUpAction) {
+	const user: User = yield call(authApi.signUp, payload);
 
-	console.log(payload);
-
-	yield put(fetchUser());
+	yield put(fetchUserSuccess(user));
 }
 
-export function* signInSaga({ payload }: PayloadAction<SignInRequest>): Generator {
-	// const user = yield call(authApi.signIn, payload);
+export function* signInSaga({ payload }: SignInAction) {
+	const user: User = yield call(authApi.signIn, payload);
 
-	console.log(payload);
-
-	yield put(fetchUser());
+	yield put(fetchUserSuccess(user));
 }
 
 export function* logOutSaga() {
-	// const user = (yield call(authApi.logOut)) as User;
+	const res: { success: boolean } = yield call(authApi.logOut);
+	if (res.success) {
+		yield put(logoutSuccess());
+	}
 }

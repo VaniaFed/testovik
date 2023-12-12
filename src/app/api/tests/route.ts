@@ -1,13 +1,13 @@
-// import { axios } from '@/lib/axios';
 // import { Test } from '@/lib/definitions';
 // import { cookies } from 'next/headers';
 // import { NextRequest, NextResponse } from 'next/server';
+// import { axiosSnp } from '@/lib/axios';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
 	// const cookie = cookies().get("_session_id");
 
-	// const response = await axios.get(`${process.env.SNP_URL}/tests`, {
+	// const response = await axiosSnp.get('/tests', {
 	//   headers: {
 	//     "scope-key": "Rm36-GQ.Z(%rFfwAu:LvY7",
 	//     Cookie: cookie ? `${cookie.name}=${cookie.value}` : "",
@@ -103,7 +103,7 @@ export async function GET() {
 
 //   const cookie = cookies().get("_session_id");
 
-//   const response = await axios.post(`${process.env.SNP_URL}/tests`, test, {
+//   const response = await axiosSnp.post(`${process.env.SNP_URL}/tests`, test, {
 //     headers: {
 //       "scope-key": "Rm36-GQ.Z(%rFfwAu:LvY7",
 //       Cookie: cookie ? `${cookie.name}=${cookie.value}` : "",

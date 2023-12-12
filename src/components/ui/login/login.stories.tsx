@@ -12,11 +12,11 @@ export const NotLoggedIn: Story = {
 	render: () => <Login />,
 };
 export const LoggedInAsAdmin: Story = {
-	render: () => <Login loggedIn userName="vaniafed" userType="admin" />,
+	render: () => <Login loggedIn userName="vaniafed" userRole="admin" />,
 };
 
 export const LoggedInAsUser: Story = {
-	render: () => <Login loggedIn userName="vaniafed" userType="user" />,
+	render: () => <Login loggedIn userName="vaniafed" userRole="user" />,
 };
 
 export default meta;

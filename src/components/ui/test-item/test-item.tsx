@@ -11,7 +11,7 @@ import { Link } from '@/components/ui/link';
 
 const cx = classNames.bind(styles);
 
-export const TestItem: FC<Props> = ({ title, testId, questionNumber, canEdit, className }) => {
+export const TestItem: FC<Props> = ({ title, testId, questionNumber, canEdit = false, className }) => {
 	return (
 		<div className={cx('test-item', className)}>
 			<Link href={`/tests/${testId}`} level="h3" color="black">

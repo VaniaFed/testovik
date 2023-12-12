@@ -1,19 +1,13 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
-import { axios } from '@/lib/axios';
-import { parseSessionId } from '@/lib/utils';
-
-interface User {
-	username: string;
-	password: string;
-	password_confirmation: string;
-	is_admin: boolean;
-}
+import { axiosSnp } from '@/utils/axios';
+import { parseSessionId } from '@/utils/parse-session-id';
+import type { User } from '@/reduxjs/modules/auth/types';
 
 export async function POST(req: NextRequest) {
 	const user: User = await req.json();
 
-	const signUpResponse = await axios.post(`${process.env.SNP_URL}/signup`, user, {
+	const signUpResponse = await axiosSnp.post('/signup', user, {
 		headers: {
 			'scope-key': 'Rm36-GQ.Z(%rFfwAu:LvY7',
 		},

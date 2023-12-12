@@ -16,7 +16,11 @@ const mockedTest: Test = {
 	created_at: '',
 };
 
-export const Primary: Story = {
-	render: () => <TestItem title={mockedTest.title} testId={mockedTest.id} questionNumber="5" />,
+export const AsAdmin: Story = {
+	render: () => <TestItem title={mockedTest.title} testId={mockedTest.id} questionNumber={5} canEdit />,
+};
+
+export const AsUser: Story = {
+	render: () => <TestItem title={mockedTest.title} testId={mockedTest.id} questionNumber={5} />,
 };
 export default meta;
