@@ -1,4 +1,4 @@
-// import { Test } from '@/lib/definitions';
+// import { Test } from '@/reduxjs/modules/tests/types';
 // import { cookies } from 'next/headers';
 // import { NextRequest, NextResponse } from 'next/server';
 // import { axiosSnp } from '@/lib/axios';

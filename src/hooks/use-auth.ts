@@ -3,10 +3,10 @@ import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { fetchUser } from '@/reduxjs/modules/auth/actions';
 import { selectUser } from '@/reduxjs/modules/auth/selectors';
-import { selectStatus } from '@/reduxjs/modules/tests/selectors';
+import { selectAuthStatus } from '@/reduxjs/modules/auth/selectors';
 
 export const useAuth = (adminOnly: boolean) => {
-	const status = useAppSelector(selectStatus);
+	const status = useAppSelector(selectAuthStatus);
 	const user = useAppSelector(selectUser);
 
 	const dispatch = useAppDispatch();

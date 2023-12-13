@@ -16,7 +16,7 @@ import { Modal } from '../modal';
 import type { FC } from 'react';
 import type { Props } from './props';
 import { axiosProxy } from '@/utils/axios';
-import { Test } from '@/lib/definitions';
+import { Test } from '@/reduxjs/modules/tests/types';
 
 // TODO: use saga instead
 const createTest = async (data: Pick<Test, 'title'>) => {

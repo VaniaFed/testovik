@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios';
-import { Pagination, Test } from '@/lib/definitions';
+import { Test } from '@/reduxjs/modules/tests/types';
+import { Pagination } from '@/types/common';
 import { fetchAllTestsSuccess, fetchTestByIdSuccess } from '@/reduxjs/modules/tests/actions';
 import { testsApi } from '@/services/tests';
 import { call, put } from 'redux-saga/effects';

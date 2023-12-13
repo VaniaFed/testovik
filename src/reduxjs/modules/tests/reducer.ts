@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { Test, Pagination } from '@/lib/definitions';
+import type { Test } from '@/reduxjs/modules/tests/types';
+import type { Pagination } from '@/types/common';
 import type { Status } from '@/types/auth';
 
 export interface TestsState {
@@ -31,8 +32,7 @@ export const testsSlice = createSlice({
 			state.status = 'SUCCEEDED';
 		},
 		fetchTestByIdSuccess(state, action) {
-			state.current = action.payload.current;
-			state.pagination = action.payload.pagination;
+			state.current = action.payload;
 			state.status = 'SUCCEEDED';
 		},
 	},

@@ -15,7 +15,7 @@ interface MoveAnswerRequest {
 export const answersApi = {
 	create: async (data: CreateAnswerRequest, questionId: number) => {
 		const res = await axiosProxy.post(`/questions/${questionId}/answers`, data);
-		return await res.data;
+		return res.data;
 	},
 	patch: async (data: PatchAnswerRequest, id: number) => {
 		const res = await axiosProxy.patch(`/answers/${id}`, data);

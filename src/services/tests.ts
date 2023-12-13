@@ -1,5 +1,5 @@
 import { axiosProxy } from '@/utils/axios';
-import { Test } from '@/lib/definitions';
+import { Test } from '@/reduxjs/modules/tests/types';
 
 export type CreateTestRequest = { title: string };
 export type PatchTestRequest = Partial<Test>;
@@ -8,7 +8,7 @@ export const testsApi = {
 	create: async (data: CreateTestRequest) => {
 		const res = await axiosProxy.post('/tests', data);
 
-		return await res.data;
+		return res.data;
 	},
 	patch: async (data: PatchTestRequest, id: number) => {
 		const res = await axiosProxy.patch(`/tests/${id}`, data);
