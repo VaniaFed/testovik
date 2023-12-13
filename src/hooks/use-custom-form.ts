@@ -17,7 +17,8 @@ export const useCustomForm = (schema: yup.ObjectShape) => {
 		resolver: yupResolver<FormFields>(formSchema),
 	});
 
-	const onFormSubmit = (e: React.FormEvent, onSubmit: (formData: SignUpRequest | SignInRequest) => void) => {
+	// TODO: get rid of any
+	const onFormSubmit = (e: React.FormEvent, onSubmit: (formData: SignUpRequest | SignInRequest | any) => void) => {
 		e.preventDefault();
 		handleSubmit(onSubmit)();
 	};

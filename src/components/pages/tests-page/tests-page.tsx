@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import Image from 'next/image';
 import classNames from 'classnames/bind';
 
 import { Button } from '@/components/ui/button';
@@ -7,25 +8,26 @@ import { ModalAddTest } from '@/components/ui/modal';
 import { Heading } from '@/components/ui/typography/heading';
 import { Paragraph } from '@/components/ui/typography/paragraph';
 import { Filter } from '@/components/pages/tests-page/filter/filter';
+import { Label } from '@/components/ui/typography/label';
+import { Loader } from '@/components/ui/loader';
+import { TestItem } from '@/components/ui/test-item';
 
 import { useModal } from '@/hooks/use-modal';
+import { useAuth } from '@/hooks/use-auth';
 
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { fetchAllTests } from '@/reduxjs/modules/tests/actions';
+import { selectAllTests } from '@/reduxjs/modules/tests/selectors';
 
-import { selectAllTests, selectPagination } from '@/reduxjs/modules/tests/selectors';
-import { TestItem } from '@/components/ui/test-item';
 import styles from './tests-page.module.scss';
 
 import type { FC } from 'react';
-import { Label } from '@/components/ui/typography/label';
-import Image from 'next/image';
-import { useAuth } from '@/hooks/use-auth';
-import { Loader } from '@/components/ui/loader';
 
 const cx = classNames.bind(styles);
 
-export const TestsPage: FC<unknown> = () => {
+export const TestsPage: FC<{ params: { params: { id: string } } }> = (params) => {
+	console.log(params);
+
 	const { user, status } = useAuth(false);
 	const tests = useAppSelector(selectAllTests);
 	const { isModalShown, showModal, hideModal } = useModal(false);
@@ -38,7 +40,7 @@ export const TestsPage: FC<unknown> = () => {
 
 	return (
 		<>
-			{status === 'PENDING' ? (
+			{status === 'IDLE' || status === 'PENDING' ? (
 				<Loader />
 			) : (
 				<div className={cx('tests-page')}>

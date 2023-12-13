@@ -18,7 +18,6 @@ export interface FetchTestByIdAction extends PayloadAction<{ id: number }> {}
 
 export function* fetchAllTestsSaga() {
 	const tests: FetchAllTestsResponse = yield call(testsApi.getAll);
-
 	yield put(
 		fetchAllTestsSuccess({
 			list: tests.tests,
@@ -30,15 +29,12 @@ export function* fetchAllTestsSaga() {
 // TODO: not sure about action necessary type
 export function* fetchTestByIdSaga(action: FetchTestByIdAction) {
 	const { id } = action.payload;
-
-	const test: FetchTestByIdResponse = yield call(testsApi.getById, id);
-
+	const { test }: FetchTestByIdResponse = yield call(testsApi.getById, id);
 	yield put(fetchTestByIdSuccess(test));
 }
 
 export function* createTestSaga(action: any) {
 	yield console.log(action);
-
 	// const { id } = action.payload;
 	// const test: FetchTestByIdResponse = yield call(testsApi.getById, id);
 	// yield put(fetchTestByIdSuccess(test));

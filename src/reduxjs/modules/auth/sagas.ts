@@ -6,21 +6,18 @@ import type { User } from '@/reduxjs/modules/auth/types';
 
 export function* fetchUserSaga() {
 	yield put(setUserPending());
-
 	const user: User = yield call(authApi.getCurrentUser);
-
 	yield put(fetchUserSuccess(user));
 }
 
 export function* signUpSaga({ payload }: SignUpAction) {
+	console.log(payload);
 	const user: User = yield call(authApi.signUp, payload);
-
 	yield put(fetchUserSuccess(user));
 }
 
 export function* signInSaga({ payload }: SignInAction) {
 	const user: User = yield call(authApi.signIn, payload);
-
 	yield put(fetchUserSuccess(user));
 }
 

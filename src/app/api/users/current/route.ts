@@ -17,9 +17,9 @@ export async function GET() {
 
 	//   return NextResponse.json({ data }, { status });
 
-	// return NextResponse.json({
-	// 	username: 'vaniafed',
-	// 	is_admin: true,
-	// });
-	return NextResponse.json(null);
+	return NextResponse.json({
+		username: 'vaniafed',
+		is_admin: true,
+	});
+	// return NextResponse.json(null);
 }
