@@ -1,6 +1,7 @@
 @import '/src/utils/variables';
 @import '/src/utils/media';
 @import '/src/components/ui/typography/heading/heading.module';
+@import '/src/components/ui/button/button.module';
 @import '/src/components/ui/typography/paragraph/paragraph.module';
 @import '/src/components/ui/typography/label/label.module';
 
@@ -54,6 +55,11 @@
 	}
 }
 
+.link_level_button_accent {
+	@include button;
+	@include button_accent;
+}
+
 .link_color_black {
 	color: $color-black;
 	fill: $color-black;
@@ -102,6 +108,11 @@
 	&:active::after {
 		color: $color-link-active;
 	}
+}
+
+.link_color_blue-reversed {
+	color: $color-white;
+	fill: $color-link;
 }
 
 .link_underline {

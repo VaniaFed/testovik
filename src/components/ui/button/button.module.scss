@@ -2,7 +2,7 @@
 @import '/src/utils/media';
 @import '/src/components/ui/typography/paragraph/paragraph.module';
 
-.button {
+@mixin button {
 	@include paragraph;
 	font-weight: 600;
 	padding: 8px 30px;
@@ -13,7 +13,11 @@
 	cursor: pointer;
 }
 
-.button_accent {
+.button {
+	@include button;
+}
+
+@mixin button_accent {
 	background-color: $color-accent;
 	color: $color-white;
 
@@ -24,6 +28,10 @@
 	&:active {
 		background-color: $color-link-active;
 	}
+}
+
+.button_accent {
+	@include button_accent;
 }
 
 .button_positive {
