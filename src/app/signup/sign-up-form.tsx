@@ -72,7 +72,8 @@ export const SignUpForm: FC<unknown> = () => {
 				id="form-password-confirmation"
 				label="Подтвердите пароль"
 				required
-				errMessage={errors.password_confirmation?.message as string}>
+				errMessage={errors.password_confirmation?.message as string}
+			>
 				<Input
 					id="form-password-confirmation"
 					type="password"

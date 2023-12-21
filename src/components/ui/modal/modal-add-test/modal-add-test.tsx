@@ -51,7 +51,8 @@ export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }
 			closable={closable}
 			closeModal={() => {
 				onClose();
-			}}>
+			}}
+		>
 			<Form
 				id="add-test-form"
 				onSubmit={(e) => {
@@ -60,7 +61,8 @@ export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }
 							console.log(res);
 						});
 					});
-				}}>
+				}}
+			>
 				<Field id="test-name" label="Название теста" errMessage={errors.title?.message as string}>
 					<Input id="test-name" placeholder="География 7 класс" autoFocus {...register('title')} />
 				</Field>
