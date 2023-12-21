@@ -34,5 +34,5 @@ export const useAuth = (adminOnly: boolean) => {
 		}
 	}, [user, status]);
 
-	return { user, status };
+	return { status };
 };
