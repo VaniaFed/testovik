@@ -6,8 +6,7 @@ export type PatchTestRequest = Partial<Test>;
 
 export const testsApi = {
 	create: async (data: CreateTestRequest) => {
-		const res = await axiosProxy.post('/tests', data);
-
+		const res = await axiosProxy.post<Test>('/tests', data);
 		return res.data;
 	},
 	patch: async (data: PatchTestRequest, id: number) => {

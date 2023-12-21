@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
 
 import { Form } from '@/components/ui/form';
@@ -10,13 +11,19 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Paragraph } from '@/components/ui/typography/paragraph';
 import { useCustomForm } from '@/hooks/use-custom-form';
 
-import type { FC } from 'react';
 import { signUp } from '@/reduxjs/modules/auth/actions';
-import { useAppDispatch } from '@/reduxjs/hooks';
-import { SignUpRequest } from '@/reduxjs/modules/auth/types';
+import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
+import { selectAuthStatus, selectUser } from '@/reduxjs/modules/auth/selectors';
+
+import type { FC } from 'react';
 
 export const SignUpForm: FC<unknown> = () => {
-	const { register, onSubmit, getValues, errors } = useCustomForm({
+	const user = useAppSelector(selectUser);
+	const status = useAppSelector(selectAuthStatus);
+	const dispatch = useAppDispatch();
+	const router = useRouter();
+
+	const { register, onSubmit, setFormError, formError, errors } = useCustomForm({
 		username: yup.string().min(3).max(50).required(),
 		password: yup.string().min(6).max(50).required(),
 		password_confirmation: yup
@@ -28,18 +35,21 @@ export const SignUpForm: FC<unknown> = () => {
 		is_admin: yup.string(),
 	});
 
-	const dispatch = useAppDispatch();
-
-	// data: SignUpRequest
 	const onSignUp = (formData: any) => {
-		console.log(formData);
-
-		// because I don't know how to make getValues() return the correct type
-		dispatch(signUp(getValues() as any));
+		dispatch(signUp(formData));
 	};
 
+	useEffect(() => {
+		if (!user && status === 'FAILED') {
+			setFormError('Пользователь с таким логином уже существует');
+		}
+		if (user && user.username) {
+			router.push('/');
+		}
+	}, [user, status]);
+
 	return (
-		<Form id="sign-up-form" onSubmit={(e) => onSubmit(e, onSignUp)}>
+		<Form id="sign-up-form" onSubmit={(e) => onSubmit(e, onSignUp)} formError={formError}>
 			<Field id="form-username" label="Логин" required errMessage={errors.username?.message as string}>
 				<Input
 					id="form-username"

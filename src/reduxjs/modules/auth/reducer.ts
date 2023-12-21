@@ -26,6 +26,7 @@ export const authSlice = createSlice({
 			state.status = 'SUCCEEDED';
 		},
 		fetchUserError(state, action: PayloadAction<string>) {
+			state.user = null;
 			state.error = action.payload;
 			state.status = 'FAILED';
 		},

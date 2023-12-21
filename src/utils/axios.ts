@@ -8,4 +8,7 @@ export const axiosProxy = axios.create({
 export const axiosSnp = axios.create({
 	baseURL: `${process.env.SNP_URL}`,
 	withCredentials: true,
+	headers: {
+		'scope-key': 'Rm36-GQ.Z(%rFfwAu:LvY7',
+	},
 });

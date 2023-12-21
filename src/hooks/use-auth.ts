@@ -6,8 +6,8 @@ import { selectUser } from '@/reduxjs/modules/auth/selectors';
 import { selectAuthStatus } from '@/reduxjs/modules/auth/selectors';
 
 export const useAuth = (adminOnly: boolean) => {
-	const status = useAppSelector(selectAuthStatus);
 	const user = useAppSelector(selectUser);
+	const status = useAppSelector(selectAuthStatus);
 	const router = useRouter();
 	const dispatch = useAppDispatch();
 
@@ -20,20 +20,15 @@ export const useAuth = (adminOnly: boolean) => {
 	useEffect(() => {
 		const isUserReceived = user !== undefined;
 		if (isUserReceived) {
-			const isNotAuthorized = user === null && status === 'SUCCEEDED';
+			const isNotAuthenticated = user === null;
 
-			if (isNotAuthorized) {
+			if (isNotAuthenticated) {
 				router.push('/signin');
 			}
 
-			const noAccess = user && !user.is_admin && adminOnly;
+			const isNoAccess = user && !user.is_admin && adminOnly;
 
-			if (noAccess) {
-				router.push('/no-access');
-			}
-
-			if (status === 'FAILED') {
-				console.error('error');
+			if (isNoAccess) {
 				router.push('/no-access');
 			}
 		}

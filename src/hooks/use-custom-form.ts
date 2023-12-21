@@ -2,8 +2,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { SignInRequest, SignUpRequest } from '@/reduxjs/modules/auth/types';
+import { useState } from 'react';
 
 export const useCustomForm = (schema: yup.ObjectShape) => {
+	const [formError, setFormError] = useState('');
 	const formSchema = yup.object(schema).required();
 
 	interface FormFields extends yup.InferType<typeof formSchema> {}
@@ -27,6 +29,8 @@ export const useCustomForm = (schema: yup.ObjectShape) => {
 		register,
 		onSubmit: onFormSubmit,
 		getValues,
+		setFormError,
+		formError,
 		errors,
 	};
 };

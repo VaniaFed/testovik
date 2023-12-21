@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 
 import { Label } from '../typography/label';
-import { Subtitle } from '../typography/subtitle';
 
 import styles from './field.module.scss';
 
