@@ -15,9 +15,9 @@ import { TestItem } from '@/components/ui/test-item';
 import { useModal } from '@/hooks/use-modal';
 import { useAuth } from '@/hooks/use-auth';
 
-import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { fetchAllTests } from '@/reduxjs/modules/tests/actions';
 import { selectAllTests } from '@/reduxjs/modules/tests/selectors';
+import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 
 import styles from './tests-page.module.scss';
 
@@ -25,9 +25,7 @@ import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 
-export const TestsPage: FC<{ params: { params: { id: string } } }> = (params) => {
-	console.log(params);
-
+export const TestsPage: FC<unknown> = () => {
 	const { user, status } = useAuth(false);
 	const tests = useAppSelector(selectAllTests);
 	const { isModalShown, showModal, hideModal } = useModal(false);

@@ -4,7 +4,6 @@ import * as yup from 'yup';
 
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Heading } from '@/components/ui/typography/heading';
 import { Form } from '@/components/ui/form';
@@ -13,10 +12,10 @@ import { useCustomForm } from '@/hooks/use-custom-form';
 
 import { Modal } from '../modal';
 
-import type { FC } from 'react';
-import type { Props } from './props';
 import { axiosProxy } from '@/utils/axios';
 import { Test } from '@/reduxjs/modules/tests/types';
+import type { FC } from 'react';
+import type { Props } from './props';
 
 // TODO: use saga instead
 const createTest = async (data: Pick<Test, 'title'>) => {
