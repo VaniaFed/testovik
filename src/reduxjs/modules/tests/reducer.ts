@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { FetchTestByIdSuccess, FetchTestByIdError, FetchAllTestsSuccess, FetchAllTestsError } from './types';
 import type { Test } from '@/reduxjs/modules/tests/types';
 import type { Pagination } from '@/types/common';
 import type { Status } from '@/types/auth';
@@ -26,14 +27,36 @@ export const testsSlice = createSlice({
 	name: 'tests',
 	initialState,
 	reducers: {
-		fetchAllTestsSuccess(state, action) {
-			state.list = action.payload.list;
-			state.pagination = action.payload.pagination;
+		setTestsPending(state) {
+			state.status = 'PENDING';
+		},
+
+		createTestSuccess(state, action) {
+			state.list.push(action.payload);
 			state.status = 'SUCCEEDED';
 		},
-		fetchTestByIdSuccess(state, action) {
+		createTestError(state, action) {
+			state.error = action.payload;
+			state.status = 'FAILED';
+		},
+
+		fetchAllTestsSuccess(state, action: FetchAllTestsSuccess) {
+			state.list = action.payload.tests;
+			state.pagination = action.payload.meta;
+			state.status = 'SUCCEEDED';
+		},
+		fetchAllTestsError(state, action: FetchAllTestsError) {
+			state.error = action.payload;
+			state.status = 'FAILED';
+		},
+
+		fetchTestByIdSuccess(state, action: FetchTestByIdSuccess) {
 			state.current = action.payload;
 			state.status = 'SUCCEEDED';
+		},
+		fetchTestByIdError(state, action: FetchTestByIdError) {
+			state.error = action.payload;
+			state.status = 'FAILED';
 		},
 	},
 });

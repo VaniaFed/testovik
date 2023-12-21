@@ -5,6 +5,7 @@ import { SESSION_ID_COOKIE } from '@/constants';
 
 export async function GET() {
 	const cookie = cookies().get(SESSION_ID_COOKIE);
+
 	const apiResponse = await axiosSnp.get('/users/current', {
 		headers: {
 			Cookie: cookie && `${cookie.name}=${cookie.value}`,

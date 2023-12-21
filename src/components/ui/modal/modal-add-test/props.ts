@@ -1,5 +1,5 @@
 export interface Props {
-	onClose: () => void;
+	close: () => void;
 	closable?: boolean;
 	className?: string;
 }

@@ -16,8 +16,5 @@ export async function POST(req: NextRequest) {
 	}
 
 	const { data, status } = apiResponse;
-
-	return NextResponse.json(data, {
-		status,
-	});
+	return NextResponse.json(data, { status });
 }

@@ -6,12 +6,7 @@ import { AxiosResponse } from 'axios';
 
 export async function DELETE() {
 	const apiResponse: AxiosResponse<{ success: boolean }> = await axiosSnp.delete('/logout');
-
 	cookies().delete(SESSION_ID_COOKIE);
-
 	const { data, status } = apiResponse;
-
-	return NextResponse.json(data, {
-		status,
-	});
+	return NextResponse.json(data, { status });
 }

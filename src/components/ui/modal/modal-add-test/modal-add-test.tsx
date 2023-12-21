@@ -1,31 +1,20 @@
 'use client';
 import React from 'react';
 import * as yup from 'yup';
-
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Heading } from '@/components/ui/typography/heading';
 import { Form } from '@/components/ui/form';
-
+import { Modal } from '@/components/ui/modal/modal';
 import { useCustomForm } from '@/hooks/use-custom-form';
-
-import { Modal } from '../modal';
-
-import { axiosProxy } from '@/utils/axios';
-import { Test } from '@/reduxjs/modules/tests/types';
+import { useAppDispatch } from '@/reduxjs/hooks';
+import { createTest } from '@/reduxjs/modules/tests/actions';
 import type { FC } from 'react';
 import type { Props } from './props';
 
-// TODO: use saga instead
-const createTest = async (data: Pick<Test, 'title'>) => {
-	const res = await axiosProxy.post('/tests', data);
-
-	return await res.data;
-};
-
-export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }) => {
-	const { register, errors, getValues, onSubmit } = useCustomForm({
+export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) => {
+	const { register, errors, onSubmit } = useCustomForm({
 		title: yup.string().min(3).max(150).required(),
 	});
 
@@ -43,6 +32,13 @@ export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }
 		</>
 	);
 
+	const dispatch = useAppDispatch();
+
+	const onCreateTest = (title: string) => {
+		dispatch(createTest(title));
+		close();
+	};
+
 	return (
 		<Modal
 			header={header}
@@ -50,19 +46,13 @@ export const ModalAddTest: FC<Props> = ({ onClose, closable = false, className }
 			className={className}
 			closable={closable}
 			closeModal={() => {
-				onClose();
-			}}
-		>
+				close();
+			}}>
 			<Form
 				id="add-test-form"
 				onSubmit={(e) => {
-					onSubmit(e, () => {
-						createTest(getValues() as Pick<Test, 'title'>).then((res) => {
-							console.log(res);
-						});
-					});
-				}}
-			>
+					onSubmit(e, onCreateTest);
+				}}>
 				<Field id="test-name" label="Название теста" errMessage={errors.title?.message as string}>
 					<Input id="test-name" placeholder="География 7 класс" autoFocus {...register('title')} />
 				</Field>

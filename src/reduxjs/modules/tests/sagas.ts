@@ -1,41 +1,56 @@
-import { Test } from '@/reduxjs/modules/tests/types';
-import { Pagination } from '@/types/common';
-import { fetchAllTestsSuccess, fetchTestByIdSuccess } from '@/reduxjs/modules/tests/actions';
-import { testsApi } from '@/services/tests';
 import { call, put } from 'redux-saga/effects';
-import { PayloadAction } from '@reduxjs/toolkit';
+import { testsApi } from '@/services/tests';
+import type { AxiosResponse } from 'axios';
+import type {
+	CreateTestAction,
+	FetchAllTestsResponse,
+	FetchTestByIdAction,
+	FetchTestByIdResponse,
+} from '@/reduxjs/modules/tests/types';
+import {
+	setTestsPending,
+	createTestError,
+	createTestSuccess,
+	fetchAllTestsError,
+	fetchAllTestsSuccess,
+	fetchTestByIdError,
+	fetchTestByIdSuccess,
+} from '@/reduxjs/modules/tests/actions';
 
-interface FetchAllTestsResponse {
-	tests: Test[];
-	meta: Pagination;
+export function* createTestSaga(action: CreateTestAction) {
+	yield put(setTestsPending());
+	const title = action.payload;
+	try {
+		const test: AxiosResponse = yield call(testsApi.create, title);
+		yield put(createTestSuccess(test.data));
+	} catch (error) {
+		yield put(createTestError('Error while creating a test'));
+	}
 }
-
-interface FetchTestByIdResponse {
-	test: Test;
-}
-
-export interface FetchTestByIdAction extends PayloadAction<{ id: number }> {}
 
 export function* fetchAllTestsSaga() {
-	const tests: FetchAllTestsResponse = yield call(testsApi.getAll);
-	yield put(
-		fetchAllTestsSuccess({
-			list: tests.tests,
-			pagination: tests.meta,
-		}),
-	);
+	yield put(setTestsPending());
+	try {
+		const res: AxiosResponse<FetchAllTestsResponse> = yield call(testsApi.getAll);
+		yield put(
+			fetchAllTestsSuccess({
+				tests: res.data.tests,
+				meta: res.data.meta,
+			}),
+		);
+	} catch (error) {
+		yield put(fetchAllTestsError('Error during fetching tests'));
+	}
 }
 
-// TODO: not sure about action necessary type
 export function* fetchTestByIdSaga(action: FetchTestByIdAction) {
-	const { id } = action.payload;
-	const { test }: FetchTestByIdResponse = yield call(testsApi.getById, id);
-	yield put(fetchTestByIdSuccess(test));
-}
+	yield put(setTestsPending());
+	const id = action.payload;
 
-export function* createTestSaga(action: any) {
-	yield console.log(action);
-	// const { id } = action.payload;
-	// const test: FetchTestByIdResponse = yield call(testsApi.getById, id);
-	// yield put(fetchTestByIdSuccess(test));
+	try {
+		const res: AxiosResponse<FetchTestByIdResponse> = yield call(testsApi.getById, id);
+		yield put(fetchTestByIdSuccess(res.data.test));
+	} catch (error) {
+		yield put(fetchTestByIdError('Error during fetching test'));
+	}
 }
