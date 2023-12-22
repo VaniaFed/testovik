@@ -21,6 +21,7 @@ import { selectUser } from '@/reduxjs/modules/auth/selectors';
 import styles from './tests-page.module.scss';
 
 import type { FC } from 'react';
+import { Sort } from '@/components/ui/icons/sort/sort';
 
 const cx = classNames.bind(styles);
 
@@ -44,7 +45,7 @@ export const TestsPage: FC<unknown> = () => {
 				</Heading>
 				<div className={cx('tests-page__sort')}>
 					<Label className={cx('tests-page__sort-label')}>Сначала новые</Label>
-					<Image src={'/sort.svg'} width={24} height={24} alt="Сначала новые" />
+					<Sort size="24" />
 				</div>
 				<div className={cx('tests-page__list')}>
 					{tests && tests.length > 0 ? (

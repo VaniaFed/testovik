@@ -13,3 +13,5 @@ export interface DropdownItem {
 	label: string;
 	value: QuestionType;
 }
+
+export type IconSize = '18' | '24' | '32' | '64';
