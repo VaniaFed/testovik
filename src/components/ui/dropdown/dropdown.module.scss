@@ -1,0 +1,23 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.dropdown {
+	position: relative;
+
+	&__input-wrapper {
+		position: relative;
+	}
+
+	&__chevron {
+		position: absolute;
+		top: calc(50%);
+		transform: translateY(-50%);
+		right: 20px;
+		transition: transform 0.15s;
+		pointer-events: none;
+
+		@include media-mobile {
+			right: 10px;
+		}
+	}
+}
