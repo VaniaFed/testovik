@@ -1,6 +1,3 @@
-import type { IconSize } from '@/types/common';
+import type { IconBaseProps } from '@/components/ui/icon-base/props';
 
-export interface Props {
-	size?: IconSize;
-	className?: string;
-}
+export interface Props extends Omit<IconBaseProps, 'children'> {}

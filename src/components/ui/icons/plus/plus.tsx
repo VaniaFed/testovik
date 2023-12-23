@@ -1,11 +1,11 @@
 import React from 'react';
 import type { FC } from 'react';
 import type { Props } from './props';
-import { BaseIcon } from '@/components/ui/base-icon';
+import { IconBase } from '@/components/ui/icon-base';
 
-export const Plus: FC<Props> = ({ size, className }) => {
+export const Plus: FC<Props> = ({ className, ...rest }) => {
 	return (
-		<BaseIcon className={className} size={size}>
+		<IconBase className={className} {...rest}>
 			<svg
 				enableBackground="new 0 0 512 512"
 				id="Layer_1"
@@ -18,6 +18,6 @@ export const Plus: FC<Props> = ({ size, className }) => {
 					<polygon points="266.228,104.22 245.988,104.22 245.988,245.9 104.98,245.9 104.98,266.14 245.988,266.14    245.988,407.148 266.228,407.148 266.228,266.14 407.908,266.14 407.908,245.9 266.228,245.9  " />
 				</g>
 			</svg>
-		</BaseIcon>
+		</IconBase>
 	);
 };

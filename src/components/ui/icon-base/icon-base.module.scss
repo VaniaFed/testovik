@@ -1,7 +1,7 @@
 @import '/src/utils/variables';
 @import '/src/utils/media';
 
-.base-icon {
+.icon-base {
 	fill: $color-black;
 
 	&_size_18 {
@@ -22,5 +22,13 @@
 	&_size_64 {
 		width: 64px;
 		height: 64px;
+	}
+
+	&_color_black {
+		fill: $color-black;
+	}
+
+	&_color_white {
+		fill: $color-white;
 	}
 }
