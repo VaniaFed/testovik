@@ -34,9 +34,8 @@
 
 	&__close-btn {
 		position: absolute;
-		top: 45px;
+		top: 40px;
 		right: 40px;
-		cursor: pointer;
 
 		@include media-mobile {
 			top: 40px;

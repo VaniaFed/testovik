@@ -1,0 +1,24 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+@import '/src/components/ui/button//button.module.scss';
+
+.icon-button {
+	@include button;
+	padding: 0.4rem 0.8rem;
+
+	&_accent {
+		@include button_accent;
+	}
+
+	&_positive {
+		@include button_positive;
+	}
+
+	&_attention {
+		@include button_attention;
+	}
+
+	&_negative {
+		@include button_negative;
+	}
+}
