@@ -1,47 +1,58 @@
-import React from 'react';
-
 import { Button } from './button';
-
-import type { ComponentStory, Meta } from '@storybook/react';
-import type { Props } from './props';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta = {
-	title: 'Button',
 	component: Button,
 };
 
-export default meta;
+type Story = StoryObj<typeof Button>;
 
 const logging = (): void => {
 	console.log('Hello, warlord');
 };
 
-export const Default: ComponentStory<typeof Button> = (args: Props) => (
-	<Button onClick={logging} {...args}>
-		Default button
-	</Button>
-);
+export const Default: Story = {
+	render: () => <Button onClick={logging}>Default button</Button>,
+};
 
-export const Positive: ComponentStory<typeof Button> = (args: Props) => (
-	<Button onClick={logging} variant="positive" {...args}>
-		Positive
-	</Button>
-);
+export const Accent: Story = {
+	render: () => (
+		<Button onClick={logging} variant="accent">
+			Positive
+		</Button>
+	),
+};
 
-export const Attention: ComponentStory<typeof Button> = (args: Props) => (
-	<Button onClick={logging} variant="attention" {...args}>
-		Attention
-	</Button>
-);
+export const Positive: Story = {
+	render: () => (
+		<Button onClick={logging} variant="positive">
+			Positive
+		</Button>
+	),
+};
 
-export const Negative: ComponentStory<typeof Button> = (args: Props) => (
-	<Button onClick={logging} variant="negative" {...args}>
-		Negative
-	</Button>
-);
+export const Attention: Story = {
+	render: () => (
+		<Button onClick={logging} variant="attention">
+			Attention
+		</Button>
+	),
+};
 
-export const Secondary: ComponentStory<typeof Button> = (args: Props) => (
-	<Button onClick={logging} variant="secondary" {...args}>
-		Secondary
-	</Button>
-);
+export const Negative: Story = {
+	render: () => (
+		<Button onClick={logging} variant="negative">
+			Negative
+		</Button>
+	),
+};
+
+export const Secondary: Story = {
+	render: () => (
+		<Button onClick={logging} variant="secondary">
+			Secondary
+		</Button>
+	),
+};
+
+export default meta;

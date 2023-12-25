@@ -4,8 +4,12 @@
 
 @mixin button {
 	@include paragraph;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 40px;
 	font-weight: 600;
-	padding: 8px 30px;
+	padding: 0.4rem 1.5rem;
 	background-color: $color-white;
 	color: $color-black;
 	border: none;
@@ -34,7 +38,7 @@
 	@include button_accent;
 }
 
-.button_positive {
+@mixin button_positive {
 	background-color: $color-green;
 	color: $color-white;
 
@@ -47,7 +51,11 @@
 	}
 }
 
-.button_attention {
+.button_positive {
+	@include button_positive;
+}
+
+@mixin button_attention {
 	background-color: $color-orange;
 	color: $color-white;
 
@@ -60,7 +68,11 @@
 	}
 }
 
-.button_negative {
+.button_attention {
+	@include button_attention;
+}
+
+@mixin button_negative {
 	background-color: transparent;
 	color: $color-red;
 
@@ -71,6 +83,10 @@
 	&:active {
 		color: $color-red-active;
 	}
+}
+
+.button_negative {
+	@include button_negative;
 }
 
 .button_secondary {
