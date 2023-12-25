@@ -15,6 +15,8 @@ export const Field: FC<Props> = ({
 	children,
 	id,
 	label = '',
+	leftContent,
+	rightContent,
 	required,
 	errMessage = '',
 	className,
@@ -22,12 +24,16 @@ export const Field: FC<Props> = ({
 }) => {
 	return (
 		<div className={cx('field', className)}>
-			{label?.length > 0 && (
+			{label.length > 0 && (
 				<Label required={required} htmlFor={id} className={cx('field__label', labelClassName)}>
 					{label}
 				</Label>
 			)}
-			{children}
+			<div className={cx('field__content')}>
+				{leftContent && leftContent}
+				{children}
+				{rightContent && rightContent}
+			</div>
 			{errMessage.length > 0 && <Paragraph className={cx('field__error')}>{errMessage}</Paragraph>}
 		</div>
 	);

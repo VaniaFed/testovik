@@ -1,11 +1,14 @@
 import { Field } from './field';
 import { Input } from '../input';
 import { Textarea } from '../textarea';
+import { IconButton } from '@/components/ui/icon-button';
+import { Cross } from '@/components/ui/icons/cross';
+import { DragDots } from '@/components/ui/icons/drag-dots';
+import { Plus } from '@/components/ui/icons/plus';
 import type { Meta, StoryObj } from '@storybook/react';
-import type { Props } from './props';
 
 const meta: Meta<typeof Field> = {
-	title: 'Field',
+	title: 'Components/ui/Field',
 	component: Field,
 };
 
@@ -14,7 +17,7 @@ type Story = StoryObj<typeof Field>;
 export const Default: Story = {
 	render: () => (
 		<Field id="0">
-			<Input />
+			<Input placeholder="Placeholder" />
 		</Field>
 	),
 };
@@ -22,7 +25,7 @@ export const Default: Story = {
 export const WithLabel: Story = {
 	render: () => (
 		<Field id="1" label="With Label">
-			<Input />
+			<Input placeholder="Placeholder" />
 		</Field>
 	),
 };
@@ -30,7 +33,7 @@ export const WithLabel: Story = {
 export const Required: Story = {
 	render: () => (
 		<Field id="2" label="With Label" required>
-			<Input />
+			<Input placeholder="Placeholder" />
 		</Field>
 	),
 };
@@ -38,7 +41,7 @@ export const Required: Story = {
 export const WithErrMessage: Story = {
 	render: () => (
 		<Field id="2" label="With Label" required errMessage="Typical form error">
-			<Input />
+			<Input placeholder="Placeholder" />
 		</Field>
 	),
 };
@@ -46,7 +49,59 @@ export const WithErrMessage: Story = {
 export const WithFieldTextArea: Story = {
 	render: () => (
 		<Field id="2" label="With Label">
-			<Textarea />
+			<Textarea placeholder="Placeholder" />
+		</Field>
+	),
+};
+
+export const WithRightContent: Story = {
+	render: () => (
+		<Field
+			id="0"
+			rightContent={
+				<IconButton>
+					<Cross />
+				</IconButton>
+			}>
+			<Input placeholder="Placeholder" />
+		</Field>
+	),
+};
+
+export const WithLeftContent: Story = {
+	render: () => (
+		<Field
+			id="0"
+			leftContent={
+				<IconButton>
+					<DragDots size="24" />
+				</IconButton>
+			}>
+			<Input placeholder="Placeholder" />
+		</Field>
+	),
+};
+
+export const WithBothSidesContent: Story = {
+	render: () => (
+		<Field
+			id="0"
+			leftContent={
+				<>
+					<IconButton zeroSpacing>
+						<DragDots size="24" />
+					</IconButton>
+					<IconButton zeroSpacing>
+						<Plus size="24" />
+					</IconButton>
+				</>
+			}
+			rightContent={
+				<IconButton zeroSpacing>
+					<Cross />
+				</IconButton>
+			}>
+			<Input placeholder="Placeholder" />
 		</Field>
 	),
 };
