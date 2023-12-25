@@ -21,4 +21,8 @@
 	&_negative {
 		@include button_negative;
 	}
+
+	&_zero-spacing {
+		padding: 0;
+	}
 }

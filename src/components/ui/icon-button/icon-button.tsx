@@ -8,9 +8,16 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const IconButton: FC<Props> = ({ variant, children, className, ...rest }) => {
+export const IconButton: FC<Props> = ({ variant, zeroSpacing = false, children, className, ...rest }) => {
 	return (
-		<button className={cx('icon-button', variant && `icon-button_${variant}`, className)} {...rest}>
+		<button
+			className={cx(
+				'icon-button',
+				variant && `icon-button_${variant}`,
+				zeroSpacing && 'icon-button_zero-spacing',
+				className,
+			)}
+			{...rest}>
 			{children}
 		</button>
 	);

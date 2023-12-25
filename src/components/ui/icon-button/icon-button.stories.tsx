@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { IconButton } from './icon-button';
 import { PlusBold } from '@/components/ui/icons/plus-bold';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof IconButton> = {
 	component: IconButton,
@@ -24,4 +23,5 @@ export const Positive: Story = {
 		</IconButton>
 	),
 };
+
 export default meta;
