@@ -1,0 +1,23 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.answer-item {
+	&_right {
+		background-color: #f5fff5;
+		color: $color-green-active;
+		border: 1px $color-green-active solid;
+		font-weight: 500;
+	}
+
+	&_wrong {
+		border: 1px $color-red-active solid;
+		background-color: #fff5f5;
+		color: $color-red-active;
+		font-weight: 500;
+	}
+
+	&_unanswered {
+		border: none;
+		background-color: #f0f0f0;
+	}
+}
