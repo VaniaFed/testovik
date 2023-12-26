@@ -55,4 +55,19 @@ export const Secondary: Story = {
 	),
 };
 
+export const AccentAsText: Story = {
+	render: () => (
+		<Button onClick={logging} variant="text_accent">
+			Accent text
+		</Button>
+	),
+};
+export const NegativeAsText: Story = {
+	render: () => (
+		<Button onClick={logging} variant="text_negative">
+			Negative text
+		</Button>
+	),
+};
+
 export default meta;
