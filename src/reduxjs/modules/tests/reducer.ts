@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import type { FetchTestByIdSuccess, FetchTestByIdError, FetchAllTestsSuccess, FetchAllTestsError } from './types';
+import type { ActionError } from './../../../types/common';
+import type { FetchTestByIdSuccess, FetchAllTestsSuccess, AddQuestionSuccess, AddAnswerSuccess } from './types';
 import type { Test } from '@/reduxjs/modules/tests/types';
 import type { Pagination } from '@/types/common';
 import type { Status } from '@/types/auth';
@@ -40,12 +41,27 @@ export const testsSlice = createSlice({
 			state.status = 'FAILED';
 		},
 
+		addQuestionSuccess(state, action: AddQuestionSuccess) {
+			state.current?.questions.push(action.payload);
+		},
+		addQuestionError(state, action: ActionError) {
+			state.error = action.payload;
+		},
+
+		addAnswerSuccess(state, action: AddAnswerSuccess) {
+			const { answer, questionId } = action.payload;
+			state.current?.questions.find((question) => question.id === questionId)?.answers.push(answer);
+		},
+		addAnswerError(state, action: ActionError) {
+			state.error = action.payload;
+		},
+
 		fetchAllTestsSuccess(state, action: FetchAllTestsSuccess) {
 			state.list = action.payload.tests;
 			state.pagination = action.payload.meta;
 			state.status = 'SUCCEEDED';
 		},
-		fetchAllTestsError(state, action: FetchAllTestsError) {
+		fetchAllTestsError(state, action: ActionError) {
 			state.error = action.payload;
 			state.status = 'FAILED';
 		},
@@ -54,7 +70,7 @@ export const testsSlice = createSlice({
 			state.current = action.payload;
 			state.status = 'SUCCEEDED';
 		},
-		fetchTestByIdError(state, action: FetchTestByIdError) {
+		fetchTestByIdError(state, action: ActionError) {
 			state.error = action.payload;
 			state.status = 'FAILED';
 		},

@@ -4,7 +4,7 @@ import { Test } from '@/reduxjs/modules/tests/types';
 export type CreateTestRequest = { title: string };
 export type PatchTestRequest = Partial<Test>;
 
-export const testsApi = {
+export const testApi = {
 	create: async (title: string) => await axiosProxy.post<Test>('/tests', title),
 	patch: async (data: PatchTestRequest, id: number) => await axiosProxy.patch(`/tests/${id}`, data),
 	delete: async (id: number) => await axiosProxy.delete(`/tests/${id}`),
