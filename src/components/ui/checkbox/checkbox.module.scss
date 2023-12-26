@@ -37,19 +37,32 @@
 .fake-control {
 	position: relative;
 	display: block;
-	width: 26px;
-	height: 26px;
-
-	@include media-mobile {
-		width: 20px;
-		height: 20px;
-	}
 
 	&::after {
 		content: url('/checkbox.svg');
 
 		@include media-mobile {
 			content: url('/checkbox-mb.svg');
+		}
+	}
+
+	&_size_24 {
+		width: 24px;
+		height: 24px;
+
+		@include media-mobile {
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	&_size_18 {
+		width: 18px;
+		height: 18px;
+
+		@include media-mobile {
+			width: 18px;
+			height: 18px;
 		}
 	}
 }
