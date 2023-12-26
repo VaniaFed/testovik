@@ -4,6 +4,7 @@
 
 .icon-button {
 	@include button;
+	background: none;
 	padding: 0.4rem 0.8rem;
 
 	&_accent {
@@ -23,6 +24,7 @@
 	}
 
 	&_zero-spacing {
+		min-height: fit-content;
 		padding: 0;
 	}
 }

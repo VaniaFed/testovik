@@ -37,12 +37,7 @@
 	}
 
 	&_solid {
-		height: 60px;
 		border: none;
 		background-color: $color-input-background;
-
-		@include media-mobile {
-			height: 48px;
-		}
 	}
 }

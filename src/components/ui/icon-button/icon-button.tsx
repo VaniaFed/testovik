@@ -11,6 +11,7 @@ const cx = classNames.bind(styles);
 export const IconButton: FC<Props> = ({ variant, zeroSpacing = false, children, className, ...rest }) => {
 	return (
 		<button
+			type="button"
 			className={cx(
 				'icon-button',
 				variant && `icon-button_${variant}`,
