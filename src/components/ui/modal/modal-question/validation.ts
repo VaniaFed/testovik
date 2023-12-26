@@ -1,8 +1,8 @@
-import type { FormFields } from '@/components/ui/modal/modal-add-single-question/modal-question';
+import type { FormFields } from '@/components/ui/modal/modal-question/modal-question';
 import type { QuestionType } from '@/reduxjs/modules/tests/types';
 import type { ModalMode } from '@/types/common';
 
-export const getValidationMessage = (formData: FormFields, mode: ModalMode, questionType: QuestionType) => {
+export const getValidationMessage = (formData: FormFields, questionType: QuestionType, mode: ModalMode) => {
 	let errorMessage = '';
 
 	if ((questionType !== 'number' && !formData.answers) || !formData.answers?.length) {

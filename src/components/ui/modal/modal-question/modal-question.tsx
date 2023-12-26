@@ -15,12 +15,12 @@ import { Cross } from '@/components/ui/icons/cross';
 import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
 import { useDispatch } from 'react-redux';
-import { getValidationMessage } from '@/components/ui/modal/modal-add-single-question/validation';
+import { getValidationMessage } from '@/components/ui/modal/modal-question/validation';
 import { DragDots } from '@/components/ui/icons/drag-dots';
 import { addQuestion } from '@/reduxjs/modules/tests/actions';
 import { Stack } from '@/components/layout/stack';
 import { Answer } from '@/reduxjs/modules/tests/types';
-import styles from './modal-add-single-question.module.scss';
+import styles from './modal-question.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
 
@@ -135,7 +135,7 @@ export const ModalQuestion: FC<Props> = ({
 	};
 
 	const onFormSubmit = (formData: FormFields) => {
-		const errorMessage = getValidationMessage(formData, mode, questionType);
+		const errorMessage = getValidationMessage(formData, questionType, mode);
 
 		console.log(formData);
 		console.log(errorMessage);
@@ -153,11 +153,11 @@ export const ModalQuestion: FC<Props> = ({
 
 	return (
 		<Modal
-			className={cx('modal-add-single-question', className)}
+			className={cx('modal-question', className)}
 			header={<Heading size="1">{headerTitle}</Heading>}
 			footer={
 				<>
-					<Button variant="accent" form="add-single-question-form">
+					<Button variant="accent" form="question-form">
 						{mode === 'create' ? 'Добавить' : 'Изменить'}
 					</Button>
 					<Button
@@ -171,10 +171,10 @@ export const ModalQuestion: FC<Props> = ({
 			}
 			closable
 			closeModal={close}>
-			<Form id="add-single-question-form" onSubmit={handleSubmit(onFormSubmit)} formError={formError}>
-				<Field id="add-single-question-question" label="Вопрос" errMessage={errors.question?.message}>
+			<Form id="question-form" onSubmit={handleSubmit(onFormSubmit)} formError={formError}>
+				<Field id="question-form-question" label="Вопрос" errMessage={errors.question?.message}>
 					<Input
-						id="add-single-question-question"
+						id="question-form-question"
 						placeholder="Введите вопрос..."
 						autoFocus
 						{...register('question')}
@@ -198,7 +198,7 @@ export const ModalQuestion: FC<Props> = ({
 							{fields.map((field, index) => (
 								<li key={field.id}>
 									<Field
-										id={`add-single-question-form-answer-${field.id}`}
+										id={`question-form-answer-${field.id}`}
 										leftContent={
 											<>
 												<IconButton zeroSpacing>
@@ -220,7 +220,7 @@ export const ModalQuestion: FC<Props> = ({
 										errMessage={errors.answers && errors.answers[index]?.text?.message}>
 										<Input
 											placeholder="Введите ответ..."
-											id={`add-single-question-form-answer-${field.id}`}
+											id={`question-form-answer-${field.id}`}
 											{...register(`answers.${index}.text`)}
 										/>
 									</Field>
