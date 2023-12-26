@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-import Image from 'next/image';
 import classNames from 'classnames/bind';
-
 import { Button } from '@/components/ui/button';
 import { Panel } from '@/components/ui/panel';
 import { ModalAddTest } from '@/components/ui/modal';
@@ -10,18 +8,15 @@ import { Paragraph } from '@/components/ui/typography/paragraph';
 import { Filter } from '@/components/pages/tests-page/filter/filter';
 import { Label } from '@/components/ui/typography/label';
 import { TestItem } from '@/components/ui/test-item';
-
+import { Sort } from '@/components/ui/icons/sort/sort';
 import { useModal } from '@/hooks/use-modal';
-
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { fetchAllTests } from '@/reduxjs/modules/tests/actions';
 import { selectAllTests } from '@/reduxjs/modules/tests/selectors';
 import { selectUser } from '@/reduxjs/modules/auth/selectors';
-
+import { Stack } from '@/components/layout/stack';
 import styles from './tests-page.module.scss';
-
 import type { FC } from 'react';
-import { Sort } from '@/components/ui/icons/sort/sort';
 
 const cx = classNames.bind(styles);
 
@@ -47,7 +42,7 @@ export const TestsPage: FC<unknown> = () => {
 					<Label className={cx('tests-page__sort-label')}>Сначала новые</Label>
 					<Sort size="24" />
 				</div>
-				<div className={cx('tests-page__list')}>
+				<Stack>
 					{tests && tests.length > 0 ? (
 						tests.map((test, key) => (
 							<TestItem
@@ -61,7 +56,7 @@ export const TestsPage: FC<unknown> = () => {
 					) : (
 						<Paragraph>Тестов нет</Paragraph>
 					)}
-				</div>
+				</Stack>
 			</div>
 			{user?.is_admin && (
 				<Panel>

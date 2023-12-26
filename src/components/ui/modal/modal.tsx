@@ -20,7 +20,7 @@ export const Modal: FC<Props> = ({ header, children, footer, closable = false, c
 			<BoxContainer className={cx('modal__container')}>
 				<div className={cx('modal__inner')} ref={ref}>
 					{closable && (
-						<IconButton className={cx('modal__close-btn')} onClick={closeModal}>
+						<IconButton className={cx('modal__close-btn')} zeroSpacing onClick={closeModal}>
 							<Cross size="24" />
 						</IconButton>
 					)}

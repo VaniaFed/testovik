@@ -36,11 +36,6 @@
 		position: absolute;
 		top: 40px;
 		right: 40px;
-
-		@include media-mobile {
-			top: 40px;
-			right: 35px;
-		}
 	}
 
 	&__container {
