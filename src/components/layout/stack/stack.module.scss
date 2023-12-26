@@ -1,0 +1,42 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.stack {
+	display: flex;
+
+	&_direction_column {
+		flex-direction: column;
+	}
+
+	&_direction_row {
+		flex-direction: row;
+	}
+
+	&_gap_9 {
+		gap: 9px;
+	}
+
+	&_gap_12 {
+		gap: 12px;
+	}
+
+	&_gap_18 {
+		gap: 18px;
+	}
+
+	&_gap_24 {
+		gap: 24px;
+	}
+
+	&_gap_30 {
+		gap: 30px;
+	}
+
+	&_align_center {
+		align-items: center;
+	}
+
+	&_justify-content_center {
+		justify-content: center;
+	}
+}
