@@ -21,7 +21,7 @@ All the routes are protected from unauthorized users, so you need to sign in bef
 
 When you are logged in, you will see a list of tests to pass, or edit if you are an admin:
 
-![List of tests](https://github.com/[vaniafed]/[testovik]/blob/[feature/AG-002]/assets/home.png?raw=true)![[Pasted image 20231226045457.png]]
+![List of tests](https://github.com/[vaniafed]/[testovik]/[feature/AG-002]/assets/home.png?raw=true)
 
 ## Authentication
 
