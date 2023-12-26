@@ -14,12 +14,12 @@ import { PlusBold } from '@/components/ui/icons/plus-bold';
 import { Cross } from '@/components/ui/icons/cross';
 import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
-import { useDispatch } from 'react-redux';
 import { getValidationMessage } from '@/components/ui/modal/modal-question/validation';
 import { DragDots } from '@/components/ui/icons/drag-dots';
 import { addQuestion } from '@/reduxjs/modules/tests/actions';
 import { Stack } from '@/components/layout/stack';
 import { Answer } from '@/reduxjs/modules/tests/types';
+import { useAppDispatch } from '@/reduxjs/hooks';
 import styles from './modal-question.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
@@ -96,13 +96,7 @@ export const ModalQuestion: FC<Props> = ({
 		control,
 	});
 
-	console.log(question);
-
-	console.log(questionType);
-
-	console.log(getValues());
-
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 
 	const handleEditQuestion = (formData: FormFields) => {
 		// dispatch(editSingleQuestion(formData));
@@ -112,11 +106,6 @@ export const ModalQuestion: FC<Props> = ({
 	};
 
 	const handleAddQuestion = (formData: FormFields) => {
-		// TODO:
-		// здесь кладем все answers и там, в sagas
-		// post addQuestion
-		// then получаем из res question id
-		// и answers.map(addAnswers /id) по этому id
 		dispatch(
 			addQuestion({
 				question: {
@@ -125,20 +114,14 @@ export const ModalQuestion: FC<Props> = ({
 					answer: formData.answer,
 					answers: formData.answers as Answer[],
 				},
-				testId: testId,
+				testId,
 			}),
 		);
-
-		console.log('adding question to redux...');
-		console.log(formData);
 		close();
 	};
 
 	const onFormSubmit = (formData: FormFields) => {
 		const errorMessage = getValidationMessage(formData, questionType, mode);
-
-		console.log(formData);
-		console.log(errorMessage);
 
 		if (errorMessage) {
 			setFormError(errorMessage);
@@ -160,13 +143,15 @@ export const ModalQuestion: FC<Props> = ({
 					<Button variant="accent" form="question-form">
 						{mode === 'create' ? 'Добавить' : 'Изменить'}
 					</Button>
-					<Button
-						type="button"
-						onClick={() => append({ text: '' })}
-						startIcon={<PlusBold color="white" />}
-						variant="secondary">
-						Добавить ответ
-					</Button>
+					{questionType !== 'number' && (
+						<Button
+							type="button"
+							onClick={() => append({ text: '' })}
+							startIcon={<PlusBold color="white" />}
+							variant="secondary">
+							Добавить ответ
+						</Button>
+					)}
 				</>
 			}
 			closable
@@ -181,54 +166,49 @@ export const ModalQuestion: FC<Props> = ({
 					/>
 				</Field>
 				{questionType === 'number' ? <Label>Ответ</Label> : <Label>Ответы</Label>}
-				<ul>
-					{questionType === 'number' ? (
-						<>
-							<Field id="question-form-number-answer" errMessage={errors.answer?.message}>
-								<Input
-									placeholder="Введите ответ..."
-									id="question-form-number-answer"
-									type="number"
-									{...register(`answer`)}
-								/>
-							</Field>
-						</>
-					) : (
-						<Stack gap="18">
-							{fields.map((field, index) => (
-								<li key={field.id}>
-									<Field
+				{questionType === 'number' ? (
+					<>
+						<Field id="question-form-number-answer" errMessage={errors.answer?.message}>
+							<Input
+								placeholder="Введите ответ..."
+								id="question-form-number-answer"
+								type="number"
+								{...register(`answer`)}
+							/>
+						</Field>
+					</>
+				) : (
+					<Stack gap="18">
+						{fields.map((field, index) => (
+							<li key={field.id}>
+								<Field
+									id={`question-form-answer-${field.id}`}
+									leftContent={
+										<>
+											<IconButton zeroSpacing>
+												<DragDots />
+											</IconButton>
+											<Checkbox {...register(`answers.${index}.is_right`)} checkboxSize="18" />
+										</>
+									}
+									rightContent={
+										getValues().answers!.length > 1 && (
+											<IconButton zeroSpacing onClick={() => remove(index)}>
+												<Cross />
+											</IconButton>
+										)
+									}
+									errMessage={errors.answers && errors.answers[index]?.text?.message}>
+									<Input
+										placeholder="Введите ответ..."
 										id={`question-form-answer-${field.id}`}
-										leftContent={
-											<>
-												<IconButton zeroSpacing>
-													<DragDots />
-												</IconButton>
-												<Checkbox
-													{...register(`answers.${index}.is_right`)}
-													checkboxSize="18"
-												/>
-											</>
-										}
-										rightContent={
-											getValues().answers!.length > 1 && (
-												<IconButton zeroSpacing onClick={() => remove(index)}>
-													<Cross />
-												</IconButton>
-											)
-										}
-										errMessage={errors.answers && errors.answers[index]?.text?.message}>
-										<Input
-											placeholder="Введите ответ..."
-											id={`question-form-answer-${field.id}`}
-											{...register(`answers.${index}.text`)}
-										/>
-									</Field>
-								</li>
-							))}
-						</Stack>
-					)}
-				</ul>
+										{...register(`answers.${index}.text`)}
+									/>
+								</Field>
+							</li>
+						))}
+					</Stack>
+				)}
 			</Form>
 		</Modal>
 	);
