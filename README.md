@@ -1,7 +1,5 @@
 # Testovik
 
----
-
 ## Overview
 
 Testovik is a project for creating and passing tests, developed during the [Salt & Pepper's](https://snp.agency/ru) internship.
@@ -21,9 +19,12 @@ All the routes are protected from unauthorized users, so you need to sign in bef
 
 When you are logged in, you will see a list of tests to pass, or edit if you are an admin:
 
-![List of tests](https://github.com/[vaniafed]/[testovik]/[feature/AG-002]/assets/home.png?raw=true)
-
+![List of tests](/assets/home.png)
 ## Authentication
+
+## Data fetching
+
+## Proxying
 
 ## Getting Started
 
