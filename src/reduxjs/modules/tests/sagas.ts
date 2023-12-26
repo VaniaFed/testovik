@@ -7,6 +7,7 @@ import type {
 	AddQuestionAction,
 	Answer,
 	CreateTestAction,
+	DeleteQuestionAction,
 	FetchAllTestsResponse,
 	FetchTestByIdAction,
 	Question,
@@ -25,6 +26,7 @@ import {
 	addAnswerSuccess,
 	addAnswers,
 	addAnswerError,
+	deleteQuestionSuccess,
 } from '@/reduxjs/modules/tests/actions';
 import { questionApi } from '@/services/question';
 import { answerApi } from '@/services/answer';
@@ -58,7 +60,6 @@ export function* fetchAllTestsSaga() {
 export function* fetchTestByIdSaga(action: FetchTestByIdAction) {
 	yield put(setTestsPending());
 	const id = action.payload;
-
 	try {
 		const res: AxiosResponse<Test> = yield call(testApi.getById, id);
 		yield put(fetchTestByIdSuccess(res.data));
@@ -73,8 +74,20 @@ export function* addQuestionSaga(action: AddQuestionAction) {
 	try {
 		const res: AxiosResponse<Question> = yield call(questionApi.create, question, testId);
 		yield put(addQuestionSuccess(res.data));
-
 		yield put(addAnswers({ answers: question.answers, questionId: res.data.id }));
+	} catch (error) {
+		addQuestionError('Error during adding a question');
+	}
+}
+
+export function* deleteQuestionSaga(action: DeleteQuestionAction) {
+	yield put(setTestsPending());
+	const id = action.payload;
+	try {
+		const res: AxiosResponse<{ status: 'ok' }> = yield call(questionApi.delete, id);
+		if (res.data.status === 'ok') {
+			yield put(deleteQuestionSuccess(id));
+		}
 	} catch (error) {
 		addQuestionError('Error during adding a question');
 	}
@@ -92,7 +105,6 @@ export function* getAnswersDetailsSaga(action: AddAnswersRequest) {
 export function* addAnswersSaga(action: AddAnswersAction) {
 	yield put(setTestsPending());
 	const { answers, questionId } = action.payload;
-
 	try {
 		const responses: AxiosResponse<Answer>[] = yield call(getAnswersDetailsSaga, { answers, questionId });
 		yield all(

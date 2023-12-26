@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { selectCurrentTest } from '@/reduxjs/modules/tests/selectors';
-import { fetchTestById } from '@/reduxjs/modules/tests/actions';
+import { deleteQuestion, fetchTestById } from '@/reduxjs/modules/tests/actions';
 import { Heading } from '@/components/ui/typography/heading';
 import { Label } from '@/components/ui/typography/label';
 import { Panel } from '@/components/ui/panel';
@@ -14,6 +14,7 @@ import { ModalQuestion } from '@/components/ui/modal/modal-question/modal-questi
 import { AnswerItem } from '@/components/ui/answer-item';
 import { Stack } from '@/components/layout/stack';
 import { Divider } from '@/components/ui/divider';
+import { ModalAction } from '@/components/ui/modal/modal-action/modal-action';
 import styles from './test-page.module.scss';
 import type { FC } from 'react';
 import type { Question } from '@/reduxjs/modules/tests/types';
@@ -27,7 +28,17 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 	const [question, setQuestion] = useState<Question | null>(null);
 	const [questionType, setQuestionType] = useState<DropdownItem>(questionTypeDropdownItems[0]);
 
-	const { isModalShown, hideModal, showModal } = useModal(false);
+	const {
+		isModalShown: isModalQuestionShown,
+		hideModal: hideQuestionModal,
+		showModal: showQuestionModal,
+	} = useModal();
+
+	const {
+		isModalShown: isModalDeleteQuestionShown,
+		hideModal: hideDeleteQuestionModal,
+		showModal: showDeleteQuestionModal,
+	} = useModal();
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -41,13 +52,26 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 	const handleAddQuestion = () => {
 		setMode('create');
 		setQuestion(null);
-		showModal();
+		showQuestionModal();
 	};
 
 	const handleEdit = (question: Question) => {
 		setMode('edit');
 		setQuestion(question);
-		showModal();
+		showQuestionModal();
+	};
+
+	const handleShowDeleteQuestionModal = (question: Question) => {
+		setQuestion(question);
+
+		showDeleteQuestionModal();
+	};
+
+	const handleDeleteQuestion = () => {
+		if (question) {
+			dispatch(deleteQuestion(question.id));
+			hideDeleteQuestionModal();
+		}
 	};
 
 	return (
@@ -88,7 +112,9 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 								<Button variant="text_accent" onClick={() => handleEdit(question)}>
 									Редактировать
 								</Button>
-								<Button variant="text_negative">Удалить</Button>
+								<Button variant="text_negative" onClick={() => handleShowDeleteQuestionModal(question)}>
+									Удалить
+								</Button>
 							</Stack>
 						)}
 						<Divider />
@@ -124,13 +150,23 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 					<Button variant="accent">Завершить</Button>
 				</Panel>
 			)}
-			{isModalShown && testMode === 'edit' && (
+			{isModalQuestionShown && testMode === 'edit' && (
 				<ModalQuestion
 					mode={mode}
 					question={question}
 					questionType={questionType.value}
 					testId={Number(id)}
-					close={hideModal}
+					close={hideQuestionModal}
+				/>
+			)}
+			{isModalDeleteQuestionShown && testMode === 'edit' && (
+				<ModalAction
+					title="Удалить вопрос?"
+					subtitle={question?.title as string}
+					actionText="Удалить"
+					primaryButtonVariant="negative"
+					onAction={handleDeleteQuestion}
+					close={hideDeleteQuestionModal}
 				/>
 			)}
 		</div>

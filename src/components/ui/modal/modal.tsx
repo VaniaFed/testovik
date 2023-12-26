@@ -25,7 +25,7 @@ export const Modal: FC<Props> = ({ header, children, footer, closable = false, c
 						</IconButton>
 					)}
 					<header className={cx('modal__header')}>{header}</header>
-					<section className={cx('modal__content')}>{children}</section>
+					{children && <section className={cx('modal__content')}>{children}</section>}
 					<footer className={cx('modal__footer')}>{footer}</footer>
 				</div>
 			</BoxContainer>

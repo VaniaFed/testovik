@@ -46,6 +46,9 @@ export interface AddAnswersRequest {
 
 export type CreateTestAction = PayloadAction<string>;
 
+export type DeleteQuestionAction = PayloadAction<number>;
+export type DeleteQuestionSuccess = PayloadAction<number>;
+
 export type FetchAllTestsSuccess = PayloadAction<FetchAllTestsResponse>;
 
 export type FetchTestByIdAction = PayloadAction<number>;
@@ -55,5 +58,4 @@ export type AddQuestionAction = PayloadAction<AddQuestionRequest>;
 export type AddQuestionSuccess = PayloadAction<Question>;
 
 export type AddAnswersAction = PayloadAction<AddAnswersRequest>;
-
 export type AddAnswerSuccess = PayloadAction<AddAnswerRequest>;

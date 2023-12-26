@@ -1,0 +1,8 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.modal-action {
+	&__header {
+		margin-bottom: 12px;
+	}
+}
