@@ -1,6 +1,15 @@
 import { QuestionType } from '@/reduxjs/modules/tests/types';
 import { PayloadAction } from '@reduxjs/toolkit';
 
+export type ButtonVariant =
+	| 'accent'
+	| 'positive'
+	| 'attention'
+	| 'negative'
+	| 'secondary'
+	| 'text_accent'
+	| 'text_negative';
+
 export interface TestPageParams {
 	params: { id: string };
 }

@@ -73,15 +73,15 @@
 }
 
 @mixin button_negative {
-	background-color: transparent;
-	color: $color-red;
+	background-color: $color-red;
+	color: $color-white;
 
 	&:hover {
-		color: $color-red-hover;
+		background-color: $color-red-hover;
 	}
 
 	&:active {
-		color: $color-red-active;
+		background-color: $color-red-active;
 	}
 }
 
