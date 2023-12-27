@@ -1,13 +1,13 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import type { Pagination } from '@/types/common';
 
+export type QuestionType = 'single' | 'multiple' | 'number';
+
 export interface Answer {
 	readonly id: number;
 	text: string;
 	is_right: boolean;
 }
-
-export type QuestionType = 'single' | 'multiple' | 'number';
 
 export interface Question {
 	readonly id: number;
@@ -29,18 +29,18 @@ export interface FetchAllTestsResponse {
 	meta: Pagination;
 }
 
-export type AddQuestionRequest = {
+export interface AddQuestionRequest {
 	testId: number;
 	question: Omit<Question, 'id'>;
-};
-
-export interface AddAnswerRequest {
-	answer: Answer;
-	questionId: number;
 }
 
 export interface AddAnswersRequest {
 	answers: Answer[];
+	questionId: number;
+}
+
+export interface AddAnswerResponse {
+	answer: Answer;
 	questionId: number;
 }
 
@@ -58,4 +58,4 @@ export type AddQuestionAction = PayloadAction<AddQuestionRequest>;
 export type AddQuestionSuccess = PayloadAction<Question>;
 
 export type AddAnswersAction = PayloadAction<AddAnswersRequest>;
-export type AddAnswerSuccess = PayloadAction<AddAnswerRequest>;
+export type AddAnswersSuccess = PayloadAction<AddAnswerResponse>;

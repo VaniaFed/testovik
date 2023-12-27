@@ -3,7 +3,6 @@ import { testApi } from '@/services/test';
 import type { AxiosResponse } from 'axios';
 import type {
 	AddAnswersAction,
-	AddAnswersRequest,
 	AddQuestionAction,
 	Answer,
 	CreateTestAction,
@@ -93,9 +92,9 @@ export function* deleteQuestionSaga(action: DeleteQuestionAction) {
 	}
 }
 
-export function* getAnswersDetailsSaga(action: AddAnswersRequest) {
+export function* getAnswersDetailsSaga(action: AddAnswersAction) {
 	yield put(setTestsPending());
-	const { answers, questionId } = action;
+	const { answers, questionId } = action.payload;
 	const response: AxiosResponse<Answer> = yield all(
 		answers.map((answer) => call(answerApi.create, answer, questionId)),
 	);
@@ -104,9 +103,10 @@ export function* getAnswersDetailsSaga(action: AddAnswersRequest) {
 
 export function* addAnswersSaga(action: AddAnswersAction) {
 	yield put(setTestsPending());
-	const { answers, questionId } = action.payload;
+	const { questionId } = action.payload;
+
 	try {
-		const responses: AxiosResponse<Answer>[] = yield call(getAnswersDetailsSaga, { answers, questionId });
+		const responses: AxiosResponse<Answer>[] = yield call(getAnswersDetailsSaga, addAnswers(action.payload));
 		yield all(
 			responses.map((res) =>
 				put(
@@ -117,9 +117,6 @@ export function* addAnswersSaga(action: AddAnswersAction) {
 				),
 			),
 		);
-
-		console.log('responses:');
-		console.log(responses);
 	} catch (error) {
 		addAnswerError('Error during adding an answer');
 	}

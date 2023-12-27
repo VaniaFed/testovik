@@ -5,7 +5,7 @@ import type {
 	FetchAllTestsSuccess,
 	AddQuestionSuccess,
 	DeleteQuestionSuccess,
-	AddAnswerSuccess,
+	AddAnswersSuccess,
 } from './types';
 import type { Test } from '@/reduxjs/modules/tests/types';
 import type { Pagination } from '@/types/common';
@@ -83,7 +83,7 @@ export const testsSlice = createSlice({
 			state.error = action.payload;
 		},
 
-		addAnswerSuccess(state, action: AddAnswerSuccess) {
+		addAnswerSuccess(state, action: AddAnswersSuccess) {
 			const { answer, questionId } = action.payload;
 			state.current?.questions.find((question) => question.id === questionId)?.answers.push(answer);
 		},

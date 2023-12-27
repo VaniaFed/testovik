@@ -39,13 +39,6 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 		hideModal: hideDeleteQuestionModal,
 		showModal: showDeleteQuestionModal,
 	} = useModal();
-	const dispatch = useAppDispatch();
-
-	useEffect(() => {
-		if (id) {
-			dispatch(fetchTestById(Number(id)));
-		}
-	}, [dispatch, id]);
 
 	const test = useAppSelector(selectCurrentTest);
 
@@ -67,12 +60,20 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 		showDeleteQuestionModal();
 	};
 
+	const dispatch = useAppDispatch();
+
 	const handleDeleteQuestion = () => {
 		if (question) {
 			dispatch(deleteQuestion(question.id));
 			hideDeleteQuestionModal();
 		}
 	};
+
+	useEffect(() => {
+		if (id) {
+			dispatch(fetchTestById(Number(id)));
+		}
+	}, [dispatch, id]);
 
 	return (
 		<div className={cx('test-page', className)}>
@@ -95,7 +96,7 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 							<Stack gap="18" className={cx('question-list__answers')}>
 								{question.answers.map((answer, index) => (
 									<AnswerItem
-										value={answer.text}
+										defaultValue={answer.text}
 										isRight={answer.is_right}
 										key={index}
 										readOnly={testMode === 'edit'}
@@ -103,7 +104,12 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 								))}
 							</Stack>
 						) : typeof question.answer === 'number' ? (
-							<AnswerItem value={question.answer} isRight key={index} readOnly={testMode === 'edit'} />
+							<AnswerItem
+								defaultValue={question.answer}
+								isRight
+								key={index}
+								readOnly={testMode === 'edit'}
+							/>
 						) : (
 							<Label>Ответов пока нет</Label>
 						)}
