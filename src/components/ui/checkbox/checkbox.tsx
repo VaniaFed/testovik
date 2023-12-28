@@ -11,7 +11,7 @@ export const Checkbox = forwardRef<HTMLInputElement, Props>(
 	({ children, checked, checkboxSize = '24', ...rest }, ref) => {
 		return (
 			<label className={cx('checkbox')}>
-				<input className={cx('checkbox__input')} checked={checked} type="checkbox" {...rest} ref={ref} />
+				<input type="checkbox" className={cx('checkbox__input')} checked={checked} {...rest} ref={ref} />
 				<span
 					className={cx(
 						'fake-control',
