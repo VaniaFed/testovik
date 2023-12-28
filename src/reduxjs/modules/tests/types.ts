@@ -30,12 +30,13 @@ export interface FetchAllTestsResponse {
 }
 
 export interface AddQuestionRequest {
-	testId: number;
 	question: Omit<Question, 'id'>;
+	testId: number;
 }
 
 export interface EditQuestionRequest {
-	question: Question;
+	question: Omit<Question, 'id'>;
+	questionId: number;
 }
 
 export interface EditQuestionResponse {
@@ -68,5 +69,5 @@ export type AddQuestionSuccess = PayloadAction<Question>;
 export type AddAnswersAction = PayloadAction<AddAnswersRequest>;
 export type AddAnswersSuccess = PayloadAction<AddAnswerResponse>;
 
-export type EditQuestionAction = PayloadAction<Question>;
+export type EditQuestionAction = PayloadAction<EditQuestionRequest>;
 export type EditQuestionSuccess = PayloadAction<Question>;

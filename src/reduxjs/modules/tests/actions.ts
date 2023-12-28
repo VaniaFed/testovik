@@ -1,4 +1,4 @@
-import { AddAnswersRequest, AddQuestionRequest, Question } from '@/reduxjs/modules/tests/types';
+import { AddAnswersRequest, AddQuestionRequest, EditQuestionRequest, Question } from '@/reduxjs/modules/tests/types';
 import { testsSlice } from './reducer';
 import { createAction } from '@reduxjs/toolkit';
 
@@ -15,7 +15,7 @@ export const fetchAllTests = createAction(FETCH_ALL_TESTS);
 export const fetchTestById = createAction<number>(FETCH_TEST_BY_ID);
 export const addQuestion = createAction<AddQuestionRequest>(ADD_QUESTION);
 export const deleteQuestion = createAction<number>(DELETE_QUESTION);
-export const editQuestion = createAction<Question>(EDIT_QUESTION);
+export const editQuestion = createAction<EditQuestionRequest>(EDIT_QUESTION);
 export const addAnswers = createAction<AddAnswersRequest>(ADD_ANSWERS);
 
 export const {

@@ -95,11 +95,13 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 		dispatch(
 			editQuestion({
-				id: question.id,
-				title: formData.question,
-				answer: formData.answer,
-				answers: formData.answers as Answer[],
-				question_type: questionType,
+				question: {
+					title: formData.question,
+					answer: formData.answer,
+					answers: formData.answers as Answer[],
+					question_type: questionType,
+				},
+				questionId: question.id,
 			}),
 		);
 		console.log('editing question in redux...');

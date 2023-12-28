@@ -96,10 +96,10 @@ export function* deleteQuestionSaga(action: DeleteQuestionAction) {
 
 export function* editQuestionSaga(action: EditQuestionAction) {
 	yield put(setTestsPending());
-	const question = action.payload;
+	const { question, questionId } = action.payload;
 
 	try {
-		const res: AxiosResponse<Question> = yield call(questionApi.patch, question, question.id);
+		const res: AxiosResponse<Question> = yield call(questionApi.patch, question, questionId);
 		yield put(editQuestionSuccess(res.data));
 	} catch (error) {
 		addQuestionError('Error during adding a question');
