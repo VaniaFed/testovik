@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
+import React from 'react';
 import classNames from 'classnames/bind';
 import { Modal } from '@/components/ui/modal/modal';
 import { Heading } from '@/components/ui/typography/heading';
@@ -14,42 +11,16 @@ import { PlusBold } from '@/components/ui/icons/plus-bold';
 import { Cross } from '@/components/ui/icons/cross';
 import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
-import { getValidationMessage } from '@/components/ui/modal/modal-question/validation';
 import { DragDots } from '@/components/ui/icons/drag-dots';
-import { addQuestion, editQuestion } from '@/reduxjs/modules/tests/actions';
 import { Stack } from '@/components/layout/stack';
-import { Answer } from '@/reduxjs/modules/tests/types';
-import { useAppDispatch } from '@/reduxjs/hooks';
+import { useModalQuestionForm } from '@/components/ui/modal/modal-question/use-modal-question-form';
 import styles from './modal-question.module.scss';
 import type { FC } from 'react';
-import type { Props } from './props';
+import type { ModalQuestionProps } from './props';
 
 const cx = classNames.bind(styles);
 
-const schema = yup
-	.object({
-		question: yup
-			.string()
-			.min(3, 'Поле слишком короткое')
-			.max(90, 'Поле слишком длинное')
-			.required('Это обязательное поле'),
-		answers: yup.array().of(
-			yup.object({
-				text: yup
-					.string()
-					.min(1, 'Поле слишком короткое')
-					.max(90, 'Поле слишком длинное')
-					.required('Это обязательное поле'),
-				is_right: yup.boolean(),
-			}),
-		),
-		answer: yup.number(),
-	})
-	.required();
-
-export interface FormFields extends yup.InferType<typeof schema> {}
-
-export const ModalQuestion: FC<Props> = ({
+export const ModalQuestion: FC<ModalQuestionProps> = ({
 	mode,
 	question,
 	questionType: tempQuestionType,
@@ -57,92 +28,16 @@ export const ModalQuestion: FC<Props> = ({
 	close,
 	className,
 }) => {
-	const [formError, setFormError] = useState('');
-
 	const questionType = question?.question_type || tempQuestionType;
 
-	const getAnswersDefaultValues = () => {
-		return questionType === 'number'
-			? []
-			: question?.answers && question.answers.length > 0
-				? question?.answers
-				: [
-						{
-							text: '',
-							is_right: false,
-						},
-					];
-	};
-
-	const defaultValues = {
-		question: mode === 'edit' ? question?.title : '',
-		answer: question?.answer || 0,
-		answers: getAnswersDefaultValues(),
-	};
-
-	const {
-		register,
-		handleSubmit,
-		getValues,
-		formState: { errors },
-		control,
-	} = useForm<FormFields>({
-		resolver: yupResolver<FormFields>(schema),
-		defaultValues,
-	});
-
-	const { fields, append, remove } = useFieldArray({
-		name: 'answers',
-		control,
-	});
-
-	const dispatch = useAppDispatch();
-
-	const handleEditQuestion = (formData: FormFields) => {
-		if (!question) {
-			return;
-		}
-
-		dispatch(
-			editQuestion({
-				id: question.id,
-				title: formData.question,
-				answer: formData.answer,
-				answers: formData.answers as Answer[],
-				question_type: questionType,
-			}),
-		);
-		console.log('editing question in redux...');
-		console.log(formData);
-		close();
-	};
-
-	const handleAddQuestion = (formData: FormFields) => {
-		dispatch(
-			addQuestion({
-				question: {
-					title: formData.question,
-					question_type: questionType,
-					answer: formData.answer,
-					answers: formData.answers as Answer[],
-				},
-				testId,
-			}),
-		);
-		close();
-	};
-
-	const onFormSubmit = (formData: FormFields) => {
-		const errorMessage = getValidationMessage(formData, questionType, mode);
-
-		if (errorMessage) {
-			setFormError(errorMessage);
-		} else if (mode === 'create') {
-			handleAddQuestion(formData);
-		} else if (mode === 'edit') {
-			handleEditQuestion(formData);
-		}
-	};
+	const { register, append, remove, getValues, onFormSubmit, handleSubmit, fields, formError, errors } =
+		useModalQuestionForm({
+			mode,
+			question,
+			questionType,
+			testId,
+			close,
+		});
 
 	const headerTitle = mode === 'create' ? 'Добавить вопрос' : 'Редактирование вопроса';
 
