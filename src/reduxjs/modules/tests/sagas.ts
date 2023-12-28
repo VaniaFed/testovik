@@ -7,6 +7,7 @@ import type {
 	Answer,
 	CreateTestAction,
 	DeleteQuestionAction,
+	EditQuestionAction,
 	FetchAllTestsResponse,
 	FetchTestByIdAction,
 	Question,
@@ -26,6 +27,7 @@ import {
 	addAnswers,
 	addAnswerError,
 	deleteQuestionSuccess,
+	editQuestionSuccess,
 } from '@/reduxjs/modules/tests/actions';
 import { questionApi } from '@/services/question';
 import { answerApi } from '@/services/answer';
@@ -87,6 +89,18 @@ export function* deleteQuestionSaga(action: DeleteQuestionAction) {
 		if (res.data.status === 'ok') {
 			yield put(deleteQuestionSuccess(id));
 		}
+	} catch (error) {
+		addQuestionError('Error during adding a question');
+	}
+}
+
+export function* editQuestionSaga(action: EditQuestionAction) {
+	yield put(setTestsPending());
+	const question = action.payload;
+
+	try {
+		const res: AxiosResponse<Question> = yield call(questionApi.patch, question, question.id);
+		yield put(editQuestionSuccess(res.data));
 	} catch (error) {
 		addQuestionError('Error during adding a question');
 	}

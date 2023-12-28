@@ -16,7 +16,7 @@ import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
 import { getValidationMessage } from '@/components/ui/modal/modal-question/validation';
 import { DragDots } from '@/components/ui/icons/drag-dots';
-import { addQuestion } from '@/reduxjs/modules/tests/actions';
+import { addQuestion, editQuestion } from '@/reduxjs/modules/tests/actions';
 import { Stack } from '@/components/layout/stack';
 import { Answer } from '@/reduxjs/modules/tests/types';
 import { useAppDispatch } from '@/reduxjs/hooks';
@@ -62,16 +62,16 @@ export const ModalQuestion: FC<Props> = ({
 	const questionType = question?.question_type || tempQuestionType;
 
 	const getAnswersDefaultValues = () => {
-		return questionType !== 'number'
-			? question?.answers && question.answers.length > 0
+		return questionType === 'number'
+			? []
+			: question?.answers && question.answers.length > 0
 				? question?.answers
 				: [
 						{
-							answer: '',
+							text: '',
 							is_right: false,
 						},
-					]
-			: [];
+					];
 	};
 
 	const defaultValues = {
@@ -99,7 +99,19 @@ export const ModalQuestion: FC<Props> = ({
 	const dispatch = useAppDispatch();
 
 	const handleEditQuestion = (formData: FormFields) => {
-		// dispatch(editSingleQuestion(formData));
+		if (!question) {
+			return;
+		}
+
+		dispatch(
+			editQuestion({
+				id: question.id,
+				title: formData.question,
+				answer: formData.answer,
+				answers: formData.answers as Answer[],
+				question_type: questionType,
+			}),
+		);
 		console.log('editing question in redux...');
 		console.log(formData);
 		close();

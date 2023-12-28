@@ -6,10 +6,12 @@ import type {
 	AddQuestionSuccess,
 	DeleteQuestionSuccess,
 	AddAnswersSuccess,
+	EditQuestionSuccess,
 } from './types';
 import type { Test } from '@/reduxjs/modules/tests/types';
 import type { Pagination } from '@/types/common';
 import type { Status } from '@/types/auth';
+import { findIndexById } from '@/utils/find-index-by-id';
 
 export interface TestsState {
 	list: Test[];
@@ -36,6 +38,10 @@ export const testsSlice = createSlice({
 	reducers: {
 		setTestsPending(state) {
 			state.status = 'PENDING';
+		},
+
+		setTestsError(state, action: ActionError) {
+			state.error = action.payload;
 		},
 
 		createTestSuccess(state, action) {
@@ -72,12 +78,18 @@ export const testsSlice = createSlice({
 		addQuestionError(state, action: ActionError) {
 			state.error = action.payload;
 		},
+		editQuestionSuccess(state, action: EditQuestionSuccess) {
+			if (state.current) {
+				const indexToUpdate = findIndexById(state.current?.questions, action.payload.id);
+				state.current.questions[indexToUpdate] = action.payload;
+			}
+		},
 
 		deleteQuestionSuccess(state, action: DeleteQuestionSuccess) {
-			const indexToDelete = state.current?.questions.findIndex(
-				(question) => question.id === action.payload,
-			) as number;
-			state.current?.questions.splice(indexToDelete, 1);
+			if (state.current) {
+				const indexToDelete = findIndexById(state.current.questions, action.payload) as number;
+				state.current?.questions.splice(indexToDelete, 1);
+			}
 		},
 		deleteQuestionError(state, action: ActionError) {
 			state.error = action.payload;

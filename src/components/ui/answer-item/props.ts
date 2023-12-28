@@ -6,4 +6,5 @@ export interface Props extends InputHTMLAttributes<HTMLInputElement> {
 	isRight?: boolean;
 	isWrong?: boolean;
 	unanswered?: boolean;
+	value?: string | number | boolean;
 }

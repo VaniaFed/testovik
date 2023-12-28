@@ -96,7 +96,7 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 							<Stack gap="18" className={cx('question-list__answers')}>
 								{question.answers.map((answer, index) => (
 									<AnswerItem
-										defaultValue={answer.text}
+										value={answer.text}
 										isRight={answer.is_right}
 										key={index}
 										readOnly={testMode === 'edit'}
@@ -104,12 +104,7 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 								))}
 							</Stack>
 						) : typeof question.answer === 'number' ? (
-							<AnswerItem
-								defaultValue={question.answer}
-								isRight
-								key={index}
-								readOnly={testMode === 'edit'}
-							/>
+							<AnswerItem value={question.answer} isRight key={index} readOnly={testMode === 'edit'} />
 						) : (
 							<Label>Ответов пока нет</Label>
 						)}

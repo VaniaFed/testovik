@@ -34,14 +34,22 @@ export interface AddQuestionRequest {
 	question: Omit<Question, 'id'>;
 }
 
+export interface EditQuestionRequest {
+	question: Question;
+}
+
+export interface EditQuestionResponse {
+	question: Question;
+}
+
 export interface AddAnswersRequest {
-	answers: Answer[];
 	questionId: number;
+	answers: Answer[];
 }
 
 export interface AddAnswerResponse {
-	answer: Answer;
 	questionId: number;
+	answer: Answer;
 }
 
 export type CreateTestAction = PayloadAction<string>;
@@ -59,3 +67,6 @@ export type AddQuestionSuccess = PayloadAction<Question>;
 
 export type AddAnswersAction = PayloadAction<AddAnswersRequest>;
 export type AddAnswersSuccess = PayloadAction<AddAnswerResponse>;
+
+export type EditQuestionAction = PayloadAction<Question>;
+export type EditQuestionSuccess = PayloadAction<Question>;
