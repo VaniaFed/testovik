@@ -1,5 +1,5 @@
+import type { Question, QuestionType } from '@/reduxjs/modules/tests';
 import type { ModalMode } from '@/types/common';
-import type { Question, QuestionType } from '@/reduxjs/modules/tests/types';
 
 export interface ModalQuestionProps {
 	mode: ModalMode;

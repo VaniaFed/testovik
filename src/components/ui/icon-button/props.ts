@@ -1,5 +1,5 @@
-import { ButtonVariant } from '@/components/ui/button/props';
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
+import type { ButtonVariant } from '@/types/common';
 
 export interface Props extends HTMLAttributes<HTMLButtonElement> {
 	variant?: Omit<ButtonVariant, 'secondary'>;

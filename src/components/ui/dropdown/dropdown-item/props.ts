@@ -1,5 +1,5 @@
-import { QuestionType } from '@/reduxjs/modules/tests/types';
-import { DropdownItem } from '@/types/common';
+import type { QuestionType } from '@/reduxjs/modules/tests';
+import type { DropdownItem } from '@/types/common';
 
 export interface Props {
 	label: string;

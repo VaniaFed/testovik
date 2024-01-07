@@ -1,18 +1,13 @@
 'use client';
-
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
-
 import { Form } from '@/components/ui/form';
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { useCustomForm } from '@/hooks/use-custom-form';
-
-import { signIn } from '@/reduxjs/modules/auth/actions';
+import { signIn, selectAuthStatus, selectUser } from '@/reduxjs/modules/auth';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import { selectAuthStatus, selectUser } from '@/reduxjs/modules/auth/selectors';
-
 import type { FC } from 'react';
 
 export const SignInForm: FC<unknown> = () => {

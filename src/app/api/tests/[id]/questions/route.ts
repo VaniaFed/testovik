@@ -1,11 +1,11 @@
-import { AddQuestionRequest } from '@/reduxjs/modules/tests/types';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import { axiosSnp } from '@/utils/axios';
 import { SESSION_ID_COOKIE } from '@/constants';
+import type { Question } from '@/reduxjs/modules/tests';
 
 export async function POST(req: NextRequest, { params }: { params: { id: number } }) {
-	const question: AddQuestionRequest = await req.json();
+	const question: Question = await req.json();
 	const cookie = cookies().get(SESSION_ID_COOKIE);
 	const { id: testId } = params;
 
@@ -16,5 +16,5 @@ export async function POST(req: NextRequest, { params }: { params: { id: number 
 	});
 
 	const { data, status } = response;
-	return NextResponse.json(data, { status });
+	return NextResponse.json({ question: data }, { status });
 }

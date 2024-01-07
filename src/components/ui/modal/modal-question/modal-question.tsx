@@ -15,7 +15,7 @@ import { DragDots } from '@/components/ui/icons/drag-dots';
 import { Stack } from '@/components/layout/stack';
 import { useModalQuestionForm } from '@/components/ui/modal/modal-question/use-modal-question-form';
 import styles from './modal-question.module.scss';
-import type { FC } from 'react';
+import type { ChangeEvent, FC } from 'react';
 import type { ModalQuestionProps } from './props';
 
 const cx = classNames.bind(styles);
@@ -30,20 +30,34 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 }) => {
 	const questionType = question?.question_type || tempQuestionType;
 
-	const { register, append, remove, getValues, onFormSubmit, handleSubmit, fields, formError, errors } =
-		useModalQuestionForm({
-			mode,
-			question,
-			questionType,
-			testId,
-			close,
-		});
+	const {
+		register,
+		append,
+		remove,
+		update,
+		getValues,
+		onFormSubmit,
+		handleSubmit,
+		handleSetAnswersToUpdate,
+		handleSetAnswersToDelete,
+		fields,
+		formError,
+		errors,
+	} = useModalQuestionForm({
+		mode,
+		question,
+		questionType,
+		testId,
+		close,
+	});
 
 	const headerTitle = mode === 'create' ? 'Добавить вопрос' : 'Редактирование вопроса';
 
 	return (
 		<Modal
 			className={cx('modal-question', className)}
+			closable
+			closeModal={close}
 			header={<Heading size="1">{headerTitle}</Heading>}
 			footer={
 				<>
@@ -60,9 +74,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 						</Button>
 					)}
 				</>
-			}
-			closable
-			closeModal={close}>
+			}>
 			<Form id="question-form" onSubmit={handleSubmit(onFormSubmit)} formError={formError}>
 				<Field id="question-form-question" label="Вопрос" errMessage={errors.question?.message}>
 					<Input
@@ -95,12 +107,42 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 											<IconButton zeroSpacing>
 												<DragDots />
 											</IconButton>
-											<Checkbox {...register(`answers.${index}.is_right`)} checkboxSize="18" />
+											<Checkbox
+												{...register(`answers.${index}.is_right`, {
+													onChange:
+														mode === 'edit'
+															? (e: ChangeEvent) => {
+																	const isRight = (e.target as HTMLInputElement)
+																		.checked;
+																	handleSetAnswersToUpdate({
+																		id: field.answerId as number,
+																		is_right: isRight,
+																		text: field.text,
+																	});
+																	// TODO: setValue instead?
+
+																	update(index, {
+																		answerId: field.answerId,
+																		text: field.text,
+																		is_right: isRight,
+																	});
+																}
+															: () => {},
+												})}
+												checkboxSize="18"
+											/>
 										</>
 									}
 									rightContent={
 										getValues().answers!.length > 1 && (
-											<IconButton zeroSpacing onClick={() => remove(index)}>
+											<IconButton
+												zeroSpacing
+												onClick={() => {
+													remove(index);
+													if (field.answerId && mode === 'edit') {
+														handleSetAnswersToDelete(field.answerId);
+													}
+												}}>
 												<Cross />
 											</IconButton>
 										)
@@ -109,7 +151,26 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 									<Input
 										placeholder="Введите ответ..."
 										id={`question-form-answer-${field.id}`}
-										{...register(`answers.${index}.text`)}
+										{...register(`answers.${index}.text`, {
+											onBlur:
+												mode === 'edit'
+													? (e: FocusEvent) => {
+															const value = (e.target as HTMLInputElement).value;
+															if (field.text !== value) {
+																handleSetAnswersToUpdate({
+																	id: field.answerId as number,
+																	is_right: field.is_right as boolean,
+																	text: value,
+																});
+																update(index, {
+																	answerId: field.answerId,
+																	text: value,
+																	is_right: field.is_right,
+																});
+															}
+														}
+													: () => {},
+										})}
 									/>
 								</Field>
 							</li>

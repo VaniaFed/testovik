@@ -1,12 +1,16 @@
 import { axiosProxy } from '@/utils/axios';
-import { Question } from '@/reduxjs/modules/tests/types';
-
-type CreateQuestionRequest = Pick<Question, 'title' | 'question_type' | 'answer'>;
-type PatchQuestionRequest = Partial<Question>;
+import type {
+	CreateQuestionSuccessPayload,
+	CreateQuestionPayload,
+	DeleteQuestionPayload,
+	UpdateQuestionPayload,
+	UpdateQuestionSuccessPayload,
+} from '@/reduxjs/modules/tests';
 
 export const questionApi = {
-	create: async (data: CreateQuestionRequest, testId: number) =>
-		await axiosProxy.post(`/tests/${testId}/questions`, data),
-	patch: async (data: PatchQuestionRequest, id: number) => await axiosProxy.patch(`/questions/${id}`, data),
-	delete: async (id: number) => await axiosProxy.delete(`/questions/${id}`),
+	create: async ({ question, testId }: CreateQuestionPayload) =>
+		await axiosProxy.post<CreateQuestionSuccessPayload>(`/tests/${testId}/questions`, question),
+	patch: async ({ question }: UpdateQuestionPayload) =>
+		await axiosProxy.patch<UpdateQuestionSuccessPayload>(`/questions/${question.id}`, question),
+	delete: async ({ id }: DeleteQuestionPayload) => await axiosProxy.delete(`/questions/${id}`),
 };

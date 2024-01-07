@@ -13,5 +13,5 @@ export async function GET(req: NextRequest, { params }: { params: { id: number }
 	});
 
 	const { data, status } = apiResponse;
-	return NextResponse.json(data, { status });
+	return NextResponse.json({ test: data }, { status });
 }

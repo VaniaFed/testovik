@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { SignInRequest, SignUpRequest } from '@/reduxjs/modules/auth/types';
+import { SignInRequest, SignUpRequest } from '@/reduxjs/modules/auth';
 import { useState } from 'react';
 
 export const useCustomForm = (schema: yup.ObjectShape) => {

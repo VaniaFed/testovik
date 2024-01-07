@@ -1,29 +1,23 @@
+import { findIndexById } from './../../../utils/redux-helpers';
 import { createSlice } from '@reduxjs/toolkit';
-import type { ActionError } from './../../../types/common';
+import { deleteById, updateById } from '@/utils/redux-helpers';
+import type { ActionError } from '@/types/common';
 import type {
+	CreateTestSuccess,
 	FetchTestByIdSuccess,
 	FetchAllTestsSuccess,
-	AddQuestionSuccess,
+	CreateQuestionSuccess,
+	UpdateQuestionSuccess,
 	DeleteQuestionSuccess,
-	AddAnswersSuccess,
-	EditQuestionSuccess,
+	CreateAnswersSuccess,
+	UpdateAnswersSuccess,
+	DeleteAnswersSuccess,
+	TestsState,
 } from './types';
-import type { Test } from '@/reduxjs/modules/tests/types';
-import type { Pagination } from '@/types/common';
-import type { Status } from '@/types/auth';
-import { findIndexById } from '@/utils/find-index-by-id';
-
-export interface TestsState {
-	list: Test[];
-	current: Test | null | undefined;
-	pagination: Pagination;
-	status: Status;
-	error: string | null;
-}
 
 const initialState: TestsState = {
 	list: [],
-	current: undefined,
+	currentTest: undefined,
 	pagination: {
 		total_count: 0,
 		total_pages: 0,
@@ -36,21 +30,18 @@ export const testsSlice = createSlice({
 	name: 'tests',
 	initialState,
 	reducers: {
-		setTestsPending(state) {
+		setPending(state) {
 			state.status = 'PENDING';
 		},
 
-		setTestsError(state, action: ActionError) {
-			state.error = action.payload;
-		},
-
-		createTestSuccess(state, action) {
-			state.list.push(action.payload);
-			state.status = 'SUCCEEDED';
-		},
-		createTestError(state, action) {
+		setError(state, action: ActionError) {
 			state.error = action.payload;
 			state.status = 'FAILED';
+		},
+
+		createTestSuccess(state, action: CreateTestSuccess) {
+			state.list.push(action.payload.test);
+			state.status = 'SUCCEEDED';
 		},
 
 		fetchAllTestsSuccess(state, action: FetchAllTestsSuccess) {
@@ -58,51 +49,54 @@ export const testsSlice = createSlice({
 			state.pagination = action.payload.meta;
 			state.status = 'SUCCEEDED';
 		},
-		fetchAllTestsError(state, action: ActionError) {
-			state.error = action.payload;
-			state.status = 'FAILED';
-		},
 
 		fetchTestByIdSuccess(state, action: FetchTestByIdSuccess) {
-			state.current = action.payload;
+			state.currentTest = action.payload.test;
 			state.status = 'SUCCEEDED';
 		},
-		fetchTestByIdError(state, action: ActionError) {
-			state.error = action.payload;
-			state.status = 'FAILED';
+
+		createQuestionSuccess(state, action: CreateQuestionSuccess) {
+			state.currentTest?.questions.push(action.payload.question);
+			state.status = 'SUCCEEDED';
 		},
 
-		addQuestionSuccess(state, action: AddQuestionSuccess) {
-			state.current?.questions.push(action.payload);
-		},
-		addQuestionError(state, action: ActionError) {
-			state.error = action.payload;
-		},
-		editQuestionSuccess(state, action: EditQuestionSuccess) {
-			if (state.current) {
-				const indexToUpdate = findIndexById(state.current?.questions, action.payload.id);
-				state.current.questions[indexToUpdate] = action.payload;
+		updateQuestionSuccess(state, action: UpdateQuestionSuccess) {
+			const { question } = action.payload;
+			if (state.currentTest) {
+				updateById(state.currentTest.questions, question.id, question);
+				state.status = 'SUCCEEDED';
 			}
 		},
 
 		deleteQuestionSuccess(state, action: DeleteQuestionSuccess) {
-			if (state.current) {
-				const indexToDelete = findIndexById(state.current.questions, action.payload) as number;
-				state.current?.questions.splice(indexToDelete, 1);
+			if (state.currentTest) {
+				deleteById(state.currentTest.questions, action.payload.id);
+				state.status = 'SUCCEEDED';
 			}
 		},
-		deleteQuestionError(state, action: ActionError) {
-			state.error = action.payload;
+
+		createAnswerSuccess(state, action: CreateAnswersSuccess) {
+			const { answer, questionId } = action.payload;
+			state.currentTest?.questions.find((question) => question.id === questionId)?.answers.push(answer);
+			state.status = 'SUCCEEDED';
 		},
 
-		addAnswerSuccess(state, action: AddAnswersSuccess) {
+		updateAnswerSuccess(state, action: UpdateAnswersSuccess) {
 			const { answer, questionId } = action.payload;
-			state.current?.questions.find((question) => question.id === questionId)?.answers.push(answer);
+			if (state.currentTest) {
+				const targetQuestionId = findIndexById(state.currentTest.questions, questionId);
+				updateById(state.currentTest.questions[targetQuestionId].answers, answer.id, answer);
+			}
 		},
-		addAnswerError(state, action: ActionError) {
-			state.error = action.payload;
+
+		deleteAnswerSuccess(state, action: DeleteAnswersSuccess) {
+			const { id, questionId } = action.payload;
+			if (state.currentTest) {
+				const targetQuestionId = findIndexById(state.currentTest.questions, questionId);
+				deleteById(state.currentTest.questions[targetQuestionId].answers, id);
+			}
 		},
 	},
 });
 
-export default testsSlice.reducer;
+export const reducer = testsSlice.reducer;

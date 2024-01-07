@@ -1,20 +1,15 @@
 'use client';
-
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import * as yup from 'yup';
-
 import { Form } from '@/components/ui/form';
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Paragraph } from '@/components/ui/typography/paragraph';
 import { useCustomForm } from '@/hooks/use-custom-form';
-
-import { signUp } from '@/reduxjs/modules/auth/actions';
+import { signUp, selectAuthStatus, selectUser } from '@/reduxjs/modules/auth';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import { selectAuthStatus, selectUser } from '@/reduxjs/modules/auth/selectors';
-
 import type { FC } from 'react';
 
 export const SignUpForm: FC<unknown> = () => {
@@ -72,8 +67,7 @@ export const SignUpForm: FC<unknown> = () => {
 				id="form-password-confirmation"
 				label="Подтвердите пароль"
 				required
-				errMessage={errors.password_confirmation?.message as string}
-			>
+				errMessage={errors.password_confirmation?.message as string}>
 				<Input
 					id="form-password-confirmation"
 					type="password"

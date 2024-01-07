@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import { selectCurrentTest } from '@/reduxjs/modules/tests/selectors';
-import { deleteQuestion, fetchTestById } from '@/reduxjs/modules/tests/actions';
+import { fetchTestById, deleteQuestion, selectCurrentTest } from '@/reduxjs/modules/tests';
 import { Heading } from '@/components/ui/typography/heading';
 import { Label } from '@/components/ui/typography/label';
 import { Panel } from '@/components/ui/panel';
@@ -17,7 +16,7 @@ import { Divider } from '@/components/ui/divider';
 import { ModalAction } from '@/components/ui/modal/modal-action/modal-action';
 import styles from './test-page.module.scss';
 import type { FC } from 'react';
-import type { Question } from '@/reduxjs/modules/tests/types';
+import type { Question } from '@/reduxjs/modules/tests';
 import type { DropdownItem } from '@/types/common';
 import type { Props } from './props';
 
@@ -64,14 +63,14 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 
 	const handleDeleteQuestion = () => {
 		if (question) {
-			dispatch(deleteQuestion(question.id));
+			dispatch(deleteQuestion({ id: question.id }));
 			hideDeleteQuestionModal();
 		}
 	};
 
 	useEffect(() => {
 		if (id) {
-			dispatch(fetchTestById(Number(id)));
+			dispatch(fetchTestById({ id: Number(id) }));
 		}
 	}, [dispatch, id]);
 
@@ -92,7 +91,7 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 						<Heading size="3" className={cx('question-list__heading')}>
 							{question.title}
 						</Heading>
-						{question.answers.length > 0 ? (
+						{question.answers.length ? (
 							<Stack gap="18" className={cx('question-list__answers')}>
 								{question.answers.map((answer, index) => (
 									<AnswerItem
@@ -103,7 +102,7 @@ export const TestPage: FC<Props> = ({ params: { id }, testMode, className }) => 
 									/>
 								))}
 							</Stack>
-						) : typeof question.answer === 'number' ? (
+						) : question.question_type === 'number' ? (
 							<AnswerItem value={question.answer} isRight key={index} readOnly={testMode === 'edit'} />
 						) : (
 							<Label>Ответов пока нет</Label>

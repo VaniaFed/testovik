@@ -1,5 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import type { Pagination } from '@/types/common';
+import type { Pagination, Status } from '@/types/common';
 
 export type QuestionType = 'single' | 'multiple' | 'number';
 
@@ -24,50 +24,138 @@ export interface Test {
 	questions: Question[];
 }
 
-export interface FetchAllTestsResponse {
+export interface TestsState {
+	list: Test[];
+	currentTest: Test | null | undefined;
+	pagination: Pagination;
+	status: Status;
+	error: string | null;
+}
+
+export interface CreateTestPayload {
+	title: string;
+}
+
+export interface CreateTestSuccessPayload {
+	test: Test;
+}
+
+export interface FetchAllTestsSuccessPayload {
 	tests: Test[];
 	meta: Pagination;
 }
 
-export interface AddQuestionRequest {
-	question: Omit<Question, 'id'>;
+export interface FetchTestByIdPayload {
+	id: number;
+}
+
+export interface FetchTestByIdSuccessPayload {
+	test: Test;
+}
+
+export interface CreateQuestionPayload {
 	testId: number;
-}
-
-export interface EditQuestionRequest {
 	question: Omit<Question, 'id'>;
-	questionId: number;
 }
 
-export interface EditQuestionResponse {
+export interface CreateQuestionSuccessPayload {
 	question: Question;
 }
 
-export interface AddAnswersRequest {
-	questionId: number;
-	answers: Answer[];
+export interface UpdateQuestionPayload {
+	question: Omit<Question, 'answers'>;
+	answersToAdd: Omit<Answer, 'id'>[];
+	answersToUpdate: Answer[];
+	answersToDelete: number[];
+	answersToMove?: MoveAnswerPosition[];
 }
 
-export interface AddAnswerResponse {
+export interface UpdateQuestionSuccessPayload {
+	question: Omit<Question, 'answers'>;
+}
+
+export interface DeleteQuestionPayload {
+	id: number;
+}
+
+export interface DeleteQuestionSuccessPayload extends DeleteQuestionPayload {}
+
+export interface CreateAnswersPayload {
+	questionId: number;
+	answers: Omit<Answer, 'id'>[];
+}
+
+export interface CreateAnswerPayload {
+	questionId: number;
+	answer: Omit<Answer, 'id'>;
+}
+
+export interface CreateAnswersSuccessPayload {
 	questionId: number;
 	answer: Answer;
 }
 
-export type CreateTestAction = PayloadAction<string>;
+export interface UpdateAnswersPayload {
+	questionId: number;
+	answers: Answer[];
+}
 
-export type DeleteQuestionAction = PayloadAction<number>;
-export type DeleteQuestionSuccess = PayloadAction<number>;
+export interface UpdateAnswerPayload {
+	questionId: number;
+	answer: Answer;
+}
 
-export type FetchAllTestsSuccess = PayloadAction<FetchAllTestsResponse>;
+export interface UpdateAnswersSuccessPayload extends CreateAnswersSuccessPayload {}
 
-export type FetchTestByIdAction = PayloadAction<number>;
-export type FetchTestByIdSuccess = PayloadAction<Test>;
+export interface MoveAnswerPosition {
+	answerId: number;
+	position: number;
+}
 
-export type AddQuestionAction = PayloadAction<AddQuestionRequest>;
-export type AddQuestionSuccess = PayloadAction<Question>;
+export interface MoveAnswersPayload {
+	questionId: number;
+	answerPosition: MoveAnswerPosition;
+}
 
-export type AddAnswersAction = PayloadAction<AddAnswersRequest>;
-export type AddAnswersSuccess = PayloadAction<AddAnswerResponse>;
+export interface MoveAnswersSuccessPayload extends MoveAnswersPayload {}
 
-export type EditQuestionAction = PayloadAction<EditQuestionRequest>;
-export type EditQuestionSuccess = PayloadAction<Question>;
+export interface DeleteAnswersPayload {
+	questionId: number;
+	id: number[];
+}
+
+export interface DeleteAnswerPayload {
+	id: number;
+	questionId: number;
+}
+
+export interface DeleteAnswersSuccessPayload {
+	id: number;
+	questionId: number;
+}
+
+export type CreateTestRequest = PayloadAction<CreateTestPayload>;
+export type CreateTestSuccess = PayloadAction<CreateTestSuccessPayload>;
+export type FetchAllTestsSuccess = PayloadAction<FetchAllTestsSuccessPayload>;
+export type FetchTestByIdRequest = PayloadAction<FetchTestByIdPayload>;
+export type FetchTestByIdSuccess = PayloadAction<FetchTestByIdSuccessPayload>;
+// Update Test
+// Update Test Success
+// Delete Test
+// Delete Test Success
+
+export type CreateQuestionRequest = PayloadAction<CreateQuestionPayload>;
+export type CreateQuestionSuccess = PayloadAction<CreateQuestionSuccessPayload>;
+export type UpdateQuestionRequest = PayloadAction<UpdateQuestionPayload>;
+export type UpdateQuestionSuccess = PayloadAction<UpdateQuestionSuccessPayload>;
+export type DeleteQuestionRequest = PayloadAction<DeleteQuestionPayload>;
+export type DeleteQuestionSuccess = PayloadAction<DeleteQuestionSuccessPayload>;
+
+export type CreateAnswersRequest = PayloadAction<CreateAnswersPayload>;
+export type CreateAnswersSuccess = PayloadAction<CreateAnswersSuccessPayload>;
+export type UpdateAnswersAction = PayloadAction<UpdateAnswersPayload>;
+export type UpdateAnswersSuccess = PayloadAction<UpdateAnswersSuccessPayload>;
+export type MoveAnswersAction = PayloadAction<MoveAnswersPayload>;
+export type MoveAnswersSuccess = PayloadAction<MoveAnswersSuccessPayload>;
+export type DeleteAnswersAction = PayloadAction<DeleteAnswersPayload>;
+export type DeleteAnswersSuccess = PayloadAction<DeleteAnswersSuccessPayload>;

@@ -1,6 +1,7 @@
-import type { FormFields } from '@/components/ui/modal/modal-question/modal-question';
-import type { QuestionType } from '@/reduxjs/modules/tests/types';
 import type { ModalMode } from '@/types/common';
+import type { QuestionType } from '@/reduxjs/modules/tests';
+import type { FormFields } from '@/components/ui/modal/modal-question/use-modal-question-form';
+import type { Answer } from '@/reduxjs/modules/tests';
 
 export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType, mode: ModalMode) => {
 	let errorMessage = '';
@@ -33,3 +34,13 @@ export const getValidationMessage = ({ answers }: FormFields, questionType: Ques
 
 	return errorMessage;
 };
+
+export const checkIfAnswerWasDeleted = (answer: Answer, answersToDelete: Answer['id'][]) =>
+	answersToDelete.some((delAnswer) => delAnswer === answer.id);
+
+export const checkIfAnswerWasCreated = (answer: Partial<Answer>) => answer.id === undefined;
+
+export const validateUpdateAnswers = (answers: Answer[], answersToDelete: Answer['id'][]) =>
+	answers.filter(
+		(updAnswer) => !checkIfAnswerWasDeleted(updAnswer, answersToDelete) && !checkIfAnswerWasCreated(updAnswer),
+	);

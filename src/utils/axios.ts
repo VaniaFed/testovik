@@ -12,3 +12,8 @@ export const axiosSnp = axios.create({
 		'scope-key': 'Rm36-GQ.Z(%rFfwAu:LvY7',
 	},
 });
+
+axiosProxy.interceptors.response.use(
+	(response) => response,
+	(error) => error.response,
+);

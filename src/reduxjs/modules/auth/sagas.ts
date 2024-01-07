@@ -1,10 +1,11 @@
-import { AxiosResponse } from 'axios';
+import type { AxiosResponse } from 'axios';
 import { call, put } from 'redux-saga/effects';
 import { fetchUserError, fetchUserSuccess, logoutSuccess, setUserPending } from '@/reduxjs/modules/auth/actions';
 import { authApi } from '@/services/auth';
 import type { SignInAction, SignUpAction } from './types';
 import type { User } from '@/reduxjs/modules/auth/types';
 
+// TODO: request instead
 export function* fetchUserSaga() {
 	try {
 		yield put(setUserPending());

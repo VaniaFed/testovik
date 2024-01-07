@@ -1,12 +1,16 @@
-import { ModalQuestionProps } from '@/components/ui/modal/modal-question/props';
-import * as yup from 'yup';
+import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getValidationMessage } from '@/components/ui/modal/modal-question/validation';
-import { addQuestion, editQuestion } from '@/reduxjs/modules/tests/actions';
-import { Answer } from '@/reduxjs/modules/tests/types';
+import * as yup from 'yup';
+import { ModalQuestionProps } from '@/components/ui/modal/modal-question/props';
+import {
+	checkIfAnswerWasCreated,
+	getValidationMessage,
+	validateUpdateAnswers,
+} from '@/components/ui/modal/modal-question/validation';
 import { useAppDispatch } from '@/reduxjs/hooks';
-import { useState } from 'react';
+import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
+import type { Answer } from '@/reduxjs/modules/tests';
 
 const schema = yup
 	.object({
@@ -17,6 +21,7 @@ const schema = yup
 			.required('Это обязательное поле'),
 		answers: yup.array().of(
 			yup.object({
+				answerId: yup.number(),
 				text: yup
 					.string()
 					.min(1, 'Поле слишком короткое')
@@ -38,7 +43,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		return questionType === 'number'
 			? []
 			: question?.answers && question.answers.length > 0
-				? question?.answers
+				? question?.answers.map((answer) => ({ ...answer, answerId: answer.id }))
 				: [
 						{
 							text: '',
@@ -64,18 +69,44 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		defaultValues,
 	});
 
-	const { fields, append, remove } = useFieldArray({
+	const { fields, append, remove, update, swap } = useFieldArray({
 		name: 'answers',
 		control,
 	});
 
 	const [formError, setFormError] = useState('');
+	const [answersToUpdate, setAnswersToUpdate] = useState<Answer[]>([]);
+	const [answersToDelete, setAnswersToDelete] = useState<Answer['id'][]>([]);
+
+	const handleSetAnswersToDelete = (id: number) => {
+		setAnswersToDelete((prev) => [...prev, id]);
+	};
+
+	const handleSetAnswersToUpdate = (answer: Answer) => {
+		setAnswersToUpdate((oldAnswers) => {
+			const isAnswersEmpty = oldAnswers.length === 0;
+			const isNewAnswer = !oldAnswers.some((ans) => ans.id === answer.id);
+
+			if (isAnswersEmpty || isNewAnswer) {
+				return [...oldAnswers, answer];
+			}
+
+			// FIXME: можно было заюзать функции из redux-helpers, только для этого их нужно сделать чистыми
+			// return updateItemById: function (array, item, id): []
+			return [
+				...oldAnswers.map((ans) => {
+					const isTargetAnswer = ans.id === answer.id;
+					return isTargetAnswer ? { ...ans, ...answer } : ans;
+				}),
+			];
+		});
+	};
 
 	const dispatch = useAppDispatch();
 
 	const handleAddQuestion = (formData: FormFields) => {
 		dispatch(
-			addQuestion({
+			createQuestion({
 				question: {
 					title: formData.question,
 					question_type: questionType,
@@ -93,19 +124,25 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 			return;
 		}
 
+		// TODO: extract to validation
+		const answersToAdd = getValues()
+			.answers?.filter(checkIfAnswerWasCreated)
+			.map((answer) => ({ text: answer.text, is_right: answer.is_right })) as Omit<Answer, 'id'>[];
+
 		dispatch(
-			editQuestion({
+			updateQuestion({
 				question: {
+					id: question.id,
 					title: formData.question,
 					answer: formData.answer,
-					answers: formData.answers as Answer[],
 					question_type: questionType,
 				},
-				questionId: question.id,
+				answersToAdd,
+				answersToUpdate: validateUpdateAnswers(answersToUpdate, answersToDelete),
+				answersToDelete,
 			}),
 		);
-		console.log('editing question in redux...');
-		console.log(formData);
+
 		close();
 	};
 
@@ -126,8 +163,11 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		getValues,
 		register,
 		append,
+		update,
 		remove,
 		handleSubmit,
+		handleSetAnswersToUpdate,
+		handleSetAnswersToDelete,
 		fields,
 		formError,
 		errors,

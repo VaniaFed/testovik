@@ -1,14 +1,13 @@
-import { QuestionType } from '@/reduxjs/modules/tests/types';
-import { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { QuestionType } from '@/reduxjs/modules/tests';
 
-export type ButtonVariant =
-	| 'accent'
-	| 'positive'
-	| 'attention'
-	| 'negative'
-	| 'secondary'
-	| 'text_accent'
-	| 'text_negative';
+export type Status = 'IDLE' | 'PENDING' | 'FAILED' | 'SUCCEEDED';
+
+export type IconSize = '18' | '24' | '32' | '64';
+
+export type ModalMode = 'create' | 'edit';
+
+export type TestMode = 'edit' | 'pass';
 
 export interface TestPageParams {
 	params: { id: string };
@@ -24,9 +23,13 @@ export interface DropdownItem {
 	value: QuestionType;
 }
 
-export type IconSize = '18' | '24' | '32' | '64';
-
-export type ModalMode = 'create' | 'edit';
-export type TestMode = 'edit' | 'pass';
-
 export type ActionError = PayloadAction<string>;
+
+export type ButtonVariant =
+	| 'accent'
+	| 'positive'
+	| 'attention'
+	| 'negative'
+	| 'secondary'
+	| 'text_accent'
+	| 'text_negative';

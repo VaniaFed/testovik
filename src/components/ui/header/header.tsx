@@ -1,19 +1,14 @@
 'use client';
 import React from 'react';
 import classNames from 'classnames/bind';
-
 import { BoxContainer } from '@/components/layout/box-container';
 import { Logo } from '@/components/ui/logo';
 import { Login } from '@/components/ui/login';
-
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import { selectUser } from '@/reduxjs/modules/auth/selectors';
-
+import { logOut, selectUser } from '@/reduxjs/modules/auth';
 import styles from './header.module.scss';
-
 import type { FC } from 'react';
 import type { Props } from './props';
-import { logOut } from '@/reduxjs/modules/auth/actions';
 
 const cx = classNames.bind(styles);
 
@@ -22,9 +17,9 @@ export const Header: FC<Props> = ({ className }) => {
 
 	const dispatch = useAppDispatch();
 
+	// FIXME: заменить link на button variant accent_text
 	const onLogOut = (e: React.MouseEvent) => {
 		e.preventDefault();
-		console.log('hi');
 
 		dispatch(logOut());
 	};

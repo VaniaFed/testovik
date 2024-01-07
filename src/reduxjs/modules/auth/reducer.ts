@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { User } from '@/reduxjs/modules/auth/types';
-import type { Status } from '@/types/auth';
+import type { Status } from '@/types/common';
 
 export interface AuthState {
 	user: User | undefined | null;
@@ -37,4 +37,4 @@ export const authSlice = createSlice({
 	},
 });
 
-export default authSlice.reducer;
+export const reducer = authSlice.reducer;

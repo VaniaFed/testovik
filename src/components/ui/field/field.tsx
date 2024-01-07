@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classNames from 'classnames/bind';
-
-import { Label } from '../typography/label';
-
-import styles from './field.module.scss';
-
-import type { FC } from 'react';
-import type { Props } from './props';
 import { Paragraph } from '@/components/ui/typography/paragraph';
+import { Label } from '../typography/label';
+import styles from './field.module.scss';
+import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 

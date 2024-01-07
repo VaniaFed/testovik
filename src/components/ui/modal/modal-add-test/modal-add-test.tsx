@@ -1,4 +1,3 @@
-'use client';
 import React from 'react';
 import * as yup from 'yup';
 import { Field } from '@/components/ui/field';
@@ -9,7 +8,7 @@ import { Form } from '@/components/ui/form';
 import { Modal } from '@/components/ui/modal/modal';
 import { useCustomForm } from '@/hooks/use-custom-form';
 import { useAppDispatch } from '@/reduxjs/hooks';
-import { createTest } from '@/reduxjs/modules/tests/actions';
+import { createTest } from '@/reduxjs/modules/tests';
 import type { FC } from 'react';
 import type { Props } from './props';
 
@@ -35,7 +34,7 @@ export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) 
 	const dispatch = useAppDispatch();
 
 	const onCreateTest = (title: string) => {
-		dispatch(createTest(title));
+		dispatch(createTest({ title }));
 		close();
 	};
 
