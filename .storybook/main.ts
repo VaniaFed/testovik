@@ -24,6 +24,7 @@ const config: StorybookConfig = {
 			'@/utils': path.resolve(__dirname, '../src/utils/'),
 			'@/hooks': path.resolve(__dirname, '../src/hooks/'),
 			'@/reduxjs': path.resolve(__dirname, '../src/reduxjs/'),
+			'@/services': path.resolve(__dirname, '../src/services/'),
 		};
 
 		return config;
