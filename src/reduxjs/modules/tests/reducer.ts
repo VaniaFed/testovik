@@ -40,7 +40,7 @@ export const testsSlice = createSlice({
 		},
 
 		createTestSuccess(state, action: CreateTestSuccess) {
-			state.list.push(action.payload.test);
+			state.list.unshift(action.payload.test);
 			state.status = 'SUCCEEDED';
 		},
 

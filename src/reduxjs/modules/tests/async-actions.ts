@@ -21,10 +21,11 @@ import type {
 	UpdateAnswersPayload,
 	MoveAnswersPayload,
 	DeleteAnswersPayload,
+	FetchAllTestsPayload,
 } from '@/reduxjs/modules/tests';
 
 export const createTest = createAction<CreateTestPayload>(CREATE_TEST);
-export const fetchAllTests = createAction(FETCH_ALL_TESTS);
+export const fetchAllTests = createAction<FetchAllTestsPayload>(FETCH_ALL_TESTS);
 export const fetchTestById = createAction<FetchTestByIdPayload>(FETCH_TEST_BY_ID);
 
 export const createQuestion = createAction<CreateQuestionPayload>(CREATE_QUESTION);

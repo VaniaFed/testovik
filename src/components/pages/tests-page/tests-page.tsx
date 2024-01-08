@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
-import { Button } from '@/components/ui/button';
+import { TestsList } from '@/components/pages/tests-page/tests-list';
+import { Pagination } from '@/components/ui/pagination';
+import { ModalAddTest } from './modal-add-test';
 import { Panel } from '@/components/ui/panel';
-import { ModalAddTest } from '@/components/ui/modal';
-import { Heading } from '@/components/ui/typography/heading';
-import { Paragraph } from '@/components/ui/typography/paragraph';
 import { Filter } from '@/components/pages/tests-page/filter/filter';
-import { Label } from '@/components/ui/typography/label';
-import { TestItem } from '@/components/ui/test-item';
-import { Sort } from '@/components/ui/icons/sort/sort';
-import { useModal } from '@/hooks/use-modal';
-import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
+import { Heading } from '@/components/ui/typography/heading';
+import { Button } from '@/components/ui/button';
+import { User, selectUser } from '@/reduxjs/modules/auth';
 import { fetchAllTests, selectAllTests } from '@/reduxjs/modules/tests';
-import { selectUser } from '@/reduxjs/modules/auth';
-import { Stack } from '@/components/layout/stack';
+import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
+import { useModal } from '@/hooks/use-modal';
+import { usePagination } from '@/components/pages/tests-page/use-pagination';
+import { useSearch } from '@/components/pages/tests-page/use-search';
+import { useSort } from '@/components/pages/tests-page/use-sort';
 import styles from './tests-page.module.scss';
 import type { FC } from 'react';
+import { Sort } from '@/components/pages/tests-page/sort/sort';
 
 const cx = classNames.bind(styles);
 
@@ -23,42 +24,41 @@ export const TestsPage: FC<unknown> = () => {
 	const tests = useAppSelector(selectAllTests);
 	const user = useAppSelector(selectUser);
 	const { isModalShown, showModal, hideModal } = useModal(false);
+	const { search, handleChangeSearch } = useSearch();
+	const { sort, handleSetSort } = useSort('created_at_desc');
+	const { page, pagination, handlePrevPageClick, handleNextPageClick, handleGoToPage } = usePagination();
+	const [testsPerPage] = useState(4);
 
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(fetchAllTests());
-	}, [dispatch]);
+		dispatch(fetchAllTests({ page, per: testsPerPage, sort, search }));
+	}, [dispatch, page, sort, search]);
 
 	return (
 		<div className={cx('tests-page')}>
 			<div className={cx('tests-page__content')}>
-				<Filter className={cx('tests-page__filter')} />
+				<Filter className={cx('tests-page__filter')} onChange={handleChangeSearch} />
 				<Heading size="1" className={cx('tests-page__title')}>
 					Тесты
 				</Heading>
-				<div className={cx('tests-page__sort')}>
-					<Label className={cx('tests-page__sort-label')}>Сначала новые</Label>
-					<Sort size="24" />
-				</div>
-				<Stack>
-					{tests && tests.length > 0 ? (
-						tests.map((test, key) => (
-							<TestItem
-								title={test.title}
-								testId={test.id}
-								questionNumber={test.questions.length}
-								key={key}
-								canEdit={user ? user.is_admin : false}
-							/>
-						))
-					) : (
-						<Paragraph>Тестов нет</Paragraph>
-					)}
-				</Stack>
+				<Sort sort={sort} handleSetSort={handleSetSort} className={cx('tests-page__sort')} />
+				<TestsList tests={tests} user={user as User} className={cx('tests-page__list')} />
+				{pagination.total_pages > 1 && (
+					<Pagination
+						totalPages={pagination.total_pages}
+						totalItems={pagination.total_count}
+						itemsPerPage={testsPerPage}
+						currentPage={page}
+						onPrevPageClick={handlePrevPageClick}
+						onNextPageClick={handleNextPageClick}
+						onItemClick={handleGoToPage}
+						className={cx('tests-page__pagination')}
+					/>
+				)}
 			</div>
 			{user?.is_admin && (
-				<Panel>
+				<Panel className={cx('tests-page__panel')}>
 					<Button variant="accent" onClick={showModal}>
 						Добавить тест
 					</Button>

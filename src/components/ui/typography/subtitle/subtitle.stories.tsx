@@ -22,5 +22,5 @@ export const Light: ComponentStory<typeof Subtitle> = (args: Props) => <Subtitle
 Light.args = {
 	className: '',
 	children: 'Subtitle text light',
-	light: true,
+	style: 'light',
 };

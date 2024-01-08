@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 export const TestItem: FC<Props> = ({ title, testId, questionNumber, canEdit = false, className }) => {
 	return (
-		<div className={cx('test-item', className)}>
+		<li className={cx('test-item', className)}>
 			<Link href={`/tests/${testId}`} level="h3" color="black">
 				<Heading size="2" className={cx('test-item__title')}>
 					{title}
@@ -26,6 +26,6 @@ export const TestItem: FC<Props> = ({ title, testId, questionNumber, canEdit = f
 					</Link>
 				)}
 			</Stack>
-		</div>
+		</li>
 	);
 };

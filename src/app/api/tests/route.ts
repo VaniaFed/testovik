@@ -18,13 +18,22 @@ export async function POST(req: NextRequest) {
 	return NextResponse.json({ test: data }, { status });
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+	const { searchParams } = new URL(req.url);
+
+	let params = {};
+
+	for (const [key, value] of searchParams.entries()) {
+		params = { ...params, ...{ [key]: value } };
+	}
+
 	const cookie = cookies().get(SESSION_ID_COOKIE);
 
 	const apiResponse = await axiosSnp.get('/tests', {
 		headers: {
 			Cookie: cookie ? `${cookie.name}=${cookie.value}` : '',
 		},
+		params,
 	});
 
 	const { data, status } = apiResponse;

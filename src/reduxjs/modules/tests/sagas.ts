@@ -43,6 +43,8 @@ import {
 	UpdateAnswerPayload,
 	Answer,
 	UpdateAnswersSuccessPayload,
+	FetchAllTestsRequest,
+	FetchAllTestsPayload,
 } from '@/reduxjs/modules/tests/types';
 import { createAnswers, deleteAnswers, updateAnswers } from '@/reduxjs/modules/tests/async-actions';
 
@@ -58,9 +60,10 @@ export function* createTestSaga(action: CreateTestRequest) {
 	});
 }
 
-export function* fetchAllTestsSaga() {
-	yield call(request<null, FetchAllTestsSuccessPayload>, {
+export function* fetchAllTestsSaga(action: FetchAllTestsRequest) {
+	yield call(request<FetchAllTestsPayload, FetchAllTestsSuccessPayload>, {
 		service: testApi.getAll,
+		params: action.payload,
 		setPending: setPending,
 		onSuccess: fetchAllTestsSuccess,
 		onFailure: setError,

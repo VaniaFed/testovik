@@ -9,6 +9,8 @@ export type ModalMode = 'create' | 'edit';
 
 export type TestMode = 'edit' | 'pass';
 
+export type TestSort = 'created_at_desc' | 'created_at_asc';
+
 export interface TestPageParams {
 	params: { id: string };
 }
@@ -31,5 +33,6 @@ export type ButtonVariant =
 	| 'attention'
 	| 'negative'
 	| 'secondary'
+	| 'text_black'
 	| 'text_accent'
 	| 'text_negative';
