@@ -27,4 +27,17 @@
 		min-height: fit-content;
 		padding: 0;
 	}
+
+	&_circle {
+		justify-content: center;
+		width: 42px;
+		height: 42px;
+		padding: 0;
+		border-radius: 50%;
+	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
 }

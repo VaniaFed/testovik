@@ -5,4 +5,5 @@ export interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 	startIcon?: React.ReactNode;
 	endIcon?: React.ReactNode;
 	variant?: ButtonVariant;
+	circle?: boolean;
 }

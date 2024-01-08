@@ -103,6 +103,21 @@
 }
 
 .button_text {
+	&_black {
+		min-height: fit-content;
+		background: transparent;
+		padding: 0;
+		color: $color-black;
+
+		&:hover {
+			color: $color-link-hover;
+		}
+
+		&:active {
+			color: $color-link-active;
+		}
+	}
+
 	&_accent {
 		min-height: fit-content;
 		background: transparent;
@@ -131,5 +146,13 @@
 		&:active {
 			color: $color-red-active;
 		}
+	}
+
+	&_circle {
+		justify-content: center;
+		width: 42px;
+		height: 42px;
+		padding: 0;
+		border-radius: 50%;
 	}
 }
