@@ -76,7 +76,6 @@ export const TestPage: FC<Props> = ({ params: { id }, className }) => {
 	const handleSaveTest = () => {
 		if (test) {
 			dispatch(updateTest({ id: test.id, title }));
-			console.log('Сохранили');
 			router.push('/');
 		}
 	};

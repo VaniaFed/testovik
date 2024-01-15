@@ -20,8 +20,6 @@ export const useAuth = (adminOnly: boolean) => {
 		if (isUserReceived) {
 			const isNotAuthenticated = user === null;
 
-			console.log(user);
-
 			if (isNotAuthenticated) {
 				window.location.href = '/signin';
 			}

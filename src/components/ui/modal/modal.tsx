@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import classNames from 'classnames/bind';
 import { BoxContainer } from '@/components/layout/box-container';
 import { IconButton } from '@/components/ui/icon-button';

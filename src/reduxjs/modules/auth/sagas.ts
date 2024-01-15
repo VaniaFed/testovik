@@ -1,5 +1,4 @@
-import type { AxiosResponse } from 'axios';
-import { call, put } from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 import {
 	fetchUserError,
 	fetchUserSuccess,
@@ -10,18 +9,18 @@ import {
 	signInSuccess,
 } from '@/reduxjs/modules/auth/actions';
 import { authApi } from '@/services/auth';
-import { SignUpPayload, typeSignInRequest, typeSignUpRequest, LogOutSuccessPayload } from './types';
+import request from '@/reduxjs/helpers/request';
 import type {
 	FetchUserSuccessPayload,
 	LogOutSuccessPayload,
 	SignInPayload,
+	SignInRequest,
 	SignInSuccessPayload,
+	SignUpPayload,
+	SignUpRequest,
 	SignUpSuccessPayload,
-	User,
 } from '@/reduxjs/modules/auth/types';
-import request from '@/reduxjs/helpers/request';
 
-// TODO: request instead
 export function* fetchUserSaga() {
 	yield call(request<null, FetchUserSuccessPayload>, {
 		service: authApi.getCurrentUser,

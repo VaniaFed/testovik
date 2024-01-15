@@ -15,7 +15,6 @@ const initialState: AuthState = {
 	status: 'IDLE',
 };
 
-// FIXME: user === пустая строка при первом включении
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,

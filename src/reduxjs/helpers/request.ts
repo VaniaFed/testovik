@@ -49,8 +49,6 @@ export default function* request<TPayload = object, TData = object>({
 			yield call(requestFailure, { message: errorMessage, onFailure });
 		}
 	} catch (err) {
-		console.log('catch');
-
 		const errorMessage = 'Произошла непредвиденная ошибка';
 		yield call(requestFailure, { message: errorMessage, onFailure });
 	}
