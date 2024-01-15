@@ -17,7 +17,6 @@ export const Header: FC<Props> = ({ className }) => {
 
 	const dispatch = useAppDispatch();
 
-	// FIXME: заменить link на button variant accent_text
 	const onLogOut = (e: React.MouseEvent) => {
 		e.preventDefault();
 

@@ -16,8 +16,6 @@ export const Question: FC<Props> = ({
 	question,
 	mode = 'pass',
 	lastQuestion = false,
-	// TODO: я хотел подсветить правильные и неправильные ответы
-	completed,
 	bottomContent,
 	className,
 	handleAnswerChange,
@@ -50,7 +48,6 @@ export const Question: FC<Props> = ({
 					handleChange={handleAnswerChange && handleAnswerChange('single')}
 				/>
 			)}
-			{completed && 'completed'}
 			{bottomContent && bottomContent}
 			{!lastQuestion && <Divider />}
 		</Stack>

@@ -8,6 +8,7 @@ import styles from './login.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
 import { Link } from '@/components/ui/link';
+import { Button } from '@/components/ui/button';
 
 const cx = classNames.bind(styles);
 
@@ -22,9 +23,9 @@ export const Login: FC<Props> = ({ loggedIn = false, userName, userRole, onLogOu
 						</Label>
 						<Label>{userName}</Label>
 					</div>
-					<Link onClick={onLogOut} isExternal level="label">
+					<Button variant="text_black" onClick={onLogOut}>
 						Выйти
-					</Link>
+					</Button>
 				</>
 			) : (
 				<Link href="/signin" level="label">
