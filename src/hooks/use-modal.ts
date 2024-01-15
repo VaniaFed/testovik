@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-interface UseModal {
-	isModalShown: boolean;
-	showModal: () => void;
-	hideModal: () => void;
-}
+type UseModal = [boolean, () => void, () => void];
 
 export function useModal(shownByDefault: boolean = false): UseModal {
 	const [isModalShown, setIsModalShown] = useState<boolean>(shownByDefault);
@@ -28,9 +24,5 @@ export function useModal(shownByDefault: boolean = false): UseModal {
 		return () => window.removeEventListener('keydown', closeOnEsc);
 	}, []);
 
-	return {
-		isModalShown,
-		showModal,
-		hideModal,
-	};
+	return [isModalShown, showModal, hideModal];
 }

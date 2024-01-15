@@ -23,42 +23,28 @@ import type { Props } from './props';
 const cx = classNames.bind(styles);
 
 export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
+	const test = useAppSelector(selectCurrentTest);
 	const [mode, setMode] = useState<'create' | 'edit'>('create');
 	const [question, setQuestion] = useState<IQuestion | null>(null);
 	const [questionType, setQuestionType] = useState<DropdownItem>(questionTypeDropdownItems[0]);
 	const [title, setTitle] = useState('');
 	const router = useRouter();
 
-	const {
-		isModalShown: isModalQuestionShown,
-		hideModal: hideQuestionModal,
-		showModal: showQuestionModal,
-	} = useModal();
-
-	const {
-		isModalShown: isModalDeleteQuestionShown,
-		hideModal: hideDeleteQuestionModal,
-		showModal: showDeleteQuestionModal,
-	} = useModal();
-
-	const {
-		isModalShown: isModalDeleteTestShown,
-		hideModal: hideDeleteTestModal,
-		showModal: showDeleteTestModal,
-	} = useModal();
-
-	const test = useAppSelector(selectCurrentTest);
+	const [isModalSaveTestShown, showSaveTestModal, hideSaveTestModal] = useModal();
+	const [isModalDeleteTestShown, showDeleteTestModal, hideDeleteTestModal] = useModal();
+	const [isModalEditQuestionShown, showEditQuestionModal, hideEditQuestionModal] = useModal();
+	const [isModalDeleteQuestionShown, showDeleteQuestionModal, hideDeleteQuestionModal] = useModal();
 
 	const handleAddQuestion = () => {
 		setMode('create');
 		setQuestion(null);
-		showQuestionModal();
+		showEditQuestionModal();
 	};
 
-	const handleEdit = (question: IQuestion) => {
+	const handleEditQuestion = (question: IQuestion) => {
 		setMode('edit');
 		setQuestion(question);
-		showQuestionModal();
+		showEditQuestionModal();
 	};
 
 	const handleShowDeleteQuestionModal = (question: IQuestion) => {
@@ -67,11 +53,19 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 		showDeleteQuestionModal();
 	};
 
-	const dispatch = useAppDispatch();
-
 	const handleTitleChange = (e: ChangeEvent) => {
 		setTitle(e.currentTarget.innerHTML);
 	};
+
+	const handleClickSaveTest = () => {
+		if (test?.title === title) {
+			router.push('/');
+		} else {
+			showSaveTestModal();
+		}
+	};
+
+	const dispatch = useAppDispatch();
 
 	const handleSaveTest = () => {
 		if (test) {
@@ -107,10 +101,10 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 	}, [test]);
 
 	return (
-		<div className={cx('test-page', className)}>
-			<header className={cx('test-page__header')}>
+		<div className={cx('edit-test-page', className)}>
+			<header className={cx('edit-test-page__header')}>
 				<Heading
-					className={cx('test-page__heading')}
+					className={cx('edit-test-page__heading')}
 					contentEditable
 					suppressContentEditableWarning={true}
 					onBlur={handleTitleChange}>
@@ -119,28 +113,26 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 				<Label>{test?.questions.length} вопросов</Label>
 			</header>
 			<Stack className={cx('question-list')}>
-				<Stack className={cx('question-list')}>
-					{test?.questions.map((question, index) => (
-						<li key={index}>
-							<Question
-								question={question}
-								mode="edit"
-								bottomContent={
-									<Stack direction="row">
-										<Button variant="text_accent" onClick={() => handleEdit(question)}>
-											Редактировать
-										</Button>
-										<Button
-											variant="text_negative"
-											onClick={() => handleShowDeleteQuestionModal(question)}>
-											Удалить
-										</Button>
-									</Stack>
-								}
-							/>
-						</li>
-					))}
-				</Stack>
+				{test?.questions.map((question, index) => (
+					<li key={index}>
+						<Question
+							question={question}
+							mode="edit"
+							bottomContent={
+								<Stack direction="row">
+									<Button variant="text_accent" onClick={() => handleEditQuestion(question)}>
+										Редактировать
+									</Button>
+									<Button
+										variant="text_negative"
+										onClick={() => handleShowDeleteQuestionModal(question)}>
+										Удалить
+									</Button>
+								</Stack>
+							}
+						/>
+					</li>
+				))}
 			</Stack>
 			<div className={cx('question-add')}>
 				<Heading size="3" className={cx('question-add__heading')}>
@@ -159,20 +151,20 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 				</Button>
 			</div>
 			<Panel>
-				<Button variant="positive" onClick={handleSaveTest}>
+				<Button variant="positive" onClick={handleClickSaveTest}>
 					Сохранить
 				</Button>
 				<Button variant="negative" onClick={showDeleteTestModal}>
 					Удалить
 				</Button>
 			</Panel>
-			{isModalQuestionShown && (
+			{isModalEditQuestionShown && (
 				<ModalQuestion
 					mode={mode}
 					question={question}
 					questionType={questionType.value}
 					testId={Number(id)}
-					close={hideQuestionModal}
+					close={hideEditQuestionModal}
 				/>
 			)}
 			{isModalDeleteQuestionShown && (
@@ -183,6 +175,16 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 					primaryButtonVariant="negative"
 					onAction={handleDeleteQuestion}
 					close={hideDeleteQuestionModal}
+				/>
+			)}
+			{isModalSaveTestShown && (
+				<ModalAction
+					title="Сохранить изменения?"
+					subtitle={`${test?.title as string} -> ${title}`}
+					actionText="Сохранить"
+					primaryButtonVariant="positive"
+					onAction={handleSaveTest}
+					close={hideSaveTestModal}
 				/>
 			)}
 			{isModalDeleteTestShown && (

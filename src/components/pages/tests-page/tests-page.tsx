@@ -23,7 +23,7 @@ const cx = classNames.bind(styles);
 export const TestsPage: FC<unknown> = () => {
 	const tests = useAppSelector(selectAllTests);
 	const user = useAppSelector(selectUser);
-	const { isModalShown, showModal, hideModal } = useModal(false);
+	const [isModalShown, showModal, hideModal] = useModal();
 	const { search, handleChangeSearch, handleClearSearch } = useSearch();
 	const { sort, handleChangeSort } = useSort('created_at_desc');
 	const { page, pagination, handlePrevPageClick, handleNextPageClick, handleGoToPage } = usePagination();

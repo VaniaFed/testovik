@@ -20,7 +20,7 @@ export const usePassTest = (id: string) => {
 	const test = useAppSelector(selectCurrentTest);
 	const [answers, setAnswers] = useState<UserAnswer[]>([]);
 	const [isSubmitted, setIsSubmitted] = useState(false);
-	const { isModalShown, showModal, hideModal } = useModal();
+	const [isModalShown, showModal, hideModal] = useModal();
 
 	const getAnswer = (questionId: number) => {
 		return answers.find((answer) => answer.question.id === questionId);
