@@ -1,7 +1,8 @@
+'use client';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { SignInRequest, SignUpRequest } from '@/reduxjs/modules/auth';
+import { SignInPayload, SignUpPayload } from '@/reduxjs/modules/auth';
 import { useState } from 'react';
 
 export const useCustomForm = (schema: yup.ObjectShape) => {
@@ -20,7 +21,7 @@ export const useCustomForm = (schema: yup.ObjectShape) => {
 	});
 
 	// TODO: get rid of any
-	const onFormSubmit = (e: React.FormEvent, onSubmit: (formData: SignUpRequest | SignInRequest | any) => void) => {
+	const onFormSubmit = (e: React.FormEvent, onSubmit: (formData: SignUpPayload | SignInPayload | any) => void) => {
 		e.preventDefault();
 		handleSubmit(onSubmit)();
 	};

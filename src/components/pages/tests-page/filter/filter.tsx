@@ -8,12 +8,11 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const Filter: FC<Props> = ({ onChange, className }) => {
-	// TODO: кнопку очистки инпута
+export const Filter: FC<Props> = ({ value, onChange, onClear, className }) => {
 	return (
 		<div className={cx('filter', className)}>
 			<Field id="tests-filter" label="Найти тест" labelClassName={cx('filter__label')}>
-				<Input id="tests-filter" placeholder="География" onChange={onChange} />
+				<Input id="tests-filter" placeholder="География" onChange={onChange} onClear={onClear} value={value} />
 			</Field>
 		</div>
 	);

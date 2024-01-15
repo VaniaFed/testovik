@@ -20,8 +20,10 @@ export const useAuth = (adminOnly: boolean) => {
 		if (isUserReceived) {
 			const isNotAuthenticated = user === null;
 
+			console.log(user);
+
 			if (isNotAuthenticated) {
-				router.push('/signin');
+				window.location.href = '/signin';
 			}
 
 			const isNoAccess = user && !user.is_admin && adminOnly;

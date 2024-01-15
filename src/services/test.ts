@@ -6,9 +6,8 @@ import type {
 	FetchAllTestsSuccessPayload,
 	FetchTestByIdPayload,
 	Test,
+	UpdateTestPayload,
 } from '@/reduxjs/modules/tests';
-
-type PatchTestRequest = Partial<Test>;
 
 export const testApi = {
 	create: async ({ title }: CreateTestPayload) => await axiosProxy.post<CreateTestSuccessPayload>('/tests', title),
@@ -17,9 +16,6 @@ export const testApi = {
 			params: data,
 		}),
 	getById: async ({ id }: FetchTestByIdPayload) => await axiosProxy.get<FetchAllTestsSuccessPayload>(`/tests/${id}`),
-	// TODO: add types:
-	// 1. PatchTestPayload
-	// 2. DeleteTestPayload
-	patch: async ({ data, id }: { data: PatchTestRequest; id: number }) => await axiosProxy.patch(`/tests/${id}`, data),
+	patch: async ({ id, title }: UpdateTestPayload) => await axiosProxy.patch(`/tests/${id}`, { title }),
 	delete: async ({ id }: { id: number }) => await axiosProxy.delete(`/tests/${id}`),
 };

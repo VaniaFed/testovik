@@ -60,6 +60,19 @@ export interface FetchTestByIdSuccessPayload {
 	test: Test;
 }
 
+export interface DeleteTestPayload {
+	id: number;
+}
+
+export interface DeleteTestSuccessPayload extends DeleteTestPayload {}
+
+export interface UpdateTestPayload {
+	title: string;
+	id: number;
+}
+
+export interface UpdateTestSuccessPayload extends Test {}
+
 export interface CreateQuestionPayload {
 	testId: number;
 	question: Omit<Question, 'id'>;
@@ -147,10 +160,10 @@ export type FetchAllTestsRequest = PayloadAction<FetchAllTestsPayload>;
 export type FetchAllTestsSuccess = PayloadAction<FetchAllTestsSuccessPayload>;
 export type FetchTestByIdRequest = PayloadAction<FetchTestByIdPayload>;
 export type FetchTestByIdSuccess = PayloadAction<FetchTestByIdSuccessPayload>;
-// Update Test
-// Update Test Success
-// Delete Test
-// Delete Test Success
+export type UpdateTestRequest = PayloadAction<UpdateTestPayload>;
+export type UpdateTestSuccess = PayloadAction<UpdateTestSuccessPayload>;
+export type DeleteTestRequest = PayloadAction<DeleteTestPayload>;
+export type DeleteTestSuccess = PayloadAction<DeleteTestSuccessPayload>;
 
 export type CreateQuestionRequest = PayloadAction<CreateQuestionPayload>;
 export type CreateQuestionSuccess = PayloadAction<CreateQuestionSuccessPayload>;

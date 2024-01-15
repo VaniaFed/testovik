@@ -5,7 +5,7 @@ import type { AnyAction } from '@reduxjs/toolkit';
 import requestFailure from '@/reduxjs/helpers/failure-request';
 
 interface Request<TPayload, TData> {
-	service: (params: any) => any;
+	service: (params?: any) => any;
 	params?: TPayload;
 	setPending?: () => AnyAction;
 	onSuccess?: (data: TData) => AnyAction;
@@ -22,7 +22,7 @@ interface Request<TPayload, TData> {
  * @onFailure action to call on failure
  * @callback function that calls when success
  */
-export default function* request<TPayload, TData>({
+export default function* request<TPayload = object, TData = object>({
 	service,
 	params,
 	setPending,
@@ -34,17 +34,24 @@ export default function* request<TPayload, TData>({
 		yield put(setPending());
 	}
 
-	const response: AxiosResponse<TData> = yield call(service, params);
-	const { status, data } = response;
+	try {
+		const response: AxiosResponse<TData> = yield call(service, params);
+		const { status, data } = response;
 
-	if ([200, 201].includes(status)) {
-		yield call(requestSuccess<TData>, {
-			data,
-			onSuccess,
-			callback,
-		});
-	} else {
-		const errorMessage = data instanceof Error ? data.message : 'Произошла непредвиденная ошибка';
+		if ([200, 201].includes(status)) {
+			yield call(requestSuccess<TData>, {
+				data,
+				onSuccess,
+				callback,
+			});
+		} else {
+			const errorMessage = data instanceof Error ? data.message : 'Произошла непредвиденная ошибка';
+			yield call(requestFailure, { message: errorMessage, onFailure });
+		}
+	} catch (err) {
+		console.log('catch');
+
+		const errorMessage = 'Произошла непредвиденная ошибка';
 		yield call(requestFailure, { message: errorMessage, onFailure });
 	}
 }

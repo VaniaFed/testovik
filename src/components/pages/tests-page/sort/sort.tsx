@@ -8,13 +8,13 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const Sort: FC<Props> = ({ sort, handleSetSort, className }) => {
+export const Sort: FC<Props> = ({ sort, handleChangeSort, className }) => {
 	return (
 		<Button
 			className={cx('sort', className)}
 			variant="text_black"
 			endIcon={<SortIcon size="24" className={cx(sort === 'created_at_asc' && 'sort-icon_reversed')} />}
-			onClick={handleSetSort}>
+			onClick={handleChangeSort}>
 			{sort === 'created_at_asc' ? 'Сначала новые' : 'Сначала старые'}
 		</Button>
 	);

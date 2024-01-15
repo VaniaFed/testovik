@@ -10,23 +10,29 @@ import {
 	UPDATE_ANSWERS,
 	MOVE_ANSWERS,
 	DELETE_ANSWERS,
+	DELETE_TEST,
+	UPDATE_TEST,
 } from '@/reduxjs/modules/tests/constants';
 import type {
 	CreateAnswersPayload,
 	CreateQuestionPayload,
 	CreateTestPayload,
+	FetchAllTestsPayload,
 	FetchTestByIdPayload,
+	DeleteTestPayload,
+	UpdateTestPayload,
 	UpdateQuestionPayload,
 	DeleteQuestionPayload,
 	UpdateAnswersPayload,
 	MoveAnswersPayload,
 	DeleteAnswersPayload,
-	FetchAllTestsPayload,
 } from '@/reduxjs/modules/tests';
 
 export const createTest = createAction<CreateTestPayload>(CREATE_TEST);
 export const fetchAllTests = createAction<FetchAllTestsPayload>(FETCH_ALL_TESTS);
 export const fetchTestById = createAction<FetchTestByIdPayload>(FETCH_TEST_BY_ID);
+export const updateTest = createAction<UpdateTestPayload>(UPDATE_TEST);
+export const deleteTest = createAction<DeleteTestPayload>(DELETE_TEST);
 
 export const createQuestion = createAction<CreateQuestionPayload>(CREATE_QUESTION);
 export const updateQuestion = createAction<UpdateQuestionPayload>(EDIT_QUESTION);

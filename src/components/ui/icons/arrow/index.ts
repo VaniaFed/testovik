@@ -1,1 +1,1 @@
-export { Arrow as Chevron } from './arrow';
+export { Arrow } from './arrow';

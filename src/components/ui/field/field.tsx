@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import classNames from 'classnames/bind';
-import { Paragraph } from '@/components/ui/typography/paragraph';
 import { Label } from '../typography/label';
+import { ErrorLabel } from '@/components/ui/error-label';
 import styles from './field.module.scss';
 import type { Props } from './props';
 
@@ -20,7 +20,7 @@ export const Field: FC<Props> = ({
 }) => {
 	return (
 		<div className={cx('field', className)}>
-			{label.length > 0 && (
+			{!!label && (
 				<Label required={required} htmlFor={id} className={cx('field__label', labelClassName)}>
 					{label}
 				</Label>
@@ -30,7 +30,7 @@ export const Field: FC<Props> = ({
 				{children}
 				{rightContent && rightContent}
 			</div>
-			{errMessage.length > 0 && <Paragraph className={cx('field__error')}>{errMessage}</Paragraph>}
+			{!!errMessage && <ErrorLabel className={cx('field__error')}>{errMessage}</ErrorLabel>}
 		</div>
 	);
 };

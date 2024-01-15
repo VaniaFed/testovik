@@ -9,6 +9,8 @@ export const {
 	createTestSuccess,
 	fetchAllTestsSuccess,
 	fetchTestByIdSuccess,
+	updateTestSuccess,
+	deleteTestSuccess,
 	createQuestionSuccess,
 	deleteQuestionSuccess,
 	updateQuestionSuccess,

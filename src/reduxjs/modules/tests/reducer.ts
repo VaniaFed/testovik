@@ -1,11 +1,13 @@
 import { findIndexById } from './../../../utils/redux-helpers';
 import { createSlice } from '@reduxjs/toolkit';
 import { deleteById, updateById } from '@/utils/redux-helpers';
-import type { ActionError } from '@/types/common';
+import type { ActionError } from '@/reduxjs/common/types';
 import type {
 	CreateTestSuccess,
 	FetchTestByIdSuccess,
 	FetchAllTestsSuccess,
+	UpdateTestSuccess,
+	DeleteTestSuccess,
 	CreateQuestionSuccess,
 	UpdateQuestionSuccess,
 	DeleteQuestionSuccess,
@@ -53,6 +55,15 @@ export const testsSlice = createSlice({
 		fetchTestByIdSuccess(state, action: FetchTestByIdSuccess) {
 			state.currentTest = action.payload.test;
 			state.status = 'SUCCEEDED';
+		},
+
+		updateTestSuccess(state, action: UpdateTestSuccess) {
+			const { id, title } = action.payload;
+			updateById(state.list, id, { title });
+		},
+
+		deleteTestSuccess(state, action: DeleteTestSuccess) {
+			deleteById(state.list, action.payload.id);
 		},
 
 		createQuestionSuccess(state, action: CreateQuestionSuccess) {

@@ -13,5 +13,5 @@ export async function GET() {
 	});
 
 	const { data, status } = apiResponse;
-	return NextResponse.json(data, { status });
+	return NextResponse.json({ user: data }, { status });
 }

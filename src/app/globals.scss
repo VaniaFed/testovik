@@ -29,6 +29,14 @@ button {
 	font-family: inherit;
 }
 
+li {
+	list-style: none;
+}
+
+.disabled {
+	opacity: 0.5;
+}
+
 @media (prefers-color-scheme: dark) {
 	html {
 		color-scheme: dark;

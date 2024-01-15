@@ -129,7 +129,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																}
 															: () => {},
 												})}
-												checkboxSize="18"
+												_size="18"
 											/>
 										</>
 									}

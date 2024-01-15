@@ -24,25 +24,30 @@ export const TestsPage: FC<unknown> = () => {
 	const tests = useAppSelector(selectAllTests);
 	const user = useAppSelector(selectUser);
 	const { isModalShown, showModal, hideModal } = useModal(false);
-	const { search, handleChangeSearch } = useSearch();
-	const { sort, handleSetSort } = useSort('created_at_desc');
+	const { search, handleChangeSearch, handleClearSearch } = useSearch();
+	const { sort, handleChangeSort } = useSort('created_at_desc');
 	const { page, pagination, handlePrevPageClick, handleNextPageClick, handleGoToPage } = usePagination();
 	const [testsPerPage] = useState(4);
 
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(fetchAllTests({ page, per: testsPerPage, sort, search }));
+		dispatch(fetchAllTests({ page: page, per: testsPerPage, sort: sort || 'created_at_desc', search }));
 	}, [dispatch, page, sort, search]);
 
 	return (
 		<div className={cx('tests-page')}>
 			<div className={cx('tests-page__content')}>
-				<Filter className={cx('tests-page__filter')} onChange={handleChangeSearch} />
+				<Filter
+					className={cx('tests-page__filter')}
+					value={search}
+					onChange={handleChangeSearch}
+					onClear={handleClearSearch}
+				/>
 				<Heading size="1" className={cx('tests-page__title')}>
 					Тесты
 				</Heading>
-				<Sort sort={sort} handleSetSort={handleSetSort} className={cx('tests-page__sort')} />
+				<Sort sort={sort} handleChangeSort={handleChangeSort} className={cx('tests-page__sort')} />
 				<TestsList tests={tests} user={user as User} className={cx('tests-page__list')} />
 				{pagination.total_pages > 1 && (
 					<Pagination

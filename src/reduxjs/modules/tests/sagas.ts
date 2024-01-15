@@ -15,6 +15,8 @@ import {
 	fetchTestByIdSuccess,
 	deleteAnswerSuccess,
 	updateAnswerSuccess,
+	deleteTestSuccess,
+	updateTestSuccess,
 } from '@/reduxjs/modules/tests/actions';
 import {
 	CreateAnswersRequest,
@@ -45,6 +47,12 @@ import {
 	UpdateAnswersSuccessPayload,
 	FetchAllTestsRequest,
 	FetchAllTestsPayload,
+	DeleteTestRequest,
+	DeleteTestPayload,
+	DeleteTestSuccessPayload,
+	UpdateTestPayload,
+	UpdateTestSuccessPayload,
+	UpdateTestRequest,
 } from '@/reduxjs/modules/tests/types';
 import { createAnswers, deleteAnswers, updateAnswers } from '@/reduxjs/modules/tests/async-actions';
 
@@ -54,7 +62,7 @@ export function* createTestSaga(action: CreateTestRequest) {
 		params: {
 			title: action.payload.title,
 		},
-		setPending: setPending,
+		setPending,
 		onSuccess: createTestSuccess,
 		onFailure: setError,
 	});
@@ -64,7 +72,7 @@ export function* fetchAllTestsSaga(action: FetchAllTestsRequest) {
 	yield call(request<FetchAllTestsPayload, FetchAllTestsSuccessPayload>, {
 		service: testApi.getAll,
 		params: action.payload,
-		setPending: setPending,
+		setPending,
 		onSuccess: fetchAllTestsSuccess,
 		onFailure: setError,
 	});
@@ -77,8 +85,28 @@ export function* fetchTestByIdSaga(action: FetchTestByIdRequest) {
 		params: {
 			id,
 		},
-		setPending: setPending,
+		setPending,
 		onSuccess: fetchTestByIdSuccess,
+		onFailure: setError,
+	});
+}
+
+export function* updateTestSaga(action: UpdateTestRequest) {
+	yield call(request<UpdateTestPayload, UpdateTestSuccessPayload>, {
+		service: testApi.patch,
+		params: action.payload,
+		setPending,
+		onSuccess: updateTestSuccess,
+		onFailure: setError,
+	});
+}
+
+export function* deleteTestSaga(action: DeleteTestRequest) {
+	yield call(request<DeleteTestPayload, DeleteTestSuccessPayload>, {
+		service: testApi.delete,
+		params: action.payload,
+		setPending,
+		onSuccess: deleteTestSuccess,
 		onFailure: setError,
 	});
 }
@@ -91,7 +119,7 @@ export function* createQuestionSaga(action: CreateQuestionRequest) {
 			question,
 			testId,
 		},
-		setPending: setPending,
+		setPending,
 		onSuccess: createQuestionSuccess,
 		onFailure: setError,
 		callback: function* ({ question: { id } }) {
@@ -107,7 +135,7 @@ export function* updateQuestionSaga(action: UpdateQuestionRequest) {
 		params: {
 			question,
 		},
-		setPending: setPending,
+		setPending,
 		onSuccess: updateQuestionSuccess,
 		onFailure: setError,
 		callback: function* () {
@@ -125,7 +153,7 @@ export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
 		params: {
 			id,
 		},
-		setPending: setPending,
+		setPending,
 		onSuccess: deleteQuestionSuccess,
 		onFailure: setError,
 	});
@@ -147,7 +175,7 @@ function* createAnswerSaga(payload: CreateAnswerPayload) {
 			answer,
 			questionId,
 		},
-		setPending: setPending,
+		setPending,
 		onFailure: setError,
 		callback: function* ({ answer }) {
 			yield put(createAnswerSuccess({ answer, questionId }));
@@ -170,7 +198,7 @@ function* updateAnswerSaga(payload: UpdateAnswerPayload) {
 		params: {
 			answer,
 		},
-		setPending: setPending,
+		setPending,
 		onFailure: setError,
 		callback: function* ({ answer }) {
 			yield put(updateAnswerSuccess({ answer, questionId }));
@@ -191,7 +219,7 @@ export function* deleteAnswerSaga(payload: DeleteAnswerPayload) {
 	yield call(request<{ id: number }, DeleteAnswersSuccessPayload>, {
 		service: answerApi.delete,
 		params: { id },
-		setPending: setPending,
+		setPending,
 		onFailure: setError,
 		callback: function* () {
 			yield put(deleteAnswerSuccess({ id, questionId }));

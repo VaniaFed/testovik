@@ -3,6 +3,11 @@
 @import '/src/utils/media';
 @import '/src/components/ui/typography/paragraph/paragraph.module';
 
+.input-wrapper {
+	position: relative;
+	width: 100%;
+}
+
 .input {
 	@include paragraph_small;
 	width: 100%;
@@ -39,5 +44,11 @@
 	&_solid {
 		border: none;
 		background-color: $color-input-background;
+	}
+
+	&-clear {
+		position: absolute;
+		right: 0;
+		bottom: 0;
 	}
 }

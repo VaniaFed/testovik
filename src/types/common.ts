@@ -25,8 +25,6 @@ export interface DropdownItem {
 	value: QuestionType;
 }
 
-export type ActionError = PayloadAction<string>;
-
 export type ButtonVariant =
 	| 'accent'
 	| 'positive'

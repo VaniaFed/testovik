@@ -1,1 +1,1 @@
-export { Sort as Cross } from './sort';
+export { Sort } from './sort';

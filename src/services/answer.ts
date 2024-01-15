@@ -1,17 +1,10 @@
 import { axiosProxy } from '@/utils/axios';
-import {
-	UpdateAnswersSuccessPayload,
-	type CreateAnswerPayload,
-	type CreateAnswersSuccessPayload,
-	type UpdateAnswerPayload,
-	Answer,
-} from '@/reduxjs/modules/tests';
+import { UpdateAnswersSuccessPayload, type CreateAnswerPayload, Answer } from '@/reduxjs/modules/tests';
 
 interface MoveAnswerRequest {
 	id: number;
 	position: number;
 }
-// TODO: Response !== SuccessPayload. надо типизировать отдельно. хотя может и нет
 
 export const answerApi = {
 	create: async ({ answer, questionId }: CreateAnswerPayload) =>
