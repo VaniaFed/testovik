@@ -14,7 +14,7 @@ import { Stack } from '@/components/layout/stack';
 import { Question } from '@/components/ui/question';
 import { ModalAction } from '@/components/ui/modal/modal-action';
 import { useRouter } from 'next/navigation';
-import styles from './test-page.module.scss';
+import styles from './edit-test-page.module.scss';
 import type { ChangeEvent, FC } from 'react';
 import type { Question as IQuestion } from '@/reduxjs/modules/tests';
 import type { DropdownItem } from '@/types/common';
@@ -22,7 +22,7 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const TestPage: FC<Props> = ({ params: { id }, className }) => {
+export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 	const [mode, setMode] = useState<'create' | 'edit'>('create');
 	const [question, setQuestion] = useState<IQuestion | null>(null);
 	const [questionType, setQuestionType] = useState<DropdownItem>(questionTypeDropdownItems[0]);
