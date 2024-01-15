@@ -15,10 +15,6 @@
 	backdrop-filter: blur(6px);
 	border: none;
 
-	&:active {
-		outline: none;
-	}
-
 	&::after {
 		content: '';
 		position: fixed;

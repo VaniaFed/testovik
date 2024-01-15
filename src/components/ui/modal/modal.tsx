@@ -1,5 +1,6 @@
 'use client';
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
+import { createPortal } from 'react-dom';
 import classNames from 'classnames/bind';
 import { BoxContainer } from '@/components/layout/box-container';
 import { IconButton } from '@/components/ui/icon-button';
@@ -15,7 +16,7 @@ export const Modal: FC<Props> = ({ header, children, footer, closable = false, c
 	const ref = useRef<HTMLDivElement>(null);
 	useClickOutside(ref, closeModal);
 
-	return (
+	return createPortal(
 		<div className={cx('modal', className)}>
 			<BoxContainer className={cx('modal__container')}>
 				<div className={cx('modal__inner')} ref={ref}>
@@ -29,6 +30,7 @@ export const Modal: FC<Props> = ({ header, children, footer, closable = false, c
 					<footer className={cx('modal__footer')}>{footer}</footer>
 				</div>
 			</BoxContainer>
-		</div>
+		</div>,
+		document.body,
 	);
 };
