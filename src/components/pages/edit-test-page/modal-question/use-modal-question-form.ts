@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { ModalQuestionProps } from '@/components/ui/modal/modal-question/props';
+import { ModalQuestionProps } from '@/components/pages/edit-test-page/modal-question/props';
 import {
 	checkIfAnswerWasCreated,
 	getValidationMessage,
 	validateUpdateAnswers,
-} from '@/components/ui/modal/modal-question/validation';
+} from '@/components/pages/edit-test-page/modal-question/validation';
 import { useAppDispatch } from '@/reduxjs/hooks';
 import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
 import type { Answer } from '@/reduxjs/modules/tests';
@@ -147,7 +147,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 	};
 
 	const onFormSubmit = (formData: FormFields) => {
-		const errorMessage = getValidationMessage(formData, questionType, mode);
+		const errorMessage = getValidationMessage(formData, questionType);
 
 		if (errorMessage) {
 			setFormError(errorMessage);

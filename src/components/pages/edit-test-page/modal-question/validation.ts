@@ -1,9 +1,8 @@
-import type { ModalMode } from '@/types/common';
 import type { QuestionType } from '@/reduxjs/modules/tests';
-import type { FormFields } from '@/components/ui/modal/modal-question/use-modal-question-form';
+import type { FormFields } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import type { Answer } from '@/reduxjs/modules/tests';
 
-export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType, mode: ModalMode) => {
+export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType) => {
 	let errorMessage = '';
 
 	if ((questionType !== 'number' && !answers) || !answers?.length) {

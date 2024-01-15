@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Dropdown } from '@/components/ui/dropdown';
 import { useModal } from '@/hooks/use-modal';
 import { questionTypeDropdownItems } from '@/utils/data';
-import { ModalQuestion } from '@/components/ui/modal/modal-question/modal-question';
+import { ModalQuestion } from '@/components/pages/edit-test-page/modal-question/modal-question';
 import { Stack } from '@/components/layout/stack';
 import { Question } from '@/components/ui/question';
 import { ModalAction } from '@/components/ui/modal/modal-action';
