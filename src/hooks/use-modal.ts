@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface UseModal {
 	isModalShown: boolean;
@@ -16,6 +16,17 @@ export function useModal(shownByDefault: boolean = false): UseModal {
 	const hideModal = (): void => {
 		setIsModalShown(false);
 	};
+
+	useEffect(() => {
+		const closeOnEsc = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') {
+				hideModal();
+			}
+		};
+		window.addEventListener('keydown', closeOnEsc);
+
+		return () => window.removeEventListener('keydown', closeOnEsc);
+	}, []);
 
 	return {
 		isModalShown,
