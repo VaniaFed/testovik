@@ -5,4 +5,5 @@ export interface Props {
 	tests: Test[];
 	user: User;
 	className?: string;
+	onItemClick: (test: Test) => void;
 }

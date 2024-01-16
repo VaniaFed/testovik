@@ -9,7 +9,7 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const TestsList: FC<Props> = ({ tests, user, className }) => {
+export const TestsList: FC<Props> = ({ tests, user, className, onItemClick }) => {
 	return (
 		<Stack className={cx('tests-page__list', className)}>
 			{tests && tests.length ? (
@@ -20,6 +20,11 @@ export const TestsList: FC<Props> = ({ tests, user, className }) => {
 						questionNumber={test.questions.length}
 						key={key}
 						canEdit={user ? user.is_admin : false}
+						onClick={(e) => {
+							e.preventDefault();
+
+							onItemClick(test);
+						}}
 					/>
 				))
 			) : (

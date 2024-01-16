@@ -11,10 +11,10 @@ import type { Props } from './props';
 const cx = classNames.bind(styles);
 
 export const ModalAction: FC<Props> = ({
-	title,
-	subtitle,
-	actionText,
-	primaryButtonVariant,
+	title = '',
+	subtitle = '',
+	actionText = '',
+	primaryButtonVariant = 'accent',
 	className,
 	onAction,
 	close,

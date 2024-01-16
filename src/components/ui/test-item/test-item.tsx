@@ -7,17 +7,23 @@ import { Stack } from '@/components/layout/stack';
 import styles from './test-item.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
+import { Button } from '@/components/ui/button';
 
 const cx = classNames.bind(styles);
 
-export const TestItem: FC<Props> = ({ title, testId, questionNumber, canEdit = false, className }) => {
+export const TestItem: FC<Props> = ({
+	title,
+	testId,
+	questionNumber,
+	canEdit = false,
+	className,
+	onClick = () => {},
+}) => {
 	return (
 		<li className={cx('test-item', className)}>
-			<Link href={`/tests/${testId}`} level="h3" color="black">
-				<Heading size="2" className={cx('test-item__title')}>
-					{title}
-				</Heading>
-			</Link>
+			<Button variant="text_black" onClick={onClick} className={cx('test-item__title')}>
+				<Heading size="2">{title}</Heading>
+			</Button>
 			<Stack direction="row" gap="9">
 				<Label className={cx('test-item__question-number')}>{questionNumber} вопросов</Label>
 				{canEdit && (
