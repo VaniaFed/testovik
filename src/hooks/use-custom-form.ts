@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { SignInPayload, SignUpPayload } from '@/reduxjs/modules/auth';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 export const useCustomForm = (schema: yup.ObjectShape) => {
 	const [formError, setFormError] = useState('');
@@ -21,7 +21,7 @@ export const useCustomForm = (schema: yup.ObjectShape) => {
 	});
 
 	// TODO: get rid of any
-	const onFormSubmit = (e: React.FormEvent, onSubmit: (formData: SignUpPayload | SignInPayload | any) => void) => {
+	const onFormSubmit = (e: FormEvent, onSubmit: (formData: SignUpPayload | SignInPayload | any) => void) => {
 		e.preventDefault();
 		handleSubmit(onSubmit)();
 	};

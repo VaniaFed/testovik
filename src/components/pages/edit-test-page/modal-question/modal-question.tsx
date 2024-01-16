@@ -15,7 +15,7 @@ import { DragDots } from '@/components/ui/icons/drag-dots';
 import { Stack } from '@/components/layout/stack';
 import { useModalQuestionForm } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import styles from './modal-question.module.scss';
-import type { ChangeEvent, FC } from 'react';
+import type { ChangeEvent, FC, FocusEvent } from 'react';
 import type { ModalQuestionProps } from './props';
 
 const cx = classNames.bind(styles);

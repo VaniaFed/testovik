@@ -7,7 +7,7 @@ import { Login } from '@/components/ui/login';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { logOut, selectUser } from '@/reduxjs/modules/auth';
 import styles from './header.module.scss';
-import type { FC } from 'react';
+import type { FC, MouseEvent } from 'react';
 import type { Props } from './props';
 
 const cx = classNames.bind(styles);
@@ -17,7 +17,7 @@ export const Header: FC<Props> = ({ className }) => {
 
 	const dispatch = useAppDispatch();
 
-	const onLogOut = (e: React.MouseEvent) => {
+	const onLogOut = (e: MouseEvent) => {
 		e.preventDefault();
 
 		dispatch(logOut());
