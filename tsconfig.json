@@ -29,8 +29,10 @@
 		"paths": {
 			"@/*": ["./src/*"],
 			"@/components/": ["./src/components"],
+			"@/hooks/": ["./src/hooks"],
+			"@/reduxjs/": ["./src/reduxjs"],
 			"@/utils/": ["./src/utils"],
-			"@/hooks/": ["./src/hooks"]
+			"@/mocks/": ["./src/mocks"]
 		},
 		"strictNullChecks": true,
 		"strictFunctionTypes": true
