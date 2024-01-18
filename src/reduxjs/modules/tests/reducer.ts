@@ -1,6 +1,5 @@
-import { findIndexById } from './../../../utils/redux-helpers';
 import { createSlice } from '@reduxjs/toolkit';
-import { deleteById, updateById } from '@/utils/redux-helpers';
+import { findIndexById, deleteById, updateById } from '@/utils/redux-helpers';
 import type { ActionError } from '@/reduxjs/common/types';
 import type {
 	CreateTestSuccess,
@@ -59,11 +58,11 @@ export const testsSlice = createSlice({
 
 		updateTestSuccess(state, action: UpdateTestSuccess) {
 			const { id, title } = action.payload;
-			updateById(state.list, id, { title });
+			state.list = updateById(state.list, id, { title });
 		},
 
 		deleteTestSuccess(state, action: DeleteTestSuccess) {
-			deleteById(state.list, action.payload.id);
+			state.list = deleteById(state.list, action.payload.id);
 		},
 
 		createQuestionSuccess(state, action: CreateQuestionSuccess) {
@@ -74,14 +73,14 @@ export const testsSlice = createSlice({
 		updateQuestionSuccess(state, action: UpdateQuestionSuccess) {
 			const { question } = action.payload;
 			if (state.currentTest) {
-				updateById(state.currentTest.questions, question.id, question);
+				state.currentTest.questions = updateById(state.currentTest.questions, question.id, question);
 				state.status = 'SUCCEEDED';
 			}
 		},
 
 		deleteQuestionSuccess(state, action: DeleteQuestionSuccess) {
 			if (state.currentTest) {
-				deleteById(state.currentTest.questions, action.payload.id);
+				state.currentTest.questions = deleteById(state.currentTest.questions, action.payload.id);
 				state.status = 'SUCCEEDED';
 			}
 		},
@@ -96,7 +95,11 @@ export const testsSlice = createSlice({
 			const { answer, questionId } = action.payload;
 			if (state.currentTest) {
 				const targetQuestionId = findIndexById(state.currentTest.questions, questionId);
-				updateById(state.currentTest.questions[targetQuestionId].answers, answer.id, answer);
+				state.currentTest.questions[targetQuestionId].answers = updateById(
+					state.currentTest.questions[targetQuestionId].answers,
+					answer.id,
+					answer,
+				);
 			}
 		},
 
@@ -104,7 +107,10 @@ export const testsSlice = createSlice({
 			const { id, questionId } = action.payload;
 			if (state.currentTest) {
 				const targetQuestionId = findIndexById(state.currentTest.questions, questionId);
-				deleteById(state.currentTest.questions[targetQuestionId].answers, id);
+				state.currentTest.questions[targetQuestionId].answers = deleteById(
+					state.currentTest.questions[targetQuestionId].answers,
+					id,
+				);
 			}
 		},
 	},

@@ -1,9 +1,16 @@
+import type { Status } from '@/types/common';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface User {
-	id: string;
+	id: number;
 	username: string;
 	is_admin: boolean;
+}
+
+export interface AuthState {
+	user: User | undefined | null;
+	status: Status;
+	error?: string;
 }
 
 export interface SignInPayload {

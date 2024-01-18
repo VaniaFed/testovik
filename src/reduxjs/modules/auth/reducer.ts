@@ -1,14 +1,7 @@
 import { SignUpSuccess, SignInSuccess, FetchUserSuccess, LogOutSuccess } from './types';
 import { createSlice } from '@reduxjs/toolkit';
 import type { ActionError } from '@/reduxjs/common/types';
-import type { User } from '@/reduxjs/modules/auth/types';
-import type { Status } from '@/types/common';
-
-export interface AuthState {
-	user: User | undefined | null;
-	status: Status;
-	error?: string;
-}
+import type { AuthState } from '@/reduxjs/modules/auth/types';
 
 const initialState: AuthState = {
 	user: undefined,

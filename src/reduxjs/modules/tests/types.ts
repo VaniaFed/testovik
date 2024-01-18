@@ -12,7 +12,7 @@ export interface Answer {
 export interface Question {
 	readonly id: number;
 	title: string;
-	answer?: number;
+	answer: number | null;
 	answers: Answer[];
 	question_type: QuestionType;
 }
@@ -71,7 +71,7 @@ export interface UpdateTestPayload {
 	id: number;
 }
 
-export interface UpdateTestSuccessPayload extends Test {}
+export interface UpdateTestSuccessPayload extends Pick<Test, 'id' | 'title'> {}
 
 export interface CreateQuestionPayload {
 	testId: number;
