@@ -18,7 +18,7 @@ export const SingleAnswer: FC<Props> = ({ question, errMessage, className, mode,
 					<Radio
 						name={String(question.id)}
 						disabled={mode === 'edit'}
-						defaultChecked={mode === 'edit' && answer.is_right}
+						checked={mode === 'edit' && answer.is_right}
 						onChange={() => handleChange && handleChange(question.id, answer.id)}>
 						{answer.text}
 					</Radio>
