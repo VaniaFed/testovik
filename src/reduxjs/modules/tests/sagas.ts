@@ -139,9 +139,15 @@ export function* updateQuestionSaga(action: UpdateQuestionRequest) {
 		onSuccess: updateQuestionSuccess,
 		onFailure: setError,
 		callback: function* () {
-			yield put(deleteAnswers({ id: answersToDelete, questionId: question.id }));
-			yield put(createAnswers({ answers: answersToAdd, questionId: question.id }));
-			yield put(updateAnswers({ answers: answersToUpdate, questionId: question.id }));
+			if (answersToDelete.length) {
+				yield put(deleteAnswers({ id: answersToDelete, questionId: question.id }));
+			}
+			if (answersToAdd.length) {
+				yield put(createAnswers({ answers: answersToAdd, questionId: question.id }));
+			}
+			if (answersToUpdate.length) {
+				yield put(updateAnswers({ answers: answersToUpdate, questionId: question.id }));
+			}
 		},
 	});
 }

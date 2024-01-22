@@ -42,7 +42,7 @@ export const ModalResults: FC<Props> = ({ results, close, className }) => {
 				close();
 			}}>
 			<Subtitle style="light" className={cx('modal-results__subtitle')}>
-				{results.wrongQuestions.length > 0 ? 'Вопросы, которые можно улучшить:' : 'Вы успешно прошли тест!'}
+				{results.wrongQuestions.length ? 'Вопросы, которые можно улучшить:' : 'Вы успешно прошли тест!'}
 			</Subtitle>
 			{results.wrongQuestions.map((question) => (
 				<Paragraph key={question.id}>{question.title}</Paragraph>

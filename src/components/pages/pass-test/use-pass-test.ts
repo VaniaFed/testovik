@@ -52,7 +52,7 @@ export const usePassTest = (id: string) => {
 	const handleSubmit = () => {
 		setAnswers((prev) => [
 			...prev.map((answer) => {
-				if (!answer.userAnswer || (answer.userAnswer as number[]).length === 0) {
+				if (!answer.userAnswer || !(answer.userAnswer as number[]).length) {
 					return { ...answer, error: 'На вопросы нужно отвечать' };
 				}
 				return { ...answer, error: '' };

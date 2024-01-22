@@ -1,5 +1,5 @@
 import type { QuestionType } from '@/reduxjs/modules/tests';
-import type { FormFields } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
+import type { AnswerField, FormFields } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import type { Answer } from '@/reduxjs/modules/tests';
 
 export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType) => {
@@ -14,7 +14,7 @@ export const getValidationMessage = ({ answers }: FormFields, questionType: Ques
 	if (questionType === 'single' || questionType === 'multiple') {
 		if (answers.length < 2) {
 			errorMessage = 'Вопрос не может содержать менее 2-х вариантов ответа';
-		} else if (correctAnswers.length === 0) {
+		} else if (!correctAnswers.length) {
 			errorMessage = 'Вопрос не может не иметь правильных вариантов ответа';
 		}
 	}
@@ -33,13 +33,15 @@ export const getValidationMessage = ({ answers }: FormFields, questionType: Ques
 
 	return errorMessage;
 };
-
-export const checkIfAnswerWasDeleted = (answer: Answer, answersToDelete: Answer['id'][]) =>
+export const checkIfAnswerWasDeletedWhileEditing = (answer: Answer | AnswerField, answersToDelete: Answer['id'][]) =>
 	answersToDelete.some((delAnswer) => delAnswer === answer.id);
 
-export const checkIfAnswerWasCreated = (answer: Partial<Answer>) => answer.id === undefined;
+export const checkIfAnswerWasCreatedWhileEditing = (answer: AnswerField) => !('answerId' in answer);
 
-export const validateUpdateAnswers = (answers: Answer[], answersToDelete: Answer['id'][]) =>
-	answers.filter(
-		(updAnswer) => !checkIfAnswerWasDeleted(updAnswer, answersToDelete) && !checkIfAnswerWasCreated(updAnswer),
-	);
+export const prepareAnswersToUpdate = (answers: Answer[], answersToDelete: Answer['id'][]) =>
+	answers.filter((updAnswer) => !checkIfAnswerWasDeletedWhileEditing(updAnswer, answersToDelete));
+
+export const prepareAnswersToAdd = (answers: AnswerField[]) =>
+	answers
+		.filter(checkIfAnswerWasCreatedWhileEditing)
+		.map((answer) => ({ text: answer.text, is_right: answer.is_right })) as Omit<Answer, 'id'>[];

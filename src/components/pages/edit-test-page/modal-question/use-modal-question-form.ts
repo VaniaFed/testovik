@@ -1,16 +1,18 @@
-import { useState } from 'react';
+import { InputChangeEvent, ModalMode, TestMode } from './../../../../types/common';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ModalQuestionProps } from '@/components/pages/edit-test-page/modal-question/props';
 import {
-	checkIfAnswerWasCreated,
 	getValidationMessage,
-	validateUpdateAnswers,
+	prepareAnswersToAdd,
+	prepareAnswersToUpdate,
 } from '@/components/pages/edit-test-page/modal-question/validation';
 import { useAppDispatch } from '@/reduxjs/hooks';
 import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
-import type { Answer } from '@/reduxjs/modules/tests';
+import type { Answer, Question } from '@/reduxjs/modules/tests';
+import { updateById } from '@/utils/redux-helpers';
 
 const schema = yup
 	.object({
@@ -21,6 +23,8 @@ const schema = yup
 			.required('Это обязательное поле'),
 		answers: yup.array().of(
 			yup.object({
+				// react-hook-form uses its own << id >> field,
+				// so in order to have answer id remembered, we define << answerId >>
 				answerId: yup.number(),
 				text: yup
 					.string()
@@ -36,13 +40,15 @@ const schema = yup
 
 export interface FormFields extends yup.InferType<typeof schema> {}
 
+export type AnswerField = Pick<Answer, 'is_right' | 'text'> & { id: string; answerId?: number };
+
 type UseModalQuestionForm = Pick<ModalQuestionProps, 'mode' | 'question' | 'questionType' | 'testId' | 'close'>;
 
 export const useModalQuestionForm = ({ mode, question, questionType, testId, close }: UseModalQuestionForm) => {
 	const getAnswersDefaultValues = () => {
 		return questionType === 'number'
 			? []
-			: question?.answers && question.answers.length > 0
+			: question?.answers && question.answers.length
 				? question?.answers.map((answer) => ({ ...answer, answerId: answer.id }))
 				: [
 						{
@@ -54,7 +60,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 	const defaultValues = {
 		question: mode === 'edit' ? question?.title : '',
-		answer: question?.answer || 0,
+		answer: question?.answer || undefined,
 		answers: getAnswersDefaultValues(),
 	};
 
@@ -62,6 +68,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		register,
 		handleSubmit,
 		getValues,
+		setValue,
 		formState: { errors },
 		control,
 	} = useForm<FormFields>({
@@ -84,21 +91,35 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 	const handleSetAnswersToUpdate = (answer: Answer) => {
 		setAnswersToUpdate((oldAnswers) => {
-			const isAnswersEmpty = oldAnswers.length === 0;
+			const isAnswersEmpty = !oldAnswers.length;
 			const isNewAnswer = !oldAnswers.some((ans) => ans.id === answer.id);
 
 			if (isAnswersEmpty || isNewAnswer) {
 				return [...oldAnswers, answer];
 			}
 
-			// FIXME: можно было заюзать функции из redux-helpers, только для этого их нужно сделать чистыми
-			// return updateItemById: function (array, item, id): []
-			return [
-				...oldAnswers.map((ans) => {
-					const isTargetAnswer = ans.id === answer.id;
-					return isTargetAnswer ? { ...ans, ...answer } : ans;
-				}),
-			];
+			return updateById(oldAnswers, answer.id, answer);
+		});
+	};
+
+	const handleUpdateAnswer = (
+		mode: ModalMode,
+		answer: Answer,
+		index: number,
+		question: Question | null | undefined,
+	) => {
+		if (mode !== 'edit' || !question || !answer.id) {
+			return;
+		}
+
+		handleSetAnswersToUpdate(answer);
+
+		// it saves values to form state
+		// if remove, changing << is_right >> after changing << text >> will set << text >> to the previous value and vice versa
+		update(index, {
+			answerId: answer.id,
+			text: answer.text,
+			is_right: answer.is_right,
 		});
 	};
 
@@ -110,12 +131,13 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 				question: {
 					title: formData.question,
 					question_type: questionType,
-					answer: formData.answer,
+					answer: formData.answer as number,
 					answers: formData.answers as Answer[],
 				},
 				testId,
 			}),
 		);
+
 		close();
 	};
 
@@ -124,21 +146,19 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 			return;
 		}
 
-		// TODO: extract to validation
-		const answersToAdd = getValues()
-			.answers?.filter(checkIfAnswerWasCreated)
-			.map((answer) => ({ text: answer.text, is_right: answer.is_right })) as Omit<Answer, 'id'>[];
+		const answersToAdd = prepareAnswersToAdd(getValues().answers as AnswerField[]);
+		const _answersToUpdate = prepareAnswersToUpdate(answersToUpdate, answersToDelete);
 
 		dispatch(
 			updateQuestion({
 				question: {
 					id: question.id,
 					title: formData.question,
-					answer: formData.answer,
+					answer: formData.answer as number,
 					question_type: questionType,
 				},
 				answersToAdd,
-				answersToUpdate: validateUpdateAnswers(answersToUpdate, answersToDelete),
+				answersToUpdate: _answersToUpdate,
 				answersToDelete,
 			}),
 		);
@@ -159,14 +179,15 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 	};
 
 	return {
+		register,
 		onFormSubmit,
 		getValues,
-		register,
+		setValue,
 		append,
 		update,
 		remove,
 		handleSubmit,
-		handleSetAnswersToUpdate,
+		handleUpdateAnswer,
 		handleSetAnswersToDelete,
 		fields,
 		formError,

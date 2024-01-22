@@ -15,30 +15,32 @@ import { DragDots } from '@/components/ui/icons/drag-dots';
 import { Stack } from '@/components/layout/stack';
 import { useModalQuestionForm } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import styles from './modal-question.module.scss';
-import type { ChangeEvent, FC, FocusEvent } from 'react';
+import type { FC } from 'react';
 import type { ModalQuestionProps } from './props';
+import type { Answer } from '@/reduxjs/modules/tests';
+import type { InputChangeEvent, InputFocusEvent } from '@/types/common';
 
 const cx = classNames.bind(styles);
 
 export const ModalQuestion: FC<ModalQuestionProps> = ({
 	mode,
 	question,
-	questionType: tempQuestionType,
+	questionType: _questionType,
 	testId,
 	close,
 	className,
 }) => {
-	const questionType = question?.question_type || tempQuestionType;
+	// in create mode there is no << question >>
+	const questionType = question?.question_type || _questionType;
 
 	const {
 		register,
 		append,
 		remove,
-		update,
 		getValues,
 		onFormSubmit,
 		handleSubmit,
-		handleSetAnswersToUpdate,
+		handleUpdateAnswer,
 		handleSetAnswersToDelete,
 		fields,
 		formError,
@@ -67,7 +69,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 					{questionType !== 'number' && (
 						<Button
 							type="button"
-							onClick={() => append({ text: '' })}
+							onClick={() => append({ text: '', is_right: false })}
 							startIcon={<PlusBold color="white" />}
 							variant="secondary">
 							Добавить ответ
@@ -109,32 +111,21 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 											</IconButton>
 											<Checkbox
 												{...register(`answers.${index}.is_right`, {
-													onChange:
-														mode === 'edit'
-															? (e: ChangeEvent) => {
-																	const isRight = (e.target as HTMLInputElement)
-																		.checked;
-																	handleSetAnswersToUpdate({
-																		id: field.answerId as number,
-																		is_right: isRight,
-																		text: field.text,
-																	});
-																	// TODO: setValue instead?
-
-																	update(index, {
-																		answerId: field.answerId,
-																		text: field.text,
-																		is_right: isRight,
-																	});
-																}
-															: () => {},
+													onChange: (e: InputChangeEvent) => {
+														const answer: Answer = {
+															id: field.answerId as number,
+															text: field.text,
+															is_right: e.target.checked as boolean,
+														};
+														handleUpdateAnswer(mode, answer, index, question);
+													},
 												})}
 												_size="18"
 											/>
 										</>
 									}
 									rightContent={
-										getValues().answers!.length > 1 && (
+										getValues().answers!.length >= 2 && (
 											<IconButton
 												zeroSpacing
 												onClick={() => {
@@ -152,24 +143,18 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 										placeholder="Введите ответ..."
 										id={`question-form-answer-${field.id}`}
 										{...register(`answers.${index}.text`, {
-											onBlur:
-												mode === 'edit'
-													? (e: FocusEvent) => {
-															const value = (e.target as HTMLInputElement).value;
-															if (field.text !== value) {
-																handleSetAnswersToUpdate({
-																	id: field.answerId as number,
-																	is_right: field.is_right as boolean,
-																	text: value,
-																});
-																update(index, {
-																	answerId: field.answerId,
-																	text: value,
-																	is_right: field.is_right,
-																});
-															}
-														}
-													: () => {},
+											onBlur: (e: InputFocusEvent) => {
+												if (e.target.value === field.text) {
+													return;
+												}
+
+												const answer: Answer = {
+													id: field.answerId as number,
+													text: e.target.value,
+													is_right: field.is_right as boolean,
+												};
+												handleUpdateAnswer(mode, answer, index, question);
+											},
 										})}
 									/>
 								</Field>

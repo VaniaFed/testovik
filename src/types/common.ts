@@ -1,4 +1,4 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
+import type { ChangeEvent } from 'react';
 import type { QuestionType } from '@/reduxjs/modules/tests';
 
 export type Status = 'IDLE' | 'PENDING' | 'FAILED' | 'SUCCEEDED';
@@ -34,3 +34,6 @@ export type ButtonVariant =
 	| 'text_black'
 	| 'text_accent'
 	| 'text_negative';
+
+export type InputChangeEvent = ChangeEvent & { target: HTMLInputElement };
+export type InputFocusEvent = ChangeEvent & { target: HTMLInputElement };

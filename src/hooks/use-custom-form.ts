@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import { SignInPayload, SignUpPayload } from '@/reduxjs/modules/auth';
 import { FormEvent, useState } from 'react';
 
+// TODO: authForm
 export const useCustomForm = (schema: yup.ObjectShape) => {
 	const [formError, setFormError] = useState('');
 	const formSchema = yup.object(schema).required();
