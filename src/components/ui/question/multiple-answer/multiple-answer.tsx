@@ -10,7 +10,14 @@ import { ErrorLabel } from '@/components/ui/error-label';
 
 const cx = classNames.bind(styles);
 
-export const MultipleAnswer: FC<Props> = ({ question, mode, errMessage, handleChange, className }) => {
+export const MultipleAnswer: FC<Props> = ({
+	question,
+	mode,
+	errMessage,
+	className,
+	handleChange,
+	checkIfAnswerChecked = () => {},
+}) => {
 	return (
 		<Stack className={cx('multiple-answer', className)}>
 			{question.answers.map((answer, index) => (
@@ -18,7 +25,7 @@ export const MultipleAnswer: FC<Props> = ({ question, mode, errMessage, handleCh
 					<Checkbox
 						_size="18"
 						disabled={mode === 'edit'}
-						checked={mode === 'edit' && answer.is_right}
+						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked(answer.id)}
 						onChange={() => handleChange && handleChange(question.id, answer.id)}>
 						{answer.text}
 					</Checkbox>

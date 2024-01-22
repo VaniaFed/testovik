@@ -19,8 +19,10 @@ export const Question: FC<Props> = ({
 	bottomContent,
 	className,
 	handleAnswerChange,
-	getAnswer,
+	checkIfAnswerChecked = () => () => {},
+	getAnswer = () => {},
 }) => {
+	const errorMsg = getAnswer(question.id)?.error;
 	return (
 		<Stack className={cx('question', className)} gap="18">
 			<Heading size="3" className={cx('question-list__heading')}>
@@ -29,22 +31,24 @@ export const Question: FC<Props> = ({
 			{question.question_type === 'number' ? (
 				<NumberAnswer
 					question={question}
-					errMessage={getAnswer && getAnswer(question.id)?.error}
+					errMessage={errorMsg}
 					mode={mode}
 					handleChange={handleAnswerChange && handleAnswerChange('number')}
 				/>
 			) : question.question_type === 'multiple' ? (
 				<MultipleAnswer
 					question={question}
-					errMessage={getAnswer && getAnswer(question.id)?.error}
+					errMessage={errorMsg}
 					mode={mode}
+					checkIfAnswerChecked={checkIfAnswerChecked(question.question_type, question.id)}
 					handleChange={handleAnswerChange && handleAnswerChange('multiple')}
 				/>
 			) : (
 				<SingleAnswer
 					question={question}
-					errMessage={getAnswer && getAnswer(question.id)?.error}
+					errMessage={errorMsg}
 					mode={mode}
+					checkIfAnswerChecked={checkIfAnswerChecked(question.question_type, question.id)}
 					handleChange={handleAnswerChange && handleAnswerChange('single')}
 				/>
 			)}

@@ -49,10 +49,30 @@ export const usePassTest = (id: string) => {
 		});
 	};
 
+	const checkIfAnswerChecked = (questionType: QuestionType, questionId: number) => (answerId: number) => {
+		if (!getAnswer) {
+			return;
+		}
+
+		const answer = getAnswer(questionId);
+
+		if (!answer) {
+			return false;
+		}
+
+		return questionType === 'single'
+			? answer.userAnswer === answerId
+			: (answer.userAnswer as number[]).includes(answerId);
+	};
+
 	const handleSubmit = () => {
 		setAnswers((prev) => [
 			...prev.map((answer) => {
-				if (!answer.userAnswer || !(answer.userAnswer as number[]).length) {
+				if (
+					answer.userAnswer === undefined ||
+					!String(answer.userAnswer).length ||
+					(answer.userAnswer as number[]).length === 0
+				) {
 					return { ...answer, error: 'На вопросы нужно отвечать' };
 				}
 				return { ...answer, error: '' };
@@ -118,6 +138,7 @@ export const usePassTest = (id: string) => {
 		answers,
 		getAnswer,
 		handleAnswerChange,
+		checkIfAnswerChecked,
 		handleSubmit,
 		getUserResults,
 		isModalShown,

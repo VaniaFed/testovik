@@ -15,8 +15,17 @@ import type { Props } from './props';
 const cx = classNames.bind(styles);
 
 export const PassTest: FC<Props> = ({ params: { id } }) => {
-	const { test, answers, getAnswer, handleAnswerChange, handleSubmit, getUserResults, isModalShown, hideModal } =
-		usePassTest(id);
+	const {
+		test,
+		answers,
+		getAnswer,
+		handleAnswerChange,
+		checkIfAnswerChecked,
+		handleSubmit,
+		getUserResults,
+		isModalShown,
+		hideModal,
+	} = usePassTest(id);
 
 	return (
 		<div className={cx('pass-test')}>
@@ -31,6 +40,7 @@ export const PassTest: FC<Props> = ({ params: { id } }) => {
 							question={question}
 							userAnswers={answers}
 							handleAnswerChange={handleAnswerChange}
+							checkIfAnswerChecked={checkIfAnswerChecked}
 							getAnswer={getAnswer}
 							lastQuestion={index === test.questions.length - 1}
 						/>
