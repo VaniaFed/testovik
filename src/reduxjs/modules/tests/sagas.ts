@@ -1,4 +1,4 @@
-import { call, fork, put } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import request from '@/reduxjs/helpers/request';
 import { testApi } from '@/services/test';
 import { questionApi } from '@/services/question';
@@ -169,7 +169,7 @@ export function* createAnswersSaga(action: CreateAnswersRequest) {
 	const { questionId, answers } = action.payload;
 
 	for (const answer of answers) {
-		yield fork(createAnswerSaga, { answer, questionId });
+		yield call(createAnswerSaga, { answer, questionId });
 	}
 }
 
@@ -216,7 +216,7 @@ export function* deleteAnswersSaga(action: DeleteAnswersAction) {
 	const { id: answersToDelete, questionId } = action.payload;
 
 	for (const id of answersToDelete) {
-		yield fork(deleteAnswerSaga, { id, questionId });
+		yield call(deleteAnswerSaga, { id, questionId });
 	}
 }
 
