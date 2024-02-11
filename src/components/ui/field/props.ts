@@ -8,4 +8,6 @@ export interface Props {
 	errMessage?: string;
 	className?: string;
 	labelClassName?: string;
+	innerRef?: any;
+	rest?: any[];
 }

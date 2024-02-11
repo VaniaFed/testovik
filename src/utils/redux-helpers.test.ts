@@ -1,7 +1,7 @@
-import { deleteById, findIndexById, findItemById, updateById } from '@/utils/redux-helpers';
+import { deleteById, findIndexById, findItemById, sortItems, updateById } from '@/utils/redux-helpers';
+import type { AbstractObjectWithId } from '@/types/common';
 
-interface SomeObjectWithId {
-	id: number;
+interface SomeObjectWithId extends AbstractObjectWithId {
 	meaningfulTitle: string;
 	userId: number;
 }
@@ -43,6 +43,48 @@ describe('redux helpers', () => {
 			{ id: 3, meaningfulTitle: 'title 3', userId: 4 },
 			{ id: 4, meaningfulTitle: 'title 4', userId: 5 },
 			{ id: 5, meaningfulTitle: 'title 5', userId: 1 },
+		]);
+	});
+
+	it('should return reordered items', () => {
+		expect(sortItems(arrayOfObjectsWithId, 0, 3)).toStrictEqual([
+			{ id: 2, meaningfulTitle: 'title 2', userId: 3 },
+			{ id: 3, meaningfulTitle: 'title 3', userId: 4 },
+			{ id: 4, meaningfulTitle: 'title 4', userId: 5 },
+			{ id: 1, meaningfulTitle: 'title 1', userId: 1 },
+			{ id: 5, meaningfulTitle: 'title 5', userId: 1 },
+		]);
+
+		expect(sortItems(arrayOfObjectsWithId, 2, 4)).toStrictEqual([
+			{ id: 1, meaningfulTitle: 'title 1', userId: 1 },
+			{ id: 2, meaningfulTitle: 'title 2', userId: 3 },
+			{ id: 4, meaningfulTitle: 'title 4', userId: 5 },
+			{ id: 5, meaningfulTitle: 'title 5', userId: 1 },
+			{ id: 3, meaningfulTitle: 'title 3', userId: 4 },
+		]);
+
+		expect(sortItems(arrayOfObjectsWithId, 4, 2)).toStrictEqual([
+			{ id: 1, meaningfulTitle: 'title 1', userId: 1 },
+			{ id: 2, meaningfulTitle: 'title 2', userId: 3 },
+			{ id: 5, meaningfulTitle: 'title 5', userId: 1 },
+			{ id: 3, meaningfulTitle: 'title 3', userId: 4 },
+			{ id: 4, meaningfulTitle: 'title 4', userId: 5 },
+		]);
+
+		expect(sortItems(arrayOfObjectsWithId, 4, 3)).toStrictEqual([
+			{ id: 1, meaningfulTitle: 'title 1', userId: 1 },
+			{ id: 2, meaningfulTitle: 'title 2', userId: 3 },
+			{ id: 3, meaningfulTitle: 'title 3', userId: 4 },
+			{ id: 5, meaningfulTitle: 'title 5', userId: 1 },
+			{ id: 4, meaningfulTitle: 'title 4', userId: 5 },
+		]);
+
+		expect(sortItems(arrayOfObjectsWithId, 4, 0)).toStrictEqual([
+			{ id: 5, meaningfulTitle: 'title 5', userId: 1 },
+			{ id: 1, meaningfulTitle: 'title 1', userId: 1 },
+			{ id: 2, meaningfulTitle: 'title 2', userId: 3 },
+			{ id: 3, meaningfulTitle: 'title 3', userId: 4 },
+			{ id: 4, meaningfulTitle: 'title 4', userId: 5 },
 		]);
 	});
 

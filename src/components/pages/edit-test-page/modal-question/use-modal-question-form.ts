@@ -1,61 +1,99 @@
-import { InputChangeEvent, ModalMode, TestMode } from './../../../../types/common';
-import { ChangeEvent, FocusEvent, useState } from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { ModalQuestionProps } from '@/components/pages/edit-test-page/modal-question/props';
 import {
 	getValidationMessage,
 	prepareAnswersToAdd,
-	prepareAnswersToUpdate,
+	excludeDeletedAnswers,
 } from '@/components/pages/edit-test-page/modal-question/validation';
 import { useAppDispatch } from '@/reduxjs/hooks';
 import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
-import type { Answer, Question } from '@/reduxjs/modules/tests';
 import { updateById } from '@/utils/redux-helpers';
+import type { OnDragEndResponder } from 'react-beautiful-dnd';
+import type { Answer, MoveAnswerPosition, Question } from '@/reduxjs/modules/tests';
+import type { ModalMode } from '@/types/common';
 
+// TODO: пытался
 const schema = yup
-	.object({
-		question: yup
-			.string()
-			.min(3, 'Поле слишком короткое')
-			.max(90, 'Поле слишком длинное')
-			.required('Это обязательное поле'),
-		answers: yup.array().of(
-			yup.object({
-				// react-hook-form uses its own << id >> field,
-				// so in order to have answer id remembered, we define << answerId >>
-				answerId: yup.number(),
-				text: yup
-					.string()
-					.min(1, 'Поле слишком короткое')
-					.max(90, 'Поле слишком длинное')
-					.required('Это обязательное поле'),
-				is_right: yup.boolean(),
+	.object()
+	.shape(
+		{
+			question: yup
+				.string()
+				.min(3, 'Поле слишком короткое')
+				.max(90, 'Поле слишком длинное')
+				.required('Это обязательное поле'),
+			answers: yup
+				.array()
+				.of(
+					yup.object({
+						text: yup
+							.string()
+							.min(1, 'Поле слишком короткое')
+							.max(90, 'Поле слишком длинное')
+							.required('Это обязательное поле'),
+						is_right: yup.boolean().required(),
+						// react-hook-form uses its own <<id>> field,
+						// so in order to have answer id remembered, we define <<answerId>>
+						answerId: yup.number().notRequired(),
+						position: yup
+							.object({
+								source: yup.number().required(),
+								destination: yup.number().required(),
+							})
+							.notRequired(),
+					}),
+				)
+				.when('answer', {
+					is: (answer: number | undefined) => answer === undefined,
+					then: (schema) => schema.required('Это обязательное поле'),
+				}),
+			answer: yup.number().when('answers', {
+				is: (answers: AnswerField[]) => !answers || !answers.length,
+				then: (schema) => schema.required('Это обязательное поле'),
 			}),
-		),
-		answer: yup.number(),
-	})
+		},
+		[['answer', 'answers']],
+	)
 	.required();
 
-export interface FormFields extends yup.InferType<typeof schema> {}
+export type FormFields = yup.InferType<typeof schema>;
 
-export type AnswerField = Pick<Answer, 'is_right' | 'text'> & { id: string; answerId?: number };
+// зачем это если есть FormFields type?
+export type AnswerField = Pick<Answer, 'is_right' | 'text'> & {
+	id: string;
+	answerId?: number;
+	position?: Omit<MoveAnswerPosition, 'id'> | null;
+};
 
 type UseModalQuestionForm = Pick<ModalQuestionProps, 'mode' | 'question' | 'questionType' | 'testId' | 'close'>;
 
 export const useModalQuestionForm = ({ mode, question, questionType, testId, close }: UseModalQuestionForm) => {
 	const getAnswersDefaultValues = () => {
-		return questionType === 'number'
-			? []
-			: question?.answers && question.answers.length
-				? question?.answers.map((answer) => ({ ...answer, answerId: answer.id }))
-				: [
-						{
-							text: '',
-							is_right: false,
-						},
-					];
+		if (questionType === 'number') {
+			return undefined;
+		}
+
+		if (!question) {
+			return [
+				{
+					text: '',
+					is_right: false,
+				},
+				{
+					text: '',
+					is_right: false,
+				},
+			];
+		}
+
+		if (question.answers.length) {
+			return question.answers.map((answer) => ({ ...answer, answerId: answer.id }));
+		}
+
+		return undefined;
 	};
 
 	const defaultValues = {
@@ -69,6 +107,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		handleSubmit,
 		getValues,
 		setValue,
+		setError,
 		formState: { errors },
 		control,
 	} = useForm<FormFields>({
@@ -76,51 +115,88 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		defaultValues,
 	});
 
-	const { fields, append, remove, update, swap } = useFieldArray({
+	const { fields, append, remove, update, move } = useFieldArray({
 		name: 'answers',
 		control,
 	});
 
-	const [formError, setFormError] = useState('');
 	const [answersToUpdate, setAnswersToUpdate] = useState<Answer[]>([]);
+	const [answersToMove, setAnswersToMove] = useState<MoveAnswerPosition[]>([]);
 	const [answersToDelete, setAnswersToDelete] = useState<Answer['id'][]>([]);
+
+	const handleSetAnswersToMove = (position: MoveAnswerPosition) => {
+		setAnswersToMove((prev) => [...prev, position]);
+	};
 
 	const handleSetAnswersToDelete = (id: number) => {
 		setAnswersToDelete((prev) => [...prev, id]);
 	};
 
 	const handleSetAnswersToUpdate = (answer: Answer) => {
-		setAnswersToUpdate((oldAnswers) => {
-			const isAnswersEmpty = !oldAnswers.length;
-			const isNewAnswer = !oldAnswers.some((ans) => ans.id === answer.id);
+		setAnswersToUpdate((prev) => {
+			const isAnswersEmpty = !prev.length;
+			const isNewAnswer = !prev.some((ans) => ans.id === answer.id);
 
 			if (isAnswersEmpty || isNewAnswer) {
-				return [...oldAnswers, answer];
+				return [answer];
 			}
 
-			return updateById(oldAnswers, answer.id, answer);
+			return updateById(prev, answer.id, answer);
 		});
 	};
 
 	const handleUpdateAnswer = (
 		mode: ModalMode,
-		answer: Answer,
+		answer: AnswerField,
 		index: number,
-		question: Question | null | undefined,
+		question: Question | undefined,
 	) => {
-		if (mode !== 'edit' || !question || !answer.id) {
+		if (mode !== 'edit' || !question) {
+			return;
+		}
+		// FIXME: это Answer а не AnswerField но я не уверен
+		console.log(answer);
+		if (answer.id) {
+			handleSetAnswersToUpdate({ id: Number(answer.answerId), is_right: answer.is_right, text: answer.text });
+		}
+
+		// saves values to form state
+		// if remove, changing << is_right >> after changing << text >> will set << text >> to default value and vice versa
+		// if remove, drag&drop causes the same problem
+		update(index, {
+			answerId: answer.answerId ? Number(answer.id) : undefined,
+			text: answer.text,
+			is_right: answer.is_right,
+			position: answer.position,
+		});
+	};
+
+	const handleDrag: OnDragEndResponder = (result) => {
+		const { source, destination } = result;
+		const movedAnswer = fields[source.index];
+
+		if (!destination) {
 			return;
 		}
 
-		handleSetAnswersToUpdate(answer);
+		move(source.index, destination.index);
 
-		// it saves values to form state
-		// if remove, changing << is_right >> after changing << text >> will set << text >> to the previous value and vice versa
-		update(index, {
-			answerId: answer.id,
-			text: answer.text,
-			is_right: answer.is_right,
-		});
+		if (movedAnswer.answerId) {
+			handleSetAnswersToMove({
+				id: movedAnswer.answerId,
+				source: source.index,
+				destination: destination.index,
+			});
+		} else {
+			// после перемещения записываем position
+			update(destination.index, {
+				...movedAnswer,
+				position: {
+					source: source.index,
+					destination: destination.index,
+				},
+			});
+		}
 	};
 
 	const dispatch = useAppDispatch();
@@ -147,7 +223,10 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		}
 
 		const answersToAdd = prepareAnswersToAdd(getValues().answers as AnswerField[]);
-		const _answersToUpdate = prepareAnswersToUpdate(answersToUpdate, answersToDelete);
+		const _answersToUpdate = excludeDeletedAnswers(answersToUpdate, answersToDelete);
+		const _answersToMove = excludeDeletedAnswers<MoveAnswerPosition>(answersToMove, answersToDelete);
+
+		// console.log(answersToAdd);
 
 		dispatch(
 			updateQuestion({
@@ -159,6 +238,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 				},
 				answersToAdd,
 				answersToUpdate: _answersToUpdate,
+				answersToMove: _answersToMove,
 				answersToDelete,
 			}),
 		);
@@ -166,11 +246,11 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		close();
 	};
 
-	const onFormSubmit = (formData: FormFields) => {
+	const onSubmit: SubmitHandler<FormFields> = (formData) => {
 		const errorMessage = getValidationMessage(formData, questionType);
 
 		if (errorMessage) {
-			setFormError(errorMessage);
+			setError('root', { message: errorMessage });
 		} else if (mode === 'create') {
 			handleAddQuestion(formData);
 		} else if (mode === 'edit') {
@@ -180,17 +260,16 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 	return {
 		register,
-		onFormSubmit,
+		onSubmit,
 		getValues,
 		setValue,
 		append,
-		update,
 		remove,
 		handleSubmit,
 		handleUpdateAnswer,
 		handleSetAnswersToDelete,
+		handleDrag,
 		fields,
-		formError,
 		errors,
 	};
 };

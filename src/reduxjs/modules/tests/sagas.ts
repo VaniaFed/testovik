@@ -1,3 +1,4 @@
+import { MoveAnswersSuccess } from './types';
 import { call, put } from 'redux-saga/effects';
 import request from '@/reduxjs/helpers/request';
 import { testApi } from '@/services/test';
@@ -17,6 +18,7 @@ import {
 	updateAnswerSuccess,
 	deleteTestSuccess,
 	updateTestSuccess,
+	moveAnswerSuccess,
 } from '@/reduxjs/modules/tests/actions';
 import {
 	CreateAnswersRequest,
@@ -53,8 +55,11 @@ import {
 	UpdateTestPayload,
 	UpdateTestSuccessPayload,
 	UpdateTestRequest,
+	MoveAnswersAction,
+	MoveAnswerPosition,
+	MoveAnswerPayload,
 } from '@/reduxjs/modules/tests/types';
-import { createAnswers, deleteAnswers, updateAnswers } from '@/reduxjs/modules/tests/async-actions';
+import { createAnswers, deleteAnswers, moveAnswers, updateAnswers } from '@/reduxjs/modules/tests/async-actions';
 
 export function* createTestSaga(action: CreateTestRequest) {
 	yield call(request<CreateTestPayload, CreateTestSuccessPayload>, {
@@ -145,6 +150,9 @@ export function* updateQuestionSaga(action: UpdateQuestionRequest) {
 			if (answersToAdd.length) {
 				yield put(createAnswers({ answers: answersToAdd, questionId: question.id }));
 			}
+			if (answersToMove.length) {
+				yield put(moveAnswers({ positions: answersToMove, questionId: question.id }));
+			}
 			if (answersToUpdate.length) {
 				yield put(updateAnswers({ answers: answersToUpdate, questionId: question.id }));
 			}
@@ -185,6 +193,9 @@ function* createAnswerSaga(payload: CreateAnswerPayload) {
 		onFailure: setError,
 		callback: function* ({ answer }) {
 			yield put(createAnswerSuccess({ answer, questionId }));
+			if (answer.position) {
+				yield put(moveAnswers({ positions: answer.position, questionId }));
+			}
 		},
 	});
 }
@@ -208,6 +219,27 @@ function* updateAnswerSaga(payload: UpdateAnswerPayload) {
 		onFailure: setError,
 		callback: function* ({ answer }) {
 			yield put(updateAnswerSuccess({ answer, questionId }));
+		},
+	});
+}
+
+export function* moveAnswersSaga(action: MoveAnswersAction) {
+	const { positions, questionId } = action.payload;
+
+	for (const position of positions) {
+		yield call(moveAnswerSaga, { position, questionId });
+	}
+}
+
+function* moveAnswerSaga(payload: MoveAnswerPayload) {
+	const { position, questionId } = payload;
+	yield call(request<MoveAnswerPosition, null>, {
+		service: answerApi.move,
+		params: position,
+		setPending,
+		onFailure: setError,
+		callback: function* () {
+			yield put(moveAnswerSuccess({ position, questionId }));
 		},
 	});
 }

@@ -84,10 +84,15 @@ export interface CreateQuestionSuccessPayload {
 
 export interface UpdateQuestionPayload {
 	question: Omit<Question, 'answers'>;
+	/*
+	answersToAdd: Answer & {movePosition}
+
+	
+	*/
 	answersToAdd: Omit<Answer, 'id'>[];
 	answersToUpdate: Answer[];
 	answersToDelete: number[];
-	answersToMove?: MoveAnswerPosition[];
+	answersToMove: MoveAnswerPosition[];
 }
 
 export interface UpdateQuestionSuccessPayload {
@@ -102,7 +107,10 @@ export interface DeleteQuestionSuccessPayload extends DeleteQuestionPayload {}
 
 export interface CreateAnswersPayload {
 	questionId: number;
-	answers: Omit<Answer, 'id'>[];
+	answers: Omit<Answer, 'id'> &
+		{
+			position: MoveAnswerPosition;
+		}[];
 }
 
 export interface CreateAnswerPayload {
@@ -128,16 +136,22 @@ export interface UpdateAnswerPayload {
 export interface UpdateAnswersSuccessPayload extends CreateAnswersSuccessPayload {}
 
 export interface MoveAnswerPosition {
-	answerId: number;
-	position: number;
+	id: number;
+	source: number;
+	destination: number;
 }
 
 export interface MoveAnswersPayload {
 	questionId: number;
-	answerPosition: MoveAnswerPosition;
+	positions: MoveAnswerPosition[];
 }
 
-export interface MoveAnswersSuccessPayload extends MoveAnswersPayload {}
+export interface MoveAnswerPayload {
+	questionId: number;
+	position: MoveAnswerPosition;
+}
+
+export interface MoveAnswersSuccessPayload extends MoveAnswerPayload {}
 
 export interface DeleteAnswersPayload {
 	questionId: number;

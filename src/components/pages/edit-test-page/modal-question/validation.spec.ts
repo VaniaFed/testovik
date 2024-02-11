@@ -2,7 +2,7 @@ import {
 	checkIfAnswerWasCreatedWhileEditing,
 	checkIfAnswerWasDeletedWhileEditing,
 	prepareAnswersToAdd,
-	prepareAnswersToUpdate,
+	excludeDeletedAnswers,
 } from '@/components/pages/edit-test-page/modal-question/validation';
 import type { Answer } from '@/reduxjs/modules/tests';
 import type { AnswerField } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
@@ -58,15 +58,15 @@ describe('add/edit/delete answer logic', () => {
 			},
 		];
 
-		expect(prepareAnswersToUpdate(answers, [1, 2, 3])).toStrictEqual([]);
-		expect(prepareAnswersToUpdate(answers, [1, 3])).toStrictEqual([
+		expect(excludeDeletedAnswers(answers, [1, 2, 3])).toStrictEqual([]);
+		expect(excludeDeletedAnswers(answers, [1, 3])).toStrictEqual([
 			{
 				id: 2,
 				text: '2',
 				is_right: true,
 			},
 		]);
-		expect(prepareAnswersToUpdate(answers, [2])).toStrictEqual([
+		expect(excludeDeletedAnswers(answers, [2])).toStrictEqual([
 			{
 				id: 1,
 				text: '1',
@@ -94,6 +94,15 @@ describe('add/edit/delete answer logic', () => {
 				is_right: true,
 			},
 			{
+				id: '2.5',
+				text: '2.5',
+				is_right: false,
+				position: {
+					source: 1,
+					destination: 4,
+				},
+			},
+			{
 				id: '3',
 				answerId: 3,
 				text: '3',
@@ -104,6 +113,15 @@ describe('add/edit/delete answer logic', () => {
 			{
 				text: '2',
 				is_right: true,
+				position: undefined,
+			},
+			{
+				text: '2.5',
+				is_right: false,
+				position: {
+					source: 1,
+					destination: 4,
+				},
 			},
 		]);
 	});

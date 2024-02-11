@@ -8,18 +8,20 @@ import type { Props } from './props';
 const cx = classNames.bind(styles);
 
 export const Field: FC<Props> = ({
-	children,
 	id,
 	label = '',
+	labelClassName,
+	children,
 	leftContent,
 	rightContent,
 	required,
 	errMessage = '',
 	className,
-	labelClassName,
+	innerRef,
+	...rest
 }) => {
 	return (
-		<div className={cx('field', className)}>
+		<div className={cx('field', className)} ref={innerRef} {...rest}>
 			{!!label && (
 				<Label required={required} htmlFor={id} className={cx('field__label', labelClassName)}>
 					{label}

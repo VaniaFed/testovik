@@ -16,5 +16,6 @@ export const {
 	updateQuestionSuccess,
 	createAnswerSuccess,
 	updateAnswerSuccess,
+	moveAnswerSuccess,
 	deleteAnswerSuccess,
 } = testsSlice.actions;

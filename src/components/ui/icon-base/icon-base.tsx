@@ -6,9 +6,9 @@ import type { IconBaseProps } from './props';
 
 const cx = classNames.bind(styles);
 
-export const IconBase: FC<IconBaseProps> = ({ children, size = 18, color = 'black', className }) => {
+export const IconBase: FC<IconBaseProps> = ({ children, size = 18, color = 'black', className, ...rest }) => {
 	return (
-		<div className={cx('icon-base', `icon-base_size_${size}`, `icon-base_color_${color}`, className)}>
+		<div className={cx('icon-base', `icon-base_size_${size}`, `icon-base_color_${color}`, className)} {...rest}>
 			{children}
 		</div>
 	);

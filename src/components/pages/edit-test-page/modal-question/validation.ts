@@ -1,6 +1,7 @@
 import type { QuestionType } from '@/reduxjs/modules/tests';
 import type { AnswerField, FormFields } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import type { Answer } from '@/reduxjs/modules/tests';
+import { AbstractObjectWithId } from '@/types/common';
 
 export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType) => {
 	let errorMessage = '';
@@ -33,15 +34,22 @@ export const getValidationMessage = ({ answers }: FormFields, questionType: Ques
 
 	return errorMessage;
 };
-export const checkIfAnswerWasDeletedWhileEditing = (answer: Answer | AnswerField, answersToDelete: Answer['id'][]) =>
-	answersToDelete.some((delAnswer) => delAnswer === answer.id);
 
-export const checkIfAnswerWasCreatedWhileEditing = (answer: AnswerField) => !('answerId' in answer);
+export const checkIfAnswerWasDeletedWhileEditing = <T extends AbstractObjectWithId>(
+	answer: T,
+	answersToDelete: Answer['id'][],
+) => answersToDelete.some((delAnswer) => delAnswer === answer.id);
 
-export const prepareAnswersToUpdate = (answers: Answer[], answersToDelete: Answer['id'][]) =>
+export const checkIfAnswerWasCreatedWhileEditing = (answer: AnswerField) =>
+	!('answerId' in answer) || answer.answerId === undefined;
+
+export const excludeDeletedAnswers = <T extends AbstractObjectWithId>(answers: T[], answersToDelete: Answer['id'][]) =>
 	answers.filter((updAnswer) => !checkIfAnswerWasDeletedWhileEditing(updAnswer, answersToDelete));
 
 export const prepareAnswersToAdd = (answers: AnswerField[]) =>
 	answers
 		.filter(checkIfAnswerWasCreatedWhileEditing)
-		.map((answer) => ({ text: answer.text, is_right: answer.is_right })) as Omit<Answer, 'id'>[];
+		.map((answer) => ({ text: answer.text, is_right: answer.is_right, position: answer.position })) as Omit<
+		Answer,
+		'id'
+	>[];

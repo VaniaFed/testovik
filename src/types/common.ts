@@ -37,3 +37,7 @@ export type ButtonVariant =
 
 export type InputChangeEvent = ChangeEvent & { target: HTMLInputElement };
 export type InputFocusEvent = ChangeEvent & { target: HTMLInputElement };
+
+export type AbstractObjectWithId<T = number> = {
+	id: T;
+};

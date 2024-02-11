@@ -8,6 +8,7 @@ import {
 	updateAnswersSaga,
 	deleteTestSaga,
 	updateTestSaga,
+	moveAnswersSaga,
 } from '@/reduxjs/modules/tests/sagas';
 import {
 	CREATE_TEST,
@@ -21,6 +22,7 @@ import {
 	UPDATE_ANSWERS,
 	DELETE_TEST,
 	UPDATE_TEST,
+	MOVE_ANSWERS,
 } from '@/reduxjs/modules/tests/constants';
 import { createTestSaga, fetchAllTestsSaga, fetchTestByIdSaga } from '@/reduxjs/modules/tests/sagas';
 
@@ -35,5 +37,6 @@ export const watcher = [
 	takeLatest(DELETE_QUESTION, deleteQuestionSaga),
 	takeLatest(CREATE_ANSWERS, createAnswersSaga),
 	takeLatest(UPDATE_ANSWERS, updateAnswersSaga),
+	takeLatest(MOVE_ANSWERS, moveAnswersSaga),
 	takeLatest(DELETE_ANSWERS, deleteAnswersSaga),
 ];

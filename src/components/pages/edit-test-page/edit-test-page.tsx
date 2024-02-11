@@ -25,7 +25,7 @@ const cx = classNames.bind(styles);
 export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 	const test = useAppSelector(selectCurrentTest);
 	const [mode, setMode] = useState<'create' | 'edit'>('create');
-	const [question, setQuestion] = useState<IQuestion | null>(null);
+	const [question, setQuestion] = useState<IQuestion | undefined>(undefined);
 	const [questionType, setQuestionType] = useState<DropdownItem>(questionTypeDropdownItems[0]);
 	const [title, setTitle] = useState('');
 	const router = useRouter();
@@ -37,7 +37,7 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 
 	const handleAddQuestion = () => {
 		setMode('create');
-		setQuestion(null);
+		setQuestion(undefined);
 		showEditQuestionModal();
 	};
 

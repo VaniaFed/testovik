@@ -10,7 +10,7 @@ import { useAppDispatch } from '@/reduxjs/hooks';
 import { createTest } from '@/reduxjs/modules/tests';
 import type { FC } from 'react';
 import type { Props } from './props';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 const schema = yup
@@ -23,7 +23,7 @@ const schema = yup
 	})
 	.required();
 
-export interface FormFields extends yup.InferType<typeof schema> {}
+export type FormFields = yup.InferType<typeof schema>;
 
 export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) => {
 	const {
@@ -50,7 +50,7 @@ export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) 
 
 	const dispatch = useAppDispatch();
 
-	const onCreateTest = (formData: FormFields) => {
+	const onSubmit: SubmitHandler<FormFields> = (formData) => {
 		dispatch(createTest({ title: formData.title }));
 		close();
 	};
@@ -64,7 +64,7 @@ export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) 
 			closeModal={() => {
 				close();
 			}}>
-			<Form id="add-test-form" onSubmit={handleSubmit(onCreateTest)}>
+			<Form id="add-test-form" onSubmit={handleSubmit(onSubmit)}>
 				<Field id="test-name" label="Название теста" errMessage={errors.title?.message as string}>
 					<Input id="test-name" placeholder="География 7 класс" autoFocus {...register('title')} />
 				</Field>

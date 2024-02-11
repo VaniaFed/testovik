@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { findIndexById, deleteById, updateById } from '@/utils/redux-helpers';
+import { findIndexById, deleteById, updateById, findItemById, sortItems } from '@/utils/redux-helpers';
 import type { ActionError } from '@/reduxjs/common/types';
 import type {
 	CreateTestSuccess,
@@ -12,6 +12,7 @@ import type {
 	DeleteQuestionSuccess,
 	CreateAnswersSuccess,
 	UpdateAnswersSuccess,
+	MoveAnswersSuccess,
 	DeleteAnswersSuccess,
 	TestsState,
 } from './types';
@@ -100,6 +101,17 @@ export const testsSlice = createSlice({
 					answer.id,
 					answer,
 				);
+			}
+		},
+
+		moveAnswerSuccess(state, action: MoveAnswersSuccess) {
+			const { position, questionId } = action.payload;
+			if (state.currentTest) {
+				const targetQuestion = findItemById(state.currentTest.questions, questionId);
+				if (targetQuestion && targetQuestion.answers) {
+					const sorted = sortItems(targetQuestion.answers, position.source, position.destination);
+					targetQuestion.answers = sorted;
+				}
 			}
 		},
 

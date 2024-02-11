@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
 import { Modal } from '@/components/ui/modal/modal';
 import { Heading } from '@/components/ui/typography/heading';
@@ -12,12 +14,14 @@ import { Cross } from '@/components/ui/icons/cross';
 import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
 import { DragDots } from '@/components/ui/icons/drag-dots';
-import { Stack } from '@/components/layout/stack';
-import { useModalQuestionForm } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
+import {
+	AnswerField,
+	useModalQuestionForm,
+} from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import styles from './modal-question.module.scss';
 import type { FC } from 'react';
 import type { ModalQuestionProps } from './props';
-import type { Answer } from '@/reduxjs/modules/tests';
+import type { MoveAnswerPosition } from '@/reduxjs/modules/tests';
 import type { InputChangeEvent, InputFocusEvent } from '@/types/common';
 
 const cx = classNames.bind(styles);
@@ -35,15 +39,15 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 
 	const {
 		register,
+		handleSubmit,
+		getValues,
 		append,
 		remove,
-		getValues,
-		onFormSubmit,
-		handleSubmit,
+		onSubmit,
 		handleUpdateAnswer,
 		handleSetAnswersToDelete,
+		handleDrag,
 		fields,
-		formError,
 		errors,
 	} = useModalQuestionForm({
 		mode,
@@ -77,7 +81,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 					)}
 				</>
 			}>
-			<Form id="question-form" onSubmit={handleSubmit(onFormSubmit)} formError={formError}>
+			<Form id="question-form" onSubmit={handleSubmit(onSubmit)} formError={errors.root?.message}>
 				<Field id="question-form-question" label="Вопрос" errMessage={errors.question?.message}>
 					<Input
 						id="question-form-question"
@@ -98,70 +102,110 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 							/>
 						</Field>
 					</>
-				) : (
-					<Stack gap="18">
-						{fields.map((field, index) => (
-							<li key={field.id}>
-								<Field
-									id={`question-form-answer-${field.id}`}
-									leftContent={
-										<>
-											<IconButton zeroSpacing>
-												<DragDots />
-											</IconButton>
-											<Checkbox
-												{...register(`answers.${index}.is_right`, {
-													onChange: (e: InputChangeEvent) => {
-														const answer: Answer = {
-															id: field.answerId as number,
-															text: field.text,
-															is_right: e.target.checked as boolean,
-														};
-														handleUpdateAnswer(mode, answer, index, question);
-													},
-												})}
-												_size="18"
-											/>
-										</>
-									}
-									rightContent={
-										getValues().answers!.length >= 2 && (
-											<IconButton
-												zeroSpacing
-												onClick={() => {
-													remove(index);
-													if (field.answerId && mode === 'edit') {
-														handleSetAnswersToDelete(field.answerId);
-													}
-												}}>
-												<Cross />
-											</IconButton>
-										)
-									}
-									errMessage={errors.answers && errors.answers[index]?.text?.message}>
-									<Input
-										placeholder="Введите ответ..."
-										id={`question-form-answer-${field.id}`}
-										{...register(`answers.${index}.text`, {
-											onBlur: (e: InputFocusEvent) => {
-												if (e.target.value === field.text) {
-													return;
-												}
+				) : typeof window !== 'undefined' ? (
+					<DragDropContext onDragEnd={handleDrag}>
+						<ul>
+							<Droppable droppableId="droppable">
+								{(provided) => (
+									<div ref={provided.innerRef} {...provided.droppableProps}>
+										{fields.map((field, index) => {
+											return (
+												<Draggable
+													key={`answers[${index}]`}
+													draggableId={`answers[${index}]`}
+													index={index}>
+													{(provided) => (
+														<Field
+															className={cx('modal-question__answer')}
+															id={`question-form-answer-${field.id}`}
+															leftContent={
+																<>
+																	<IconButton zeroSpacing>
+																		<DragDots {...provided.dragHandleProps} />
+																	</IconButton>
+																	<Checkbox
+																		{...register(`answers.${index}.is_right`, {
+																			onChange: (e: InputChangeEvent) => {
+																				const answer: AnswerField = {
+																					id: String(field.answerId),
+																					text: field.text,
+																					is_right: e.target
+																						.checked as boolean,
+																					position: field.position as Omit<
+																						MoveAnswerPosition,
+																						'id'
+																					>,
+																				};
+																				handleUpdateAnswer(
+																					mode,
+																					answer,
+																					index,
+																					question,
+																				);
+																			},
+																		})}
+																		_size="18"
+																	/>
+																</>
+															}
+															rightContent={
+																getValues().answers!.length >= 2 && (
+																	<IconButton
+																		zeroSpacing
+																		onClick={() => {
+																			remove(index);
+																			if (field.answerId && mode === 'edit') {
+																				handleSetAnswersToDelete(
+																					field.answerId,
+																				);
+																			}
+																		}}>
+																		<Cross />
+																	</IconButton>
+																)
+															}
+															errMessage={
+																errors.answers && errors.answers[index]?.text?.message
+															}
+															key={field.id}
+															innerRef={provided.innerRef}
+															{...provided.draggableProps}>
+															<Input
+																placeholder="Введите ответ..."
+																id={`question-form-answer-${field.id}`}
+																{...register(`answers.${index}.text`, {
+																	onBlur: (e: InputFocusEvent) => {
+																		if (e.target.value === field.text) {
+																			return;
+																		}
 
-												const answer: Answer = {
-													id: field.answerId as number,
-													text: e.target.value,
-													is_right: field.is_right as boolean,
-												};
-												handleUpdateAnswer(mode, answer, index, question);
-											},
+																		const answer: AnswerField = {
+																			id: String(field.answerId),
+																			text: e.target.value,
+																			is_right: field.is_right as boolean,
+																			position: field.position,
+																		};
+																		handleUpdateAnswer(
+																			mode,
+																			answer,
+																			index,
+																			question,
+																		);
+																	},
+																})}
+															/>
+														</Field>
+													)}
+												</Draggable>
+											);
 										})}
-									/>
-								</Field>
-							</li>
-						))}
-					</Stack>
-				)}
+										{provided.placeholder}
+									</div>
+								)}
+							</Droppable>
+						</ul>
+					</DragDropContext>
+				) : null}
 			</Form>
 		</Modal>
 	);
