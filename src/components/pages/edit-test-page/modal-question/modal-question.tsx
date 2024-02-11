@@ -73,7 +73,12 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 					{questionType !== 'number' && (
 						<Button
 							type="button"
-							onClick={() => append({ text: '', is_right: false })}
+							onClick={() =>
+								append({
+									text: '',
+									is_right: false,
+								})
+							}
 							startIcon={<PlusBold color="white" />}
 							variant="secondary">
 							Добавить ответ
@@ -183,7 +188,10 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																			id: String(field.answerId),
 																			text: e.target.value,
 																			is_right: field.is_right as boolean,
-																			position: field.position,
+																			position: field.position as Omit<
+																				MoveAnswerPosition,
+																				'id'
+																			>,
 																		};
 																		handleUpdateAnswer(
 																			mode,

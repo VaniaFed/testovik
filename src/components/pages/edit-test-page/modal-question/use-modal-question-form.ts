@@ -17,46 +17,36 @@ import type { ModalMode } from '@/types/common';
 
 // TODO: пытался
 const schema = yup
-	.object()
-	.shape(
-		{
-			question: yup
-				.string()
-				.min(3, 'Поле слишком короткое')
-				.max(90, 'Поле слишком длинное')
-				.required('Это обязательное поле'),
-			answers: yup
-				.array()
-				.of(
-					yup.object({
-						text: yup
-							.string()
-							.min(1, 'Поле слишком короткое')
-							.max(90, 'Поле слишком длинное')
-							.required('Это обязательное поле'),
-						is_right: yup.boolean().required(),
-						// react-hook-form uses its own <<id>> field,
-						// so in order to have answer id remembered, we define <<answerId>>
-						answerId: yup.number().notRequired(),
-						position: yup
-							.object({
-								source: yup.number().required(),
-								destination: yup.number().required(),
-							})
-							.notRequired(),
-					}),
-				)
-				.when('answer', {
-					is: (answer: number | undefined) => answer === undefined,
-					then: (schema) => schema.required('Это обязательное поле'),
-				}),
-			answer: yup.number().when('answers', {
-				is: (answers: AnswerField[]) => !answers || !answers.length,
-				then: (schema) => schema.required('Это обязательное поле'),
+	.object({
+		question: yup
+			.string()
+			.min(3, 'Поле слишком короткое')
+			.max(90, 'Поле слишком длинное')
+			.required('Это обязательное поле'),
+		answers: yup.array().of(
+			yup.object({
+				text: yup
+					.string()
+					.min(1, 'Поле слишком короткое')
+					.max(90, 'Поле слишком длинное')
+					.required('Это обязательное поле'),
+				is_right: yup.boolean(),
+				// react-hook-form uses its own <<id>> field,
+				// so in order to have answer id remembered, we define <<answerId>>
+				answerId: yup.number(),
+				position: yup
+					.object({
+						source: yup.number(),
+						destination: yup.number(),
+					})
+					.notRequired(),
 			}),
-		},
-		[['answer', 'answers']],
-	)
+		),
+		answer: yup.number().when('answers', {
+			is: (answers: Answer[]) => !answers || !answers.length,
+			then: (schema) => schema.required('Это обязательное поле').typeError('Нужно указать число'),
+		}),
+	})
 	.required();
 
 export type FormFields = yup.InferType<typeof schema>;
@@ -248,6 +238,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 	const onSubmit: SubmitHandler<FormFields> = (formData) => {
 		const errorMessage = getValidationMessage(formData, questionType);
+		console.log({ errorMessage });
 
 		if (errorMessage) {
 			setError('root', { message: errorMessage });
