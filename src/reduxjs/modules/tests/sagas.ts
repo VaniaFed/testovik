@@ -168,8 +168,10 @@ export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
 			id,
 		},
 		setPending,
-		onSuccess: deleteQuestionSuccess,
 		onFailure: setError,
+		callback: function* () {
+			yield put(deleteQuestionSuccess({ id }));
+		},
 	});
 }
 
