@@ -27,7 +27,7 @@ export const Dropdown: FC<Props> = ({
 			<div className={cx('dropdown__input-wrapper')}>
 				<Input
 					placeholder={placeholder}
-					defaultValue={active.label}
+					value={active.label}
 					type="text"
 					name={name}
 					id={name}
