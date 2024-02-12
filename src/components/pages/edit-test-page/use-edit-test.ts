@@ -10,7 +10,7 @@ import {
 } from '@/reduxjs/modules/tests';
 import { ModalMode } from '@/types/common';
 import { questionTypeDropdownItems } from '@/utils/data';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 export const useEditTest = (testId: string) => {
