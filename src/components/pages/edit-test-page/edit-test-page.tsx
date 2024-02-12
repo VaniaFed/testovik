@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { fetchTestById, deleteQuestion, selectCurrentTest, deleteTest, updateTest } from '@/reduxjs/modules/tests';
@@ -6,50 +6,47 @@ import { Heading } from '@/components/ui/typography/heading';
 import { Label } from '@/components/ui/typography/label';
 import { Panel } from '@/components/ui/panel';
 import { Button } from '@/components/ui/button';
-import { useModal } from '@/hooks/use-modal';
 import { questionTypeDropdownItems } from '@/utils/data';
-import { ModalQuestion } from '@/components/pages/edit-test-page/modal-question/modal-question';
-import { ModalAction } from '@/components/ui/modal/modal-action';
 import { useRouter } from 'next/navigation';
 import styles from './edit-test-page.module.scss';
-import type { ChangeEvent, FC } from 'react';
-import type { Question as IQuestion } from '@/reduxjs/modules/tests';
-import type { Props } from './props';
 import { AddQuestion } from '@/components/pages/edit-test-page/add-question';
 import { QuestionList } from '@/components/pages/edit-test-page/question-list';
 import { Loader } from '@/components/ui/loader';
+import { Modals } from '@/components/pages/edit-test-page/modals';
+import type { ChangeEvent, FC } from 'react';
+import type { Question as IQuestion } from '@/reduxjs/modules/tests';
+import type { Props } from './props';
+import type { ModalMode } from '@/types/common';
+import { EditTestModals } from '@/components/pages/edit-test-page/modals/modals';
 
 const cx = classNames.bind(styles);
 
 export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 	const test = useAppSelector(selectCurrentTest);
-	const [mode, setMode] = useState<'create' | 'edit'>('create');
+	const [mode, setMode] = useState<ModalMode>('create');
 	const [question, setQuestion] = useState<IQuestion | undefined>(undefined);
 	const [questionType, setQuestionType] = useState(questionTypeDropdownItems[0]);
 	const [title, setTitle] = useState('');
 	const router = useRouter();
 
-	const [isModalSaveTestShown, showSaveTestModal, hideSaveTestModal] = useModal();
-	const [isModalDeleteTestShown, showDeleteTestModal, hideDeleteTestModal] = useModal();
-	const [isModalEditQuestionShown, showEditQuestionModal, hideEditQuestionModal] = useModal();
-	const [isModalDeleteQuestionShown, showDeleteQuestionModal, hideDeleteQuestionModal] = useModal();
+	const modalsRef = useRef<EditTestModals>(null);
 
 	const handleAddQuestion = () => {
 		setMode('create');
 		setQuestion(undefined);
-		showEditQuestionModal();
+		modalsRef.current?.showEditQuestionModal();
 	};
 
 	const handleEditQuestion = (question: IQuestion) => {
 		setMode('edit');
 		setQuestion(question);
-		showEditQuestionModal();
+		modalsRef.current?.showEditQuestionModal();
 	};
 
 	const handleShowDeleteQuestionModal = (question: IQuestion) => {
 		setQuestion(question);
 
-		showDeleteQuestionModal();
+		modalsRef.current?.showDeleteQuestionModal();
 	};
 
 	const handleChangeTitle = (e: ChangeEvent) => {
@@ -60,7 +57,7 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 		if (test?.title === title) {
 			router.push('/');
 		} else {
-			showSaveTestModal();
+			modalsRef.current?.showSaveTestModal();
 		}
 	};
 
@@ -83,7 +80,8 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 	const handleDeleteQuestion = () => {
 		if (question) {
 			dispatch(deleteQuestion({ id: question.id }));
-			hideDeleteQuestionModal();
+
+			modalsRef.current?.hideDeleteQuestionModal();
 		}
 	};
 
@@ -130,49 +128,22 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 						<Button variant="positive" onClick={handleClickSaveTest}>
 							Сохранить
 						</Button>
-						<Button variant="negative" onClick={showDeleteTestModal}>
+						<Button variant="negative" onClick={modalsRef.current?.showDeleteTestModal}>
 							Удалить
 						</Button>
 					</Panel>
-					{isModalEditQuestionShown && (
-						<ModalQuestion
-							mode={mode}
-							question={question}
-							questionType={questionType.value}
-							testId={Number(id)}
-							close={hideEditQuestionModal}
-						/>
-					)}
-					{isModalDeleteQuestionShown && (
-						<ModalAction
-							title="Удалить вопрос?"
-							subtitle={question?.title as string}
-							actionText="Удалить"
-							primaryButtonVariant="negative"
-							onAction={handleDeleteQuestion}
-							close={hideDeleteQuestionModal}
-						/>
-					)}
-					{isModalSaveTestShown && (
-						<ModalAction
-							title="Сохранить изменения?"
-							subtitle={`${test?.title as string} -> ${title}`}
-							actionText="Сохранить"
-							primaryButtonVariant="positive"
-							onAction={handleSaveTest}
-							close={hideSaveTestModal}
-						/>
-					)}
-					{isModalDeleteTestShown && (
-						<ModalAction
-							title="Удалить тест?"
-							subtitle={test?.title as string}
-							actionText="Удалить"
-							primaryButtonVariant="negative"
-							onAction={handleDeleteTest}
-							close={hideDeleteTestModal}
-						/>
-					)}
+					<Modals
+						mode={mode}
+						testId={id}
+						test={test}
+						question={question}
+						questionType={questionType}
+						title={title}
+						onDeleteQuestion={handleDeleteQuestion}
+						onDeleteTest={handleDeleteTest}
+						onSaveTest={handleSaveTest}
+						ref={modalsRef}
+					/>
 				</>
 			) : (
 				<Loader />
