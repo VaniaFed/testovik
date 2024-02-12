@@ -10,7 +10,7 @@ import type {
 } from '@/reduxjs/modules/tests';
 
 export const testApi = {
-	create: async ({ title }: CreateTestPayload) => await axiosProxy.post<CreateTestSuccessPayload>('/tests', title),
+	create: async (title: CreateTestPayload) => await axiosProxy.post<CreateTestSuccessPayload>('/tests', title),
 	getAll: async (data: FetchAllTestsPayload) =>
 		await axiosProxy.get<Test[]>('/tests', {
 			params: data,
