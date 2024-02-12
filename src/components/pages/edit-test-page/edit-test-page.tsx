@@ -6,7 +6,6 @@ import { Heading } from '@/components/ui/typography/heading';
 import { Label } from '@/components/ui/typography/label';
 import { Panel } from '@/components/ui/panel';
 import { Button } from '@/components/ui/button';
-import { Dropdown } from '@/components/ui/dropdown';
 import { useModal } from '@/hooks/use-modal';
 import { questionTypeDropdownItems } from '@/utils/data';
 import { ModalQuestion } from '@/components/pages/edit-test-page/modal-question/modal-question';
@@ -17,8 +16,8 @@ import { useRouter } from 'next/navigation';
 import styles from './edit-test-page.module.scss';
 import type { ChangeEvent, FC } from 'react';
 import type { Question as IQuestion } from '@/reduxjs/modules/tests';
-import type { DropdownItem } from '@/types/common';
 import type { Props } from './props';
+import { AddQuestion } from '@/components/pages/edit-test-page/add-question';
 
 const cx = classNames.bind(styles);
 
@@ -26,7 +25,7 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 	const test = useAppSelector(selectCurrentTest);
 	const [mode, setMode] = useState<'create' | 'edit'>('create');
 	const [question, setQuestion] = useState<IQuestion | undefined>(undefined);
-	const [questionType, setQuestionType] = useState<DropdownItem>(questionTypeDropdownItems[0]);
+	const [questionType, setQuestionType] = useState(questionTypeDropdownItems[0]);
 	const [title, setTitle] = useState('');
 	const router = useRouter();
 
@@ -134,22 +133,13 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 					</li>
 				))}
 			</Stack>
-			<div className={cx('question-add')}>
-				<Heading size="3" className={cx('question-add__heading')}>
-					Добавить вопрос
-				</Heading>
-				<Dropdown
-					placeholder="Тип вопроса"
-					name="dropdown-question-type"
-					items={questionTypeDropdownItems}
-					active={questionType}
-					onChange={setQuestionType}
-					className={cx('question-add__dropdown')}
-				/>
-				<Button variant="accent" onClick={() => handleAddQuestion()}>
-					Добавить вопрос
-				</Button>
-			</div>
+			<AddQuestion
+				className={cx('question__add')}
+				allQuestionTypes={questionTypeDropdownItems}
+				activeQuestionType={questionType}
+				setQuestionType={setQuestionType}
+				onAdd={handleAddQuestion}
+			/>
 			<Panel>
 				<Button variant="positive" onClick={handleClickSaveTest}>
 					Сохранить
