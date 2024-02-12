@@ -13,7 +13,7 @@ import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
 import { updateById } from '@/utils/redux-helpers';
 import type { OnDragEndResponder } from 'react-beautiful-dnd';
 import type { Answer, MoveAnswerPosition, Question } from '@/reduxjs/modules/tests';
-import type { ModalMode } from '@/types/common';
+import type { InputChangeEvent, InputFocusEvent, ModalMode } from '@/types/common';
 
 // TODO: пытался
 const schema = yup
@@ -161,6 +161,32 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		});
 	};
 
+	const handleChangeIsRight = (e: InputChangeEvent, field: (typeof fields)[0], index: number) => {
+		const answer: AnswerField = {
+			id: String(field.answerId),
+			text: field.text,
+			is_right: e.target.checked as boolean,
+			position: field.position as Omit<MoveAnswerPosition, 'id'>,
+		};
+
+		handleUpdateAnswer(mode, answer, index, question);
+	};
+
+	const handleChangeAnswerText = (e: InputFocusEvent, field: (typeof fields)[0], index: number) => {
+		if (e.target.value === field.text) {
+			return;
+		}
+
+		const answer: AnswerField = {
+			id: String(field.answerId),
+			text: e.target.value,
+			is_right: field.is_right as boolean,
+			position: field.position as Omit<MoveAnswerPosition, 'id'>,
+		};
+
+		handleUpdateAnswer(mode, answer, index, question);
+	};
+
 	const handleDrag: OnDragEndResponder = (result) => {
 		const { source, destination } = result;
 		const movedAnswer = fields[source.index];
@@ -178,7 +204,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 				destination: destination.index,
 			});
 		} else {
-			// после перемещения записываем position
+			// после перемещения записываем position для еще не созданного answer
 			update(destination.index, {
 				...movedAnswer,
 				position: {
@@ -257,7 +283,8 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		append,
 		remove,
 		handleSubmit,
-		handleUpdateAnswer,
+		handleChangeIsRight,
+		handleChangeAnswerText,
 		handleSetAnswersToDelete,
 		handleDrag,
 		fields,

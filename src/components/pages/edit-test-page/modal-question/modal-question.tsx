@@ -13,15 +13,11 @@ import { Cross } from '@/components/ui/icons/cross';
 import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
 import { DragDots } from '@/components/ui/icons/drag-dots';
-import {
-	AnswerField,
-	useModalQuestionForm,
-} from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
+import { useModalQuestionForm } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import { AppendAnswerButton } from '@/components/pages/edit-test-page/modal-question/append-answer-button';
 import styles from './modal-question.module.scss';
 import type { FC } from 'react';
 import type { ModalQuestionProps } from './props';
-import type { MoveAnswerPosition } from '@/reduxjs/modules/tests';
 import type { InputChangeEvent, InputFocusEvent } from '@/types/common';
 
 const cx = classNames.bind(styles);
@@ -44,7 +40,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 		append,
 		remove,
 		onSubmit,
-		handleUpdateAnswer,
+		handleChangeIsRight,
+		handleChangeAnswerText,
 		handleSetAnswersToDelete,
 		handleDrag,
 		fields,
@@ -126,24 +123,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																	</IconButton>
 																	<Checkbox
 																		{...register(`answers.${index}.is_right`, {
-																			onChange: (e: InputChangeEvent) => {
-																				const answer: AnswerField = {
-																					id: String(field.answerId),
-																					text: field.text,
-																					is_right: e.target
-																						.checked as boolean,
-																					position: field.position as Omit<
-																						MoveAnswerPosition,
-																						'id'
-																					>,
-																				};
-																				handleUpdateAnswer(
-																					mode,
-																					answer,
-																					index,
-																					question,
-																				);
-																			},
+																			onChange: (e: InputChangeEvent) =>
+																				handleChangeIsRight(e, field, index),
 																		})}
 																		_size="18"
 																	/>
@@ -175,26 +156,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																placeholder="Введите ответ..."
 																id={`question-form-answer-${field.id}`}
 																{...register(`answers.${index}.text`, {
-																	onBlur: (e: InputFocusEvent) => {
-																		if (e.target.value === field.text) {
-																			return;
-																		}
-																		const answer: AnswerField = {
-																			id: String(field.answerId),
-																			text: e.target.value,
-																			is_right: field.is_right as boolean,
-																			position: field.position as Omit<
-																				MoveAnswerPosition,
-																				'id'
-																			>,
-																		};
-																		handleUpdateAnswer(
-																			mode,
-																			answer,
-																			index,
-																			question,
-																		);
-																	},
+																	onBlur: (e: InputFocusEvent) =>
+																		handleChangeAnswerText(e, field, index),
 																})}
 															/>
 														</Field>
