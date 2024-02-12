@@ -5,13 +5,12 @@
 	&__header {
 		margin-bottom: 36px;
 	}
-}
 
-// TODO: нужно будет превратить в элементы блока edit-test-page
-.question__list {
-	margin-bottom: 24px;
-}
+	&__question-list {
+		margin-bottom: 24px;
+	}
 
-.question__add {
-	margin-bottom: 24px;
+	&__question-add {
+		margin-bottom: 24px;
+	}
 }

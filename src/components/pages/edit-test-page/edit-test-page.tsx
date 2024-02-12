@@ -45,13 +45,13 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 						questionLength={test.questions.length}
 					/>
 					<QuestionList
-						className={cx('question__list')}
+						className={cx('edit-test-page__question-list')}
 						questions={test.questions}
 						onEditQuestion={handleEditQuestion}
 						onShowDeleteQuestionModal={handleShowDeleteQuestionModal}
 					/>
 					<AddQuestion
-						className={cx('question__add')}
+						className={cx('edit-test-page__question-add')}
 						allQuestionTypes={questionTypeDropdownItems}
 						activeQuestionType={questionType}
 						setQuestionType={setQuestionType}
