@@ -2,22 +2,21 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { fetchTestById, deleteQuestion, selectCurrentTest, deleteTest, updateTest } from '@/reduxjs/modules/tests';
-import { Heading } from '@/components/ui/typography/heading';
-import { Label } from '@/components/ui/typography/label';
 import { Panel } from '@/components/ui/panel';
 import { Button } from '@/components/ui/button';
 import { questionTypeDropdownItems } from '@/utils/data';
 import { useRouter } from 'next/navigation';
-import styles from './edit-test-page.module.scss';
 import { AddQuestion } from '@/components/pages/edit-test-page/add-question';
 import { QuestionList } from '@/components/pages/edit-test-page/question-list';
 import { Loader } from '@/components/ui/loader';
 import { Modals } from '@/components/pages/edit-test-page/modals';
+import { EditTestModals } from '@/components/pages/edit-test-page/modals/modals';
+import { TestPageHeader } from '@/components/pages/edit-test-page/test-page-header';
+import styles from './edit-test-page.module.scss';
 import type { ChangeEvent, FC } from 'react';
 import type { Question as IQuestion } from '@/reduxjs/modules/tests';
 import type { Props } from './props';
 import type { ModalMode } from '@/types/common';
-import { EditTestModals } from '@/components/pages/edit-test-page/modals/modals';
 
 const cx = classNames.bind(styles);
 
@@ -101,16 +100,12 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 		<div className={cx('edit-test-page', className)}>
 			{test ? (
 				<>
-					<header className={cx('edit-test-page__header')}>
-						<Heading
-							className={cx('edit-test-page__heading')}
-							contentEditable
-							suppressContentEditableWarning={true}
-							onBlur={handleChangeTitle}>
-							{title}
-						</Heading>
-						<Label>{test?.questions.length} вопросов</Label>
-					</header>
+					<TestPageHeader
+						className={cx('edit-test-page__header')}
+						title={title}
+						onChangeTitle={handleChangeTitle}
+						questionLength={test.questions.length}
+					/>
 					<QuestionList
 						className={cx('question__list')}
 						questions={test.questions}
