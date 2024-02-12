@@ -1,8 +1,47 @@
+import * as yup from 'yup';
 import type { QuestionType } from '@/reduxjs/modules/tests';
-import type { AnswerField, FormFields } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 import type { Answer } from '@/reduxjs/modules/tests';
 import { AbstractObjectWithId } from '@/types/common';
 
+const answersSchema = yup.object({
+	text: yup
+		.string()
+		.trim()
+		.min(1, 'Поле слишком короткое')
+		.max(90, 'Поле слишком длинное')
+		.required('Это обязательное поле'),
+	is_right: yup.boolean().nonNullable(),
+	// react-hook-form uses its own <<id>> field,
+	// so in order to have answer id remembered, we define <<answerId>>
+	answerId: yup.number(),
+	position: yup
+		.object({
+			source: yup.number(),
+			destination: yup.number(),
+		})
+		.notRequired(),
+});
+
+export const schema = yup
+	.object({
+		question: yup
+			.string()
+			.trim()
+			.min(3, 'Поле слишком короткое')
+			.max(90, 'Поле слишком длинное')
+			.required('Это обязательное поле'),
+		answers: yup.array().of(answersSchema),
+		answer: yup.number().when('answers', {
+			is: (answers: Answer[]) => !answers || !answers.length,
+			then: (schema) => schema.required('Это обязательное поле').typeError('Нужно указать число'),
+		}),
+	})
+	.required();
+
+export type FormFields = yup.InferType<typeof schema>;
+export type AnswerField = yup.InferType<typeof answersSchema> & { id: string };
+
+// TODO: эти проверки спокойно можно вынести в yup
 export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType) => {
 	let errorMessage = '';
 

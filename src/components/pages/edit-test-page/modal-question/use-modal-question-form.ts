@@ -1,62 +1,21 @@
 import { useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { ModalQuestionProps } from '@/components/pages/edit-test-page/modal-question/props';
 import {
 	getValidationMessage,
 	prepareAnswersToAdd,
 	excludeDeletedAnswers,
+	schema,
+	FormFields,
+	AnswerField,
 } from '@/components/pages/edit-test-page/modal-question/validation';
 import { useAppDispatch } from '@/reduxjs/hooks';
 import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
 import { updateById } from '@/utils/redux-helpers';
 import type { OnDragEndResponder } from 'react-beautiful-dnd';
-import type { Answer, MoveAnswerPosition, Question } from '@/reduxjs/modules/tests';
-import type { InputChangeEvent, InputFocusEvent, ModalMode } from '@/types/common';
-
-// TODO: пытался
-const schema = yup
-	.object({
-		question: yup
-			.string()
-			.min(3, 'Поле слишком короткое')
-			.max(90, 'Поле слишком длинное')
-			.required('Это обязательное поле'),
-		answers: yup.array().of(
-			yup.object({
-				text: yup
-					.string()
-					.min(1, 'Поле слишком короткое')
-					.max(90, 'Поле слишком длинное')
-					.required('Это обязательное поле'),
-				is_right: yup.boolean(),
-				// react-hook-form uses its own <<id>> field,
-				// so in order to have answer id remembered, we define <<answerId>>
-				answerId: yup.number(),
-				position: yup
-					.object({
-						source: yup.number(),
-						destination: yup.number(),
-					})
-					.notRequired(),
-			}),
-		),
-		answer: yup.number().when('answers', {
-			is: (answers: Answer[]) => !answers || !answers.length,
-			then: (schema) => schema.required('Это обязательное поле').typeError('Нужно указать число'),
-		}),
-	})
-	.required();
-
-export type FormFields = yup.InferType<typeof schema>;
-
-// зачем это если есть FormFields type?
-export type AnswerField = Pick<Answer, 'is_right' | 'text'> & {
-	id: string;
-	answerId?: number;
-	position?: Omit<MoveAnswerPosition, 'id'> | null;
-};
+import type { Answer, MoveAnswerPosition } from '@/reduxjs/modules/tests';
+import type { InputChangeEvent, InputFocusEvent } from '@/types/common';
 
 type UseModalQuestionForm = Pick<ModalQuestionProps, 'mode' | 'question' | 'questionType' | 'testId' | 'close'>;
 
@@ -128,7 +87,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 			const isNewAnswer = !prev.some((ans) => ans.id === answer.id);
 
 			if (isAnswersEmpty || isNewAnswer) {
-				return [answer];
+				return [...prev, answer];
 			}
 
 			return updateById(prev, answer.id, answer);
@@ -136,55 +95,45 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 	};
 
 	const handleUpdateAnswer = (
-		mode: ModalMode,
-		answer: AnswerField,
+		field: AnswerField,
 		index: number,
-		question: Question | undefined,
+		text?: string | undefined,
+		isRight?: boolean | undefined,
 	) => {
 		if (mode !== 'edit' || !question) {
 			return;
 		}
-		// FIXME: это Answer а не AnswerField но я не уверен
-		console.log(answer);
-		if (answer.id) {
-			handleSetAnswersToUpdate({ id: Number(answer.answerId), is_right: answer.is_right, text: answer.text });
+
+		const answer: AnswerField = {
+			...field,
+			text: text ?? field.text,
+			is_right: isRight ?? field.is_right,
+		};
+
+		if (answer.answerId) {
+			handleSetAnswersToUpdate({
+				id: Number(answer.answerId),
+				is_right: answer.is_right as boolean,
+				text: answer.text,
+			});
 		}
 
 		// saves values to form state
 		// if remove, changing << is_right >> after changing << text >> will set << text >> to default value and vice versa
 		// if remove, drag&drop causes the same problem
-		update(index, {
-			answerId: answer.answerId ? Number(answer.id) : undefined,
-			text: answer.text,
-			is_right: answer.is_right,
-			position: answer.position,
-		});
+		update(index, answer);
 	};
 
-	const handleChangeIsRight = (e: InputChangeEvent, field: (typeof fields)[0], index: number) => {
-		const answer: AnswerField = {
-			id: String(field.answerId),
-			text: field.text,
-			is_right: e.target.checked as boolean,
-			position: field.position as Omit<MoveAnswerPosition, 'id'>,
-		};
-
-		handleUpdateAnswer(mode, answer, index, question);
+	const handleChangeIsRight = (e: InputChangeEvent, field: AnswerField, index: number) => {
+		handleUpdateAnswer(field, index, undefined, e.target.checked);
 	};
 
-	const handleChangeAnswerText = (e: InputFocusEvent, field: (typeof fields)[0], index: number) => {
+	const handleChangeAnswerText = (e: InputFocusEvent, field: AnswerField, index: number) => {
 		if (e.target.value === field.text) {
 			return;
 		}
 
-		const answer: AnswerField = {
-			id: String(field.answerId),
-			text: e.target.value,
-			is_right: field.is_right as boolean,
-			position: field.position as Omit<MoveAnswerPosition, 'id'>,
-		};
-
-		handleUpdateAnswer(mode, answer, index, question);
+		handleUpdateAnswer(field, index, e.target.value);
 	};
 
 	const handleDrag: OnDragEndResponder = (result) => {
@@ -242,8 +191,6 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		const _answersToUpdate = excludeDeletedAnswers(answersToUpdate, answersToDelete);
 		const _answersToMove = excludeDeletedAnswers<MoveAnswerPosition>(answersToMove, answersToDelete);
 
-		// console.log(answersToAdd);
-
 		dispatch(
 			updateQuestion({
 				question: {
@@ -264,7 +211,6 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 	const onSubmit: SubmitHandler<FormFields> = (formData) => {
 		const errorMessage = getValidationMessage(formData, questionType);
-		console.log({ errorMessage });
 
 		if (errorMessage) {
 			setError('root', { message: errorMessage });
