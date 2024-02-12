@@ -9,7 +9,6 @@ import { Form } from '@/components/ui/form';
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { PlusBold } from '@/components/ui/icons/plus-bold';
 import { Cross } from '@/components/ui/icons/cross';
 import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
@@ -18,6 +17,7 @@ import {
 	AnswerField,
 	useModalQuestionForm,
 } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
+import { AppendAnswerButton } from '@/components/pages/edit-test-page/modal-question/append-answer-button';
 import styles from './modal-question.module.scss';
 import type { FC } from 'react';
 import type { ModalQuestionProps } from './props';
@@ -71,18 +71,14 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 						{mode === 'create' ? 'Добавить' : 'Изменить'}
 					</Button>
 					{questionType !== 'number' && (
-						<Button
-							type="button"
-							onClick={() =>
+						<AppendAnswerButton
+							onAppend={() =>
 								append({
 									text: '',
 									is_right: false,
 								})
 							}
-							startIcon={<PlusBold color="white" />}
-							variant="secondary">
-							Добавить ответ
-						</Button>
+						/>
 					)}
 				</>
 			}>
@@ -95,7 +91,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 						{...register('question')}
 					/>
 				</Field>
-				{questionType === 'number' ? <Label>Ответ</Label> : <Label>Ответы</Label>}
+				<Label>{questionType === 'number' ? 'Ответ' : 'Ответы'}</Label>
 				{questionType === 'number' ? (
 					<>
 						<Field id="question-form-number-answer" errMessage={errors.answer?.message}>
@@ -107,7 +103,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 							/>
 						</Field>
 					</>
-				) : typeof window !== 'undefined' ? (
+				) : (
 					<DragDropContext onDragEnd={handleDrag}>
 						<ul>
 							<Droppable droppableId="droppable">
@@ -183,7 +179,6 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																		if (e.target.value === field.text) {
 																			return;
 																		}
-
 																		const answer: AnswerField = {
 																			id: String(field.answerId),
 																			text: e.target.value,
@@ -213,7 +208,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 							</Droppable>
 						</ul>
 					</DragDropContext>
-				) : null}
+				)}
 			</Form>
 		</Modal>
 	);
