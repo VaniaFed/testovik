@@ -210,7 +210,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 	};
 
 	const onSubmit: SubmitHandler<FormFields> = (formData) => {
-		const errorMessage = getValidationMessage(formData, questionType);
+		const errorMessage = getValidationMessage(formData as Required<FormFields>, questionType);
 
 		if (errorMessage) {
 			setError('root', { message: errorMessage });

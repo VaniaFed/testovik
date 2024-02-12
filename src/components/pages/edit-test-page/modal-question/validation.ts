@@ -41,13 +41,8 @@ export const schema = yup
 export type FormFields = yup.InferType<typeof schema>;
 export type AnswerField = yup.InferType<typeof answersSchema> & { id: string };
 
-// TODO: эти проверки спокойно можно вынести в yup
-export const getValidationMessage = ({ answers }: FormFields, questionType: QuestionType) => {
+export const getValidationMessage = ({ answers }: Required<FormFields>, questionType: QuestionType) => {
 	let errorMessage = '';
-
-	if ((questionType !== 'number' && !answers) || !answers?.length) {
-		return null;
-	}
 
 	const correctAnswers = answers.filter((answer) => answer.is_right);
 
@@ -61,13 +56,13 @@ export const getValidationMessage = ({ answers }: FormFields, questionType: Ques
 
 	if (questionType === 'single') {
 		if (correctAnswers.length >= 2) {
-			errorMessage = 'У вопроса не может быть 2 и более правильных вариантов ответа';
+			errorMessage = 'Вопрос не может содержать 2 и более правильных вариантов ответа';
 		}
 	}
 
 	if (questionType === 'multiple') {
 		if (correctAnswers.length < 2) {
-			errorMessage = 'У вопроса не может быть меньше 2-х правильных вариантов ответа';
+			errorMessage = 'Вопроса не может содержать менее 2-х правильных вариантов ответа';
 		}
 	}
 
