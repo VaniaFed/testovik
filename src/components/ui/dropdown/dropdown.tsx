@@ -5,12 +5,12 @@ import { useDropdown } from '@/hooks/use-dropdown';
 import { DropdownList } from './dropdown-list/';
 import { Chevron } from '@/components/ui/icons/chevron';
 import styles from './dropdown.module.scss';
-import type { FC } from 'react';
+import type { PropsWithChildren, ReactElement } from 'react';
 import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const Dropdown: FC<Props> = ({
+export const Dropdown = <T extends unknown>({
 	items,
 	active,
 	name,
@@ -19,8 +19,8 @@ export const Dropdown: FC<Props> = ({
 	className,
 	onChange = () => {},
 	onBlur = () => {},
-}) => {
-	const { isOpened, menuRef, openMenu, handleItemClick } = useDropdown(onChange);
+}: PropsWithChildren<Props<T>>): ReactElement | null => {
+	const { isOpened, menuRef, openMenu, handleItemClick } = useDropdown<T>(onChange);
 
 	return (
 		<div className={cx('dropdown', className)}>
@@ -39,7 +39,9 @@ export const Dropdown: FC<Props> = ({
 				/>
 				<Chevron className={cx('dropdown__chevron')} />
 			</div>
-			{isOpened && <DropdownList items={items} active={active} onClick={handleItemClick} ref={menuRef} />}
+			{isOpened && (
+				<DropdownList<T> items={items} active={active} onClick={handleItemClick} customRef={menuRef} />
+			)}
 		</div>
 	);
 };

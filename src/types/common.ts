@@ -20,9 +20,9 @@ export interface Pagination {
 	total_count: number;
 }
 
-export interface DropdownItem {
+export interface DropdownItem<T = string> {
 	label: string;
-	value: QuestionType;
+	value: T;
 }
 
 export type ButtonVariant =

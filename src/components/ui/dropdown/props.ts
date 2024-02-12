@@ -1,13 +1,13 @@
 import type { FocusEvent } from 'react';
 import type { DropdownItem } from '@/types/common';
 
-export interface Props {
-	items: DropdownItem[];
-	active: DropdownItem;
+export interface Props<T = string> {
+	items: DropdownItem<T>[];
+	active: DropdownItem<T>;
+	onChange?: (item: DropdownItem<T>) => void;
 	name: string;
 	placeholder?: string;
 	isInvalid?: boolean;
 	className?: string;
-	onChange?: (item: DropdownItem) => void;
 	onBlur?: (e: FocusEvent) => void;
 }

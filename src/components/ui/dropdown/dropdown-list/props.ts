@@ -1,8 +1,10 @@
 import type { DropdownItem } from '@/types/common';
+import { Ref } from 'react';
 
-export interface Props {
-	items: DropdownItem[];
-	active: DropdownItem;
+export interface Props<T = string> {
+	items: DropdownItem<T>[];
+	active: DropdownItem<T>;
 	className?: string;
-	onClick?: (item: DropdownItem) => void;
+	customRef?: Ref<HTMLUListElement>;
+	onClick?: (item: DropdownItem<T>) => void;
 }
