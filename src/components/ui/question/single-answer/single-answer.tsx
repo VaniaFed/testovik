@@ -16,7 +16,7 @@ export const SingleAnswer: FC<Props> = ({
 	mode,
 	className,
 	handleChange,
-	checkIfAnswerChecked = () => {},
+	checkIfAnswerChecked,
 }) => {
 	return (
 		<Stack className={cx('single-answer', className)}>
@@ -25,7 +25,7 @@ export const SingleAnswer: FC<Props> = ({
 					<Radio
 						name={String(question.id)}
 						disabled={mode === 'edit'}
-						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked(answer.id)}
+						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked!(answer.id)}
 						onChange={() => handleChange && handleChange(question.id, answer.id)}>
 						{answer.text}
 					</Radio>

@@ -52,7 +52,7 @@ export const Question: FC<Props> = ({
 					handleChange={handleAnswerChange && handleAnswerChange('single')}
 				/>
 			)}
-			{bottomContent && bottomContent}
+			{bottomContent}
 			{!lastQuestion && <Divider />}
 		</Stack>
 	);
