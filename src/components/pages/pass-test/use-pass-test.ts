@@ -20,9 +20,9 @@ export const usePassTest = (id: string) => {
 	const test = useAppSelector(selectCurrentTest);
 	const [answers, setAnswers] = useState<UserAnswer[]>([]);
 	const [isSubmitted, setIsSubmitted] = useState(false);
-	const [isModalShown, showModal, hideModal] = useModal();
+	const [isSuccessModalShown, showSuccessModal, hideSuccessModal] = useModal();
 
-	const getAnswer = (questionId: number) => {
+	const getUserAnswer = (questionId: number) => {
 		return answers.find((answer) => answer.question.id === questionId);
 	};
 
@@ -33,8 +33,8 @@ export const usePassTest = (id: string) => {
 	};
 
 	const handleAnswerChange = (questionType: QuestionType) => (questionId: number, value: number) => {
-		setAnswers((prev) => {
-			return prev.map((answer) => {
+		setAnswers((prev) =>
+			prev.map((answer) => {
 				const isTargetAnswer = answer.question.id === questionId;
 				return isTargetAnswer
 					? {
@@ -45,16 +45,12 @@ export const usePassTest = (id: string) => {
 									: value,
 						}
 					: answer;
-			});
-		});
+			}),
+		);
 	};
 
 	const checkIfAnswerChecked = (questionType: QuestionType, questionId: number) => (answerId: number) => {
-		if (!getAnswer) {
-			return;
-		}
-
-		const answer = getAnswer(questionId);
+		const answer = getUserAnswer(questionId);
 
 		if (!answer) {
 			return false;
@@ -68,11 +64,7 @@ export const usePassTest = (id: string) => {
 	const handleSubmit = () => {
 		setAnswers((prev) => [
 			...prev.map((answer) => {
-				if (
-					answer.userAnswer === undefined ||
-					!String(answer.userAnswer).length ||
-					(answer.userAnswer as number[]).length === 0
-				) {
+				if (answer.userAnswer === undefined || !String(answer.userAnswer).length) {
 					return { ...answer, error: 'На вопросы нужно отвечать' };
 				}
 				return { ...answer, error: '' };
@@ -87,6 +79,19 @@ export const usePassTest = (id: string) => {
 		return answers.every((answer) => correctAnswers.includes(answer)) && answers.length === correctAnswers.length;
 	};
 
+	const getWrongQuestions = (questions: Question[]) => {
+		return questions.filter(
+			(question) =>
+				answers.filter(
+					(answer) =>
+						question.id === answer.question.id &&
+						(answer.question.question_type === 'multiple'
+							? !checkMultipleAnswers(answer.userAnswer as number[], answer.correctAnswer as number[])
+							: answer.userAnswer !== answer.correctAnswer),
+				).length,
+		);
+	};
+
 	const getUserResults = useCallback((): TestResults => {
 		const correctAnswers = answers.filter((answer) =>
 			answer.question.question_type === 'multiple'
@@ -96,18 +101,9 @@ export const usePassTest = (id: string) => {
 		return {
 			totalAnswers: answers.length,
 			correctNumber: correctAnswers.length,
-			wrongQuestions: test?.questions.filter(
-				(question) =>
-					answers.filter(
-						(answer) =>
-							question.id === answer.question.id &&
-							(answer.question.question_type === 'multiple'
-								? !checkMultipleAnswers(answer.userAnswer as number[], answer.correctAnswer as number[])
-								: answer.userAnswer !== answer.correctAnswer),
-					).length,
-			) as Question[],
+			wrongQuestions: getWrongQuestions(test?.questions as Question[]),
 		};
-	}, [isModalShown, answers]);
+	}, [isSuccessModalShown, answers]);
 
 	const dispatch = useAppDispatch();
 
@@ -127,7 +123,7 @@ export const usePassTest = (id: string) => {
 		const isFormValid = checkIfFormValid();
 
 		if (isSubmitted && isFormValid) {
-			showModal();
+			showSuccessModal();
 		}
 
 		setIsSubmitted(false);
@@ -136,13 +132,13 @@ export const usePassTest = (id: string) => {
 	return {
 		test,
 		answers,
-		getAnswer,
+		getUserAnswer,
 		handleAnswerChange,
 		checkIfAnswerChecked,
 		handleSubmit,
 		getUserResults,
-		isModalShown,
-		hideModal,
+		isModalShown: isSuccessModalShown,
+		hideModal: hideSuccessModal,
 	};
 };
 

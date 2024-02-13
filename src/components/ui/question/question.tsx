@@ -19,10 +19,10 @@ export const Question: FC<Props> = ({
 	bottomContent,
 	className,
 	handleAnswerChange,
-	checkIfAnswerChecked = () => () => {},
-	getAnswer = () => {},
+	checkIfAnswerChecked = () => () => false,
+	getUserAnswer = () => {},
 }) => {
-	const errorMsg = getAnswer(question.id)?.error;
+	const errorMsg = getUserAnswer(question.id)?.error;
 	return (
 		<Stack className={cx('question', className)} gap="18">
 			<Heading size="3" className={cx('question-list__heading')}>

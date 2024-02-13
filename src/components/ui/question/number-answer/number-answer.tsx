@@ -14,7 +14,7 @@ export const NumberAnswer: FC<Props> = ({ question, errMessage, className, mode,
 			<Input
 				type="number"
 				disabled={mode === 'edit'}
-				value={mode === 'edit' ? question.answer : undefined}
+				value={mode === 'edit' ? String(question.answer) : undefined}
 				onChange={(e) => handleChange!(question.id, Number(e.target.value))}
 			/>
 		</Field>

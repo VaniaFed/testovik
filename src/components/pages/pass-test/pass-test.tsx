@@ -18,7 +18,7 @@ export const PassTest: FC<Props> = ({ params: { id } }) => {
 	const {
 		test,
 		answers,
-		getAnswer,
+		getUserAnswer,
 		handleAnswerChange,
 		checkIfAnswerChecked,
 		handleSubmit,
@@ -41,7 +41,7 @@ export const PassTest: FC<Props> = ({ params: { id } }) => {
 							userAnswers={answers}
 							handleAnswerChange={handleAnswerChange}
 							checkIfAnswerChecked={checkIfAnswerChecked}
-							getAnswer={getAnswer}
+							getUserAnswer={getUserAnswer}
 							lastQuestion={index === test.questions.length - 1}
 						/>
 					</li>

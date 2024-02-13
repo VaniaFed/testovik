@@ -16,7 +16,7 @@ export const MultipleAnswer: FC<Props> = ({
 	errMessage,
 	className,
 	handleChange,
-	checkIfAnswerChecked = () => {},
+	checkIfAnswerChecked,
 }) => {
 	return (
 		<Stack className={cx('multiple-answer', className)}>
@@ -25,7 +25,7 @@ export const MultipleAnswer: FC<Props> = ({
 					<Checkbox
 						_size="18"
 						disabled={mode === 'edit'}
-						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked(answer.id)}
+						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked!(answer.id)}
 						onChange={() => handleChange && handleChange(question.id, answer.id)}>
 						{answer.text}
 					</Checkbox>

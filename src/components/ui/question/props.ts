@@ -6,8 +6,8 @@ export interface Props {
 	question: Question;
 	userAnswers?: UserAnswer[];
 	handleAnswerChange?: (questionType: QuestionType) => (questionId: number, value: number) => void;
-	checkIfAnswerChecked?: (questionType: QuestionType, questionId: number) => (answerId: number) => void;
-	getAnswer?: (questionId: number) => UserAnswer | undefined;
+	checkIfAnswerChecked?: (questionType: QuestionType, questionId: number) => (answerId: number) => boolean;
+	getUserAnswer?: (questionId: number) => UserAnswer | undefined;
 	mode?: TestMode;
 	bottomContent?: React.ReactNode;
 	lastQuestion?: boolean;
