@@ -2,7 +2,7 @@ import { TestResults } from '@/components/pages/pass-test/modal-results/props';
 import { useModal } from '@/hooks/use-modal';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { Answer, Question, QuestionType, fetchTestById, selectCurrentTest } from '@/reduxjs/modules/tests';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // in case of multiple and single answers
 // we collect answer ids in order to determine the right ones
@@ -92,7 +92,7 @@ export const usePassTest = (id: string) => {
 		);
 	};
 
-	const getUserResults = useCallback((): TestResults => {
+	const getUserResults = (): TestResults => {
 		const correctAnswers = answers.filter((answer) =>
 			answer.question.question_type === 'multiple'
 				? checkMultipleAnswers(answer.userAnswer as number[], answer.correctAnswer as number[])
@@ -103,7 +103,7 @@ export const usePassTest = (id: string) => {
 			correctNumber: correctAnswers.length,
 			wrongQuestions: getWrongQuestions(test?.questions as Question[]),
 		};
-	}, [isSuccessModalShown, answers]);
+	};
 
 	const dispatch = useAppDispatch();
 
