@@ -223,6 +223,8 @@ function* updateAnswerSaga(payload: UpdateAnswerPayload) {
 	});
 }
 
+// TODO: где-то action, где-то сразу payload,
+// сделать для всех action? чтобы можно было извне вызывать?
 export function* moveAnswersSaga(action: MoveAnswersAction) {
 	const { positions, questionId } = action.payload;
 

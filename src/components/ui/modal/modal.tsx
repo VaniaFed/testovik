@@ -16,6 +16,7 @@ export const Modal: FC<Props> = ({ header, children, footer, closable = false, c
 	const ref = useRef<HTMLDivElement>(null);
 	useClickOutside(ref, closeModal);
 
+	//TODO: closable не работает. ничего не меняется в зависимости от false/true
 	return createPortal(
 		<div className={cx('modal', className)}>
 			<BoxContainer className={cx('modal__container')}>
