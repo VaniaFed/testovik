@@ -7,6 +7,7 @@ export interface Answer {
 	readonly id: number;
 	text: string;
 	is_right: boolean;
+	position?: MoveAnswerPosition;
 }
 
 export interface Question {
@@ -84,11 +85,6 @@ export interface CreateQuestionSuccessPayload {
 
 export interface UpdateQuestionPayload {
 	question: Omit<Question, 'answers'>;
-	/*
-	answersToAdd: Answer & {movePosition}
-
-	
-	*/
 	answersToAdd: Omit<Answer, 'id'>[];
 	answersToUpdate: Answer[];
 	answersToDelete: number[];
@@ -107,10 +103,7 @@ export interface DeleteQuestionSuccessPayload extends DeleteQuestionPayload {}
 
 export interface CreateAnswersPayload {
 	questionId: number;
-	answers: Omit<Answer, 'id'> &
-		{
-			position: MoveAnswerPosition;
-		}[];
+	answers: Omit<Answer, 'id'>[];
 }
 
 export interface CreateAnswerPayload {

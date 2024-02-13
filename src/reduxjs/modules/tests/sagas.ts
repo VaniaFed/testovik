@@ -1,4 +1,3 @@
-import { MoveAnswersSuccess } from './types';
 import { call, put } from 'redux-saga/effects';
 import request from '@/reduxjs/helpers/request';
 import { testApi } from '@/services/test';
@@ -64,9 +63,7 @@ import { createAnswers, deleteAnswers, moveAnswers, updateAnswers } from '@/redu
 export function* createTestSaga(action: CreateTestRequest) {
 	yield call(request<CreateTestPayload, CreateTestSuccessPayload>, {
 		service: testApi.create,
-		params: {
-			title: action.payload.title,
-		},
+		params: action.payload,
 		setPending,
 		onSuccess: createTestSuccess,
 		onFailure: setError,
@@ -187,16 +184,17 @@ function* createAnswerSaga(payload: CreateAnswerPayload) {
 	const { answer, questionId } = payload;
 	yield call(request<CreateAnswerPayload, CreateAnswersSuccessPayload>, {
 		service: answerApi.create,
-		params: {
-			answer,
-			questionId,
-		},
+		params: payload,
 		setPending,
 		onFailure: setError,
-		callback: function* ({ answer }) {
-			yield put(createAnswerSuccess({ answer, questionId }));
+		callback: function* ({ answer: resAnswer }) {
+			yield put(createAnswerSuccess({ answer: resAnswer, questionId }));
 			if (answer.position) {
-				yield put(moveAnswers({ positions: answer.position, questionId }));
+				const position: MoveAnswerPosition = {
+					...answer.position,
+					id: resAnswer.id,
+				};
+				yield put(moveAnswers({ positions: [position], questionId }));
 			}
 		},
 	});
