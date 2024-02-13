@@ -12,17 +12,16 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const Modal: FC<Props> = ({ header, children, footer, closable = false, closeModal = () => {}, className }) => {
+export const Modal: FC<Props> = ({ header, children, footer, close, className }) => {
 	const ref = useRef<HTMLDivElement>(null);
-	useClickOutside(ref, closeModal);
+	useClickOutside(ref, close);
 
-	//TODO: closable не работает. ничего не меняется в зависимости от false/true
 	return createPortal(
 		<div className={cx('modal', className)}>
 			<BoxContainer className={cx('modal__container')}>
 				<div className={cx('modal__inner')} ref={ref}>
-					{closable && (
-						<IconButton className={cx('modal__close-btn')} zeroSpacing onClick={closeModal}>
+					{close && (
+						<IconButton className={cx('modal__close-btn')} zeroSpacing onClick={close}>
 							<Cross size="24" />
 						</IconButton>
 					)}

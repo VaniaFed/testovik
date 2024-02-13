@@ -59,8 +59,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 	return (
 		<Modal
 			className={cx('modal-question', className)}
-			closable
-			closeModal={close}
+			close={close}
 			header={<Heading size="1">{headerTitle}</Heading>}
 			footer={
 				<>

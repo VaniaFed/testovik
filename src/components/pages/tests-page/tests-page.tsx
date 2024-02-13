@@ -92,7 +92,7 @@ export const TestsPage: FC<unknown> = () => {
 					</Button>
 				</Panel>
 			)}
-			{isModalAddTestShown && <ModalAddTest closable close={hideModalAddTest} />}
+			{isModalAddTestShown && <ModalAddTest close={hideModalAddTest} />}
 			{isModalPassTestShown && (
 				<ModalAction
 					title="Вы действительно хотите пройти тест?"

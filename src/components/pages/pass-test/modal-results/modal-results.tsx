@@ -37,10 +37,7 @@ export const ModalResults: FC<Props> = ({ results, close, className }) => {
 				</>
 			}
 			className={cx('modal-results', className)}
-			closable
-			closeModal={() => {
-				close();
-			}}>
+			close={close}>
 			<Subtitle style="light" className={cx('modal-results__subtitle')}>
 				{results.wrongQuestions.length ? 'Вопросы, которые можно улучшить:' : 'Вы успешно прошли тест!'}
 			</Subtitle>

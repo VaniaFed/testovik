@@ -25,7 +25,7 @@ const schema = yup
 
 export type FormFields = yup.InferType<typeof schema>;
 
-export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) => {
+export const ModalAddTest: FC<Props> = ({ close, className }) => {
 	const {
 		register,
 		handleSubmit,
@@ -56,14 +56,7 @@ export const ModalAddTest: FC<Props> = ({ close, closable = false, className }) 
 	};
 
 	return (
-		<Modal
-			header={header}
-			footer={footer}
-			className={className}
-			closable={closable}
-			closeModal={() => {
-				close();
-			}}>
+		<Modal header={header} footer={footer} close={close} className={className}>
 			<Form id="add-test-form" onSubmit={handleSubmit(onSubmit)}>
 				<Field id="test-name" label="Название теста" errMessage={errors.title?.message as string}>
 					<Input id="test-name" placeholder="География 7 класс" autoFocus {...register('title')} />

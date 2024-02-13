@@ -40,10 +40,7 @@ export const ModalAction: FC<Props> = ({
 				</>
 			}
 			className={cx('modal-action', className)}
-			closable
-			closeModal={() => {
-				close();
-			}}
+			close={close}
 		/>
 	);
 };
