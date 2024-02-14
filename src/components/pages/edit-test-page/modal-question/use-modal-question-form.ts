@@ -57,6 +57,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		getValues,
 		setValue,
 		setError,
+		watch,
 		formState: { errors },
 		control,
 	} = useForm<FormFields>({
@@ -68,6 +69,8 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 		name: 'answers',
 		control,
 	});
+
+	const watchAnswers = watch('answers');
 
 	const [answersToUpdate, setAnswersToUpdate] = useState<Answer[]>([]);
 	const [answersToMove, setAnswersToMove] = useState<MoveAnswerPosition[]>([]);
@@ -138,7 +141,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 
 	const handleDrag: OnDragEndResponder = (result) => {
 		const { source, destination } = result;
-		const movedAnswer = fields[source.index];
+		const movedAnswer = watchAnswers![source.index];
 
 		if (!destination) {
 			return;
@@ -173,7 +176,7 @@ export const useModalQuestionForm = ({ mode, question, questionType, testId, clo
 					title: formData.question,
 					question_type: questionType,
 					answer: formData.answer as number,
-					answers: formData.answers as Answer[],
+					answers: prepareAnswersToAdd(formData.answers as AnswerField[]) as Answer[],
 				},
 				testId,
 			}),

@@ -72,6 +72,10 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 								append({
 									text: '',
 									is_right: false,
+									position: {
+										source: undefined,
+										destination: undefined,
+									},
 								})
 							}
 						/>

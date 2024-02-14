@@ -36,6 +36,10 @@ export const testsSlice = createSlice({
 			state.status = 'PENDING';
 		},
 
+		setSucceeded(state) {
+			state.status = 'SUCCEEDED';
+		},
+
 		setError(state, action: ActionError) {
 			state.error = action.payload;
 			state.status = 'FAILED';
@@ -43,18 +47,15 @@ export const testsSlice = createSlice({
 
 		createTestSuccess(state, action: CreateTestSuccess) {
 			state.list.unshift(action.payload.test);
-			state.status = 'SUCCEEDED';
 		},
 
 		fetchAllTestsSuccess(state, action: FetchAllTestsSuccess) {
 			state.list = action.payload.tests;
 			state.pagination = action.payload.meta;
-			state.status = 'SUCCEEDED';
 		},
 
 		fetchTestByIdSuccess(state, action: FetchTestByIdSuccess) {
 			state.currentTest = action.payload.test;
-			state.status = 'SUCCEEDED';
 		},
 
 		updateTestSuccess(state, action: UpdateTestSuccess) {
@@ -68,28 +69,24 @@ export const testsSlice = createSlice({
 
 		createQuestionSuccess(state, action: CreateQuestionSuccess) {
 			state.currentTest?.questions.push(action.payload.question);
-			state.status = 'SUCCEEDED';
 		},
 
 		updateQuestionSuccess(state, action: UpdateQuestionSuccess) {
 			const { question } = action.payload;
 			if (state.currentTest) {
 				state.currentTest.questions = updateById(state.currentTest.questions, question.id, question);
-				state.status = 'SUCCEEDED';
 			}
 		},
 
 		deleteQuestionSuccess(state, action: DeleteQuestionSuccess) {
 			if (state.currentTest) {
 				state.currentTest.questions = deleteById(state.currentTest.questions, action.payload.id);
-				state.status = 'SUCCEEDED';
 			}
 		},
 
 		createAnswerSuccess(state, action: CreateAnswersSuccess) {
 			const { answer, questionId } = action.payload;
 			state.currentTest?.questions.find((question) => question.id === questionId)?.answers.push(answer);
-			state.status = 'SUCCEEDED';
 		},
 
 		updateAnswerSuccess(state, action: UpdateAnswersSuccess) {

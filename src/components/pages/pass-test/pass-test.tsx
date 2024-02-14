@@ -17,7 +17,6 @@ const cx = classNames.bind(styles);
 export const PassTest: FC<Props> = ({ params: { id } }) => {
 	const {
 		test,
-		answers,
 		getUserAnswer,
 		handleAnswerChange,
 		checkIfAnswerChecked,
@@ -38,7 +37,6 @@ export const PassTest: FC<Props> = ({ params: { id } }) => {
 					<li key={index}>
 						<Question
 							question={question}
-							userAnswers={answers}
 							handleAnswerChange={handleAnswerChange}
 							checkIfAnswerChecked={checkIfAnswerChecked}
 							getUserAnswer={getUserAnswer}

@@ -3,6 +3,7 @@ import { testsSlice } from '@/reduxjs/modules/tests/reducer';
 export const {
 	// general
 	setPending,
+	setSucceeded,
 	setError,
 
 	// specific

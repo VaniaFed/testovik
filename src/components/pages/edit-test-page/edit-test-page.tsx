@@ -12,6 +12,8 @@ import { useEditTest } from '@/components/pages/edit-test-page/use-edit-test';
 import styles from './edit-test-page.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
+import { useAppSelector } from '@/reduxjs/hooks';
+import { selectTestsStatus } from '@/reduxjs/modules/tests';
 
 const cx = classNames.bind(styles);
 
@@ -34,9 +36,11 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 		handleDeleteTest,
 	} = useEditTest(id);
 
+	const status = useAppSelector(selectTestsStatus);
+
 	return (
 		<div className={cx('edit-test-page', className)}>
-			{test ? (
+			{test && status !== 'PENDING' && status !== 'FAILED' ? (
 				<>
 					<TestPageHeader
 						className={cx('edit-test-page__header')}

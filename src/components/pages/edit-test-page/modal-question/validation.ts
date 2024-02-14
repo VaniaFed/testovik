@@ -8,7 +8,7 @@ const answersSchema = yup.object({
 		.string()
 		.trim()
 		.min(1, 'Поле слишком короткое')
-		.max(90, 'Поле слишком длинное')
+		.max(200, 'Поле слишком длинное')
 		.required('Это обязательное поле'),
 	is_right: yup.boolean().nonNullable(),
 	// react-hook-form uses its own <<id>> field,
@@ -28,7 +28,7 @@ export const schema = yup
 			.string()
 			.trim()
 			.min(3, 'Поле слишком короткое')
-			.max(90, 'Поле слишком длинное')
+			.max(200, 'Поле слишком длинное')
 			.required('Это обязательное поле'),
 		answers: yup.array().of(answersSchema),
 		answer: yup.number().when('answers', {
@@ -80,10 +80,12 @@ export const checkIfAnswerWasCreatedWhileEditing = (answer: AnswerField) =>
 export const excludeDeletedAnswers = <T extends AbstractObjectWithId>(answers: T[], answersToDelete: Answer['id'][]) =>
 	answers.filter((updAnswer) => !checkIfAnswerWasDeletedWhileEditing(updAnswer, answersToDelete));
 
+const preparePosition = (position: AnswerField['position']) => {
+	return position?.destination && position.destination ? position : null;
+};
 export const prepareAnswersToAdd = (answers: AnswerField[]) =>
-	answers
-		.filter(checkIfAnswerWasCreatedWhileEditing)
-		.map((answer) => ({ text: answer.text, is_right: answer.is_right, position: answer.position })) as Omit<
-		Answer,
-		'id'
-	>[];
+	answers.filter(checkIfAnswerWasCreatedWhileEditing).map((answer) => ({
+		text: answer.text,
+		is_right: answer.is_right,
+		position: preparePosition(answer.position),
+	})) as Omit<Answer, 'id'>[];

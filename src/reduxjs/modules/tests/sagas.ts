@@ -1,10 +1,11 @@
-import { call, put } from 'redux-saga/effects';
+import { all, call, fork, put } from 'redux-saga/effects';
 import request from '@/reduxjs/helpers/request';
 import { testApi } from '@/services/test';
 import { questionApi } from '@/services/question';
 import { answerApi } from '@/services/answer';
 import {
 	setPending,
+	setSucceeded,
 	setError,
 	createQuestionSuccess,
 	deleteQuestionSuccess,
@@ -65,6 +66,7 @@ export function* createTestSaga(action: CreateTestRequest) {
 		service: testApi.create,
 		params: action.payload,
 		setPending,
+		setSucceeded,
 		onSuccess: createTestSuccess,
 		onFailure: setError,
 	});
@@ -75,6 +77,7 @@ export function* fetchAllTestsSaga(action: FetchAllTestsRequest) {
 		service: testApi.getAll,
 		params: action.payload,
 		setPending,
+		setSucceeded,
 		onSuccess: fetchAllTestsSuccess,
 		onFailure: setError,
 	});
@@ -88,6 +91,7 @@ export function* fetchTestByIdSaga(action: FetchTestByIdRequest) {
 			id,
 		},
 		setPending,
+		setSucceeded,
 		onSuccess: fetchTestByIdSuccess,
 		onFailure: setError,
 	});
@@ -125,7 +129,10 @@ export function* createQuestionSaga(action: CreateQuestionRequest) {
 		onSuccess: createQuestionSuccess,
 		onFailure: setError,
 		callback: function* ({ question: { id } }) {
-			yield put(createAnswers({ answers: question.answers, questionId: id }));
+			if (question.answers) {
+				yield call(createAnswersSaga, createAnswers({ answers: question.answers, questionId: id }));
+			}
+			yield put(setSucceeded());
 		},
 	});
 }
@@ -141,18 +148,13 @@ export function* updateQuestionSaga(action: UpdateQuestionRequest) {
 		onSuccess: updateQuestionSuccess,
 		onFailure: setError,
 		callback: function* () {
-			if (answersToDelete.length) {
-				yield put(deleteAnswers({ id: answersToDelete, questionId: question.id }));
-			}
-			if (answersToAdd.length) {
-				yield put(createAnswers({ answers: answersToAdd, questionId: question.id }));
-			}
-			if (answersToMove.length) {
-				yield put(moveAnswers({ positions: answersToMove, questionId: question.id }));
-			}
-			if (answersToUpdate.length) {
-				yield put(updateAnswers({ answers: answersToUpdate, questionId: question.id }));
-			}
+			yield all([
+				call(deleteAnswersSaga, deleteAnswers({ id: answersToDelete, questionId: question.id })),
+				call(createAnswersSaga, createAnswers({ answers: answersToAdd, questionId: question.id })),
+				call(moveAnswersSaga, moveAnswers({ positions: answersToMove, questionId: question.id })),
+				call(updateAnswersSaga, updateAnswers({ answers: answersToUpdate, questionId: question.id })),
+			]);
+			yield put(setSucceeded());
 		},
 	});
 }
@@ -161,9 +163,7 @@ export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
 	const { id } = action.payload;
 	yield call(request<DeleteQuestionPayload, DeleteQuestionSuccessPayload>, {
 		service: questionApi.delete,
-		params: {
-			id,
-		},
+		params: action.payload,
 		setPending,
 		onFailure: setError,
 		callback: function* () {
@@ -174,7 +174,6 @@ export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
 
 export function* createAnswersSaga(action: CreateAnswersRequest) {
 	const { questionId, answers } = action.payload;
-
 	for (const answer of answers) {
 		yield call(createAnswerSaga, { answer, questionId });
 	}
@@ -202,9 +201,8 @@ function* createAnswerSaga(payload: CreateAnswerPayload) {
 
 export function* updateAnswersSaga(action: UpdateAnswersAction) {
 	const { answers, questionId } = action.payload;
-
 	for (const answer of answers) {
-		yield call(updateAnswerSaga, { answer, questionId });
+		yield fork(updateAnswerSaga, { answer, questionId });
 	}
 }
 
@@ -215,7 +213,6 @@ function* updateAnswerSaga(payload: UpdateAnswerPayload) {
 		params: {
 			answer,
 		},
-		setPending,
 		onFailure: setError,
 		callback: function* ({ answer }) {
 			yield put(updateAnswerSuccess({ answer, questionId }));
@@ -223,8 +220,6 @@ function* updateAnswerSaga(payload: UpdateAnswerPayload) {
 	});
 }
 
-// TODO: где-то action, где-то сразу payload,
-// сделать для всех action? чтобы можно было извне вызывать?
 export function* moveAnswersSaga(action: MoveAnswersAction) {
 	const { positions, questionId } = action.payload;
 
@@ -250,7 +245,7 @@ export function* deleteAnswersSaga(action: DeleteAnswersAction) {
 	const { id: answersToDelete, questionId } = action.payload;
 
 	for (const id of answersToDelete) {
-		yield call(deleteAnswerSaga, { id, questionId });
+		yield fork(deleteAnswerSaga, { id, questionId });
 	}
 }
 
