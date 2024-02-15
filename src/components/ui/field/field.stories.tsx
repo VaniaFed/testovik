@@ -1,6 +1,5 @@
 import { Field } from './field';
 import { Input } from '../input';
-import { Textarea } from '../textarea';
 import { IconButton } from '@/components/ui/icon-button';
 import { Cross } from '@/components/ui/icons/cross';
 import { DragDots } from '@/components/ui/icons/drag-dots';
@@ -42,14 +41,6 @@ export const WithErrMessage: Story = {
 	render: () => (
 		<Field id="2" label="With Label" required errMessage="Typical form error">
 			<Input placeholder="Placeholder" />
-		</Field>
-	),
-};
-
-export const WithFieldTextArea: Story = {
-	render: () => (
-		<Field id="2" label="With Label">
-			<Textarea placeholder="Placeholder" />
 		</Field>
 	),
 };

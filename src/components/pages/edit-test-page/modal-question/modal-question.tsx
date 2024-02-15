@@ -82,7 +82,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 					)}
 				</>
 			}>
-			<Form id="question-form" onSubmit={handleSubmit(onSubmit)} formError={errors.root?.message}>
+			<Form id="question-form" onSubmit={handleSubmit(onSubmit)} errMessage={errors.root?.message}>
 				<Field id="question-form-question" label="Вопрос" errMessage={errors.question?.message}>
 					<Input
 						id="question-form-question"

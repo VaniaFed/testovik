@@ -7,11 +7,11 @@ import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 
-export const Form: FC<Props> = ({ children, formError, className, ...rest }) => {
+export const Form: FC<Props> = ({ children, errMessage, className, ...rest }) => {
 	return (
 		<form className={cx('form', className)} {...rest}>
 			{children}
-			{formError && <Paragraph className={cx('form__error')}>{formError}</Paragraph>}
+			{errMessage && <Paragraph className={cx('form__error')}>{errMessage}</Paragraph>}
 		</form>
 	);
 };

@@ -1,26 +1,20 @@
-import React from 'react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import { Subtitle } from './subtitle';
 
-import type { ComponentStory, Meta } from '@storybook/react';
-import type { Props } from './props';
-
-const meta: Meta = {
-	title: 'Subtitle',
+const meta: Meta<typeof Subtitle> = {
 	component: Subtitle,
 };
 
+type Story = StoryObj<typeof Subtitle>;
+
+export const Regular: Story = {
+	render: () => <Subtitle>Subtitle text</Subtitle>,
+};
+
+export const Medium: Story = {
+	render: () => <Subtitle style="medium">Subtitle text</Subtitle>,
+};
+export const Light: Story = {
+	render: () => <Subtitle style="light">Subtitle text</Subtitle>,
+};
 export default meta;
-
-export const Default: ComponentStory<typeof Subtitle> = (args: Props) => <Subtitle {...args} />;
-Default.args = {
-	className: '',
-	children: 'Subtitle text',
-};
-
-export const Light: ComponentStory<typeof Subtitle> = (args: Props) => <Subtitle {...args} />;
-Light.args = {
-	className: '',
-	children: 'Subtitle text light',
-	style: 'light',
-};

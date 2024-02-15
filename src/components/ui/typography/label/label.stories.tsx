@@ -1,24 +1,22 @@
-import React from 'react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import { Label } from './label';
 
-import type { ComponentStory, Meta } from '@storybook/react';
-import type { Props } from './props';
-
-const meta: Meta = {
-	title: 'Label',
+const meta: Meta<typeof Label> = {
 	component: Label,
 };
 
+type Story = StoryObj<typeof Label>;
+
+export const Default: Story = {
+	render: () => <Label>Label text</Label>,
+};
+
+export const Required: Story = {
+	render: () => <Label required>Label text</Label>,
+};
+
+export const Small: Story = {
+	render: () => <Label small>Label text</Label>,
+};
+
 export default meta;
-
-export const Default: ComponentStory<typeof Label> = (args: Props) => <Label {...args}>Label</Label>;
-Default.args = {
-	className: '',
-};
-
-export const Required: ComponentStory<typeof Label> = (args: Props) => <Label {...args}>Required label</Label>;
-Required.args = {
-	className: '',
-	required: true,
-};

@@ -1,27 +1,29 @@
-import React from 'react';
-
 import { Dropdown } from './dropdown';
+import type { Meta, StoryObj } from '@storybook/react';
+import type { DropdownItem } from '@/types/common';
 
-import type { Meta, ComponentStory } from '@storybook/react';
-import type { Props } from './props';
-
-const meta: Meta = {
-	title: 'Dropdown',
+const meta: Meta<typeof Dropdown> = {
 	component: Dropdown,
 };
 
-export default meta;
-export const Default: ComponentStory<typeof Dropdown> = (args: Props) => <Dropdown {...args} />;
-Default.args = {
-	dropdownItems: [
-		{
-			label: 'Аргентина',
-			value: 'аргентина',
-		},
-		{
-			label: 'Тверь',
-			value: 'тверь',
-		},
-	],
-	className: '',
+type Story = StoryObj<typeof Dropdown>;
+
+const items: DropdownItem[] = [
+	{
+		label: 'Item 1',
+		value: '1',
+	},
+	{
+		label: 'Item 2',
+		value: '2',
+	},
+	{
+		label: 'Item 3',
+		value: '3',
+	},
+];
+
+export const Primary: Story = {
+	render: () => <Dropdown items={items} active={items[0]} name="dropdown-example" onChange={console.log} />,
 };
+export default meta;

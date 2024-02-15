@@ -6,7 +6,6 @@ export interface Props<T = string> {
 	active: DropdownItem<T>;
 	onChange?: (item: DropdownItem<T>) => void;
 	name: string;
-	placeholder?: string;
 	isInvalid?: boolean;
 	className?: string;
 	onBlur?: (e: FocusEvent) => void;

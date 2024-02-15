@@ -1,15 +1,18 @@
-import React from 'react';
-
+import type { Meta, StoryObj } from '@storybook/react';
 import { Header } from './header';
+import { Providers } from '@/components/utils/providers';
 
-import type { Props } from './props';
-import type { Meta, ComponentStory } from '@storybook/react';
-
-const meta: Meta = {
-	title: 'Header',
+const meta: Meta<typeof Header> = {
 	component: Header,
 };
 
-export default meta;
+type Story = StoryObj<typeof Header>;
 
-export const Default: ComponentStory<typeof Header> = (args: Props) => <Header {...args} />;
+export const Primary: Story = {
+	render: () => (
+		<Providers>
+			<Header />
+		</Providers>
+	),
+};
+export default meta;

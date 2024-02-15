@@ -51,7 +51,7 @@ export const SignInForm: FC<unknown> = () => {
 	}, [user, status]);
 
 	return (
-		<Form id="sign-up-form" onSubmit={handleSubmit(onSubmit)} formError={errors.root?.message}>
+		<Form id="sign-up-form" onSubmit={handleSubmit(onSubmit)} errMessage={errors.root?.message}>
 			<Field id="form-username" label="Логин" required errMessage={errors.username?.message as string}>
 				<Input
 					id="form-username"

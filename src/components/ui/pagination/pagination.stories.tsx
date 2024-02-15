@@ -11,12 +11,13 @@ type Story = StoryObj<typeof Pagination>;
 export const Primary: Story = {
 	render: () => (
 		<Pagination
-			currentPage={5}
-			totalCount={22}
-			disable={{ left: false, right: false }}
-			goToPage={() => {}}
-			onNextPage={() => {}}
-			onPrevPage={() => {}}
+			totalPages={9}
+			currentPage={1}
+			itemsPerPage={10}
+			totalItems={22}
+			onNextPageClick={console.log}
+			onPrevPageClick={console.log}
+			onItemClick={console.log}
 		/>
 	),
 };

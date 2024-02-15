@@ -14,7 +14,6 @@ export const Dropdown = <T extends unknown>({
 	items,
 	active,
 	name,
-	placeholder,
 	isInvalid,
 	className,
 	onChange = () => {},
@@ -26,7 +25,6 @@ export const Dropdown = <T extends unknown>({
 		<div className={cx('dropdown', className)}>
 			<div className={cx('dropdown__input-wrapper')}>
 				<Input
-					placeholder={placeholder}
 					value={active.label}
 					type="text"
 					name={name}

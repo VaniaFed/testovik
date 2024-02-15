@@ -16,7 +16,6 @@ export const AddQuestion: FC<Props> = ({ allQuestionTypes, activeQuestionType, s
 				Добавить вопрос
 			</Heading>
 			<Dropdown
-				placeholder="Тип вопроса"
 				name="dropdown-question-type"
 				items={allQuestionTypes}
 				active={activeQuestionType}
