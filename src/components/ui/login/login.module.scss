@@ -5,6 +5,10 @@
 	display: flex;
 	gap: 42px;
 
+	@include media-tablet {
+		gap: 24px;
+	}
+
 	&__user {
 		display: flex;
 		align-items: center;
@@ -13,5 +17,9 @@
 
 	&__role {
 		color: $color-gray;
+
+		@include media-mobile {
+			display: none;
+		}
 	}
 }

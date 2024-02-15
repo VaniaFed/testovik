@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import classNames from 'classnames/bind';
 import { TestsList } from '@/components/pages/tests-page/tests-list';
 import { Pagination } from '@/components/ui/pagination';
@@ -7,8 +8,10 @@ import { Panel } from '@/components/ui/panel';
 import { Filter } from '@/components/pages/tests-page/filter/filter';
 import { Heading } from '@/components/ui/typography/heading';
 import { Button } from '@/components/ui/button';
+import { Sort } from '@/components/pages/tests-page/sort/sort';
+import { ModalAction } from '@/components/ui/modal/modal-action';
 import { User, selectUser } from '@/reduxjs/modules/auth';
-import { Test, fetchAllTests, selectAllTests, selectTestsStatus } from '@/reduxjs/modules/tests';
+import { Test, fetchAllTests, selectAllTests } from '@/reduxjs/modules/tests';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { useModal } from '@/hooks/use-modal';
 import { usePagination } from '@/components/pages/tests-page/use-pagination';
@@ -16,16 +19,11 @@ import { useSearch } from '@/components/pages/tests-page/use-search';
 import { useSort } from '@/components/pages/tests-page/use-sort';
 import styles from './tests-page.module.scss';
 import type { FC } from 'react';
-import { Sort } from '@/components/pages/tests-page/sort/sort';
-import { ModalAction } from '@/components/ui/modal/modal-action';
-import { useRouter } from 'next/navigation';
-import { LoaderBox } from '@/components/ui/loader-box';
 
 const cx = classNames.bind(styles);
 
 export const TestsPage: FC<unknown> = () => {
 	const tests = useAppSelector(selectAllTests);
-	const status = useAppSelector(selectTestsStatus);
 	const user = useAppSelector(selectUser);
 	const { search, handleChangeSearch, handleClearSearch } = useSearch();
 	const { sort, handleChangeSort } = useSort('created_at_desc');
@@ -57,7 +55,6 @@ export const TestsPage: FC<unknown> = () => {
 
 	return (
 		<div className={cx('tests-page')}>
-			{status === 'PENDING' && <LoaderBox />}
 			<div className={cx('tests-page__content')}>
 				<Filter
 					className={cx('tests-page__filter')}

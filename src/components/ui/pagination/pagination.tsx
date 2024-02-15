@@ -29,12 +29,12 @@ export const Pagination: FC<Props> = ({
 			<IconButton disabled={currentPage === 1} circle onClick={onPrevPageClick}>
 				<Arrow direction="left" />
 			</IconButton>
-			{pageNumbers.map((item, index) => (
+			{pageNumbers.map((pageNumber, index) => (
 				<Button
-					variant={item === currentPage ? 'text_accent' : 'text_black'}
+					variant={pageNumber === currentPage ? 'text_accent' : 'text_black'}
 					key={index}
-					onClick={() => onItemClick(item)}>
-					{item}
+					onClick={() => onItemClick(pageNumber)}>
+					{pageNumber}
 				</Button>
 			))}
 			<IconButton disabled={totalPages === currentPage} circle onClick={onNextPageClick}>

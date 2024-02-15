@@ -11,6 +11,10 @@
 	cursor: pointer;
 	color: $color-gray;
 
+	@include media-mobile {
+		height: 36px;
+	}
+
 	&_active {
 		color: $color-black;
 	}

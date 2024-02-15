@@ -1,5 +1,9 @@
 @import '/src/utils/variables';
 @import '/src/utils/media';
 
-.pagination.module {
+.pagination {
+	@include media-mobile {
+		display: flex;
+		gap: 24px;
+	}
 }
