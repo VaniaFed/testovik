@@ -3,9 +3,9 @@ import {
 	checkIfAnswerWasDeletedWhileEditing,
 	prepareAnswersToAdd,
 	excludeDeletedAnswers,
+	AnswerField,
 } from '@/components/pages/edit-test-page/modal-question/validation';
 import type { Answer } from '@/reduxjs/modules/tests';
-import type { AnswerField } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
 
 describe('add/edit/delete answer logic', () => {
 	it('should return true if one of the ids is present in answer.id', () => {
