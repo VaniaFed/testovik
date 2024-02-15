@@ -1,3 +1,5 @@
+import { Ref } from 'react';
+
 export interface Props {
 	id: string;
 	required?: boolean;
@@ -8,6 +10,6 @@ export interface Props {
 	errMessage?: string;
 	className?: string;
 	labelClassName?: string;
-	innerRef?: any;
+	innerRef?: Ref<any>;
 	rest?: any[];
 }

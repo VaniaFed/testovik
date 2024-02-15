@@ -5,11 +5,6 @@ export interface Props {
 	onPrevPageClick: () => void;
 	onNextPageClick: () => void;
 	onItemClick: (n: number) => void;
-	// currentPage: number;
 	totalPages: number;
-	// disable: {
-	// 	left: boolean;
-	// 	right: boolean;
-	// };
 	className?: string;
 }

@@ -1,4 +1,4 @@
-import { OlHTMLAttributes } from 'react';
+import { OlHTMLAttributes, Ref } from 'react';
 
 export interface Props extends OlHTMLAttributes<HTMLUListElement> {
 	children: React.ReactNode;
@@ -7,5 +7,5 @@ export interface Props extends OlHTMLAttributes<HTMLUListElement> {
 	alignCenter?: boolean;
 	justifyContentCenter?: boolean;
 	className?: string;
-	innerRef?: any;
+	innerRef?: Ref<any>;
 }
