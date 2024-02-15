@@ -5,15 +5,15 @@ import { Button } from '@/components/ui/button';
 import { questionTypeDropdownItems } from '@/utils/data';
 import { AddQuestion } from '@/components/pages/edit-test-page/add-question';
 import { QuestionList } from '@/components/pages/edit-test-page/question-list';
-import { Loader } from '@/components/ui/loader';
 import { Modals } from '@/components/pages/edit-test-page/modals';
 import { TestPageHeader } from '@/components/pages/edit-test-page/test-page-header';
 import { useEditTest } from '@/components/pages/edit-test-page/use-edit-test';
+import { LoaderBox } from '@/components/ui/loader-box';
+import { useAppSelector } from '@/reduxjs/hooks';
+import { selectTestsStatus } from '@/reduxjs/modules/tests';
 import styles from './edit-test-page.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
-import { useAppSelector } from '@/reduxjs/hooks';
-import { selectTestsStatus } from '@/reduxjs/modules/tests';
 
 const cx = classNames.bind(styles);
 
@@ -40,7 +40,8 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 
 	return (
 		<div className={cx('edit-test-page', className)}>
-			{test && status !== 'PENDING' && status !== 'FAILED' ? (
+			{status === 'PENDING' && <LoaderBox />}
+			{test && (
 				<>
 					<TestPageHeader
 						className={cx('edit-test-page__header')}
@@ -82,8 +83,6 @@ export const EditTestPage: FC<Props> = ({ params: { id }, className }) => {
 						ref={modalsRef}
 					/>
 				</>
-			) : (
-				<Loader />
 			)}
 		</div>
 	);

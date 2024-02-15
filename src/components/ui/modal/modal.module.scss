@@ -2,31 +2,8 @@
 @import '/src/utils/media';
 
 .modal {
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	overflow-y: auto;
-	display: flex;
-	align-items: center;
-	width: 100%;
-	height: 100%;
 	padding: 0;
-	backdrop-filter: blur(6px);
 	border: none;
-
-	&::after {
-		content: '';
-		position: fixed;
-		z-index: 0;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		display: block;
-		background-color: $color-black;
-		opacity: 0.75;
-	}
 
 	&__close-btn {
 		position: absolute;

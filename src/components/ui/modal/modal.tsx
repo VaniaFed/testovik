@@ -1,6 +1,5 @@
 'use client';
 import React, { useRef } from 'react';
-import { createPortal } from 'react-dom';
 import classNames from 'classnames/bind';
 import { BoxContainer } from '@/components/layout/box-container';
 import { IconButton } from '@/components/ui/icon-button';
@@ -9,6 +8,7 @@ import { useClickOutside } from '@/hooks/use-click-outside';
 import styles from './modal.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
+import { Overlay } from '@/components/ui/overlay';
 
 const cx = classNames.bind(styles);
 
@@ -16,8 +16,8 @@ export const Modal: FC<Props> = ({ header, children, footer, close, className })
 	const ref = useRef<HTMLDivElement>(null);
 	useClickOutside(ref, close);
 
-	return createPortal(
-		<div className={cx('modal', className)}>
+	return (
+		<Overlay className={cx('modal', className)} withDarkBackground>
 			<BoxContainer className={cx('modal__container')}>
 				<div className={cx('modal__inner')} ref={ref}>
 					{close && (
@@ -30,7 +30,6 @@ export const Modal: FC<Props> = ({ header, children, footer, close, className })
 					<footer className={cx('modal__footer')}>{footer}</footer>
 				</div>
 			</BoxContainer>
-		</div>,
-		document.body,
+		</Overlay>
 	);
 };
