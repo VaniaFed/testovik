@@ -8,9 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Panel } from '@/components/ui/panel';
 import { ModalResults } from '@/components/pages/pass-test/modal-results';
 import { usePassTest } from '@/components/pages/pass-test/use-pass-test';
+import { Link } from '@/components/ui/link';
+import { Subtitle } from '@/components/ui/typography/subtitle';
 import styles from './pass-test.module.scss';
 import type { FC } from 'react';
 import type { Props } from './props';
+import { useAppSelector } from '@/reduxjs/hooks';
+import { selectTestsStatus } from '@/reduxjs/modules/tests';
+import { LoaderBox } from '@/components/ui/loader-box';
 
 const cx = classNames.bind(styles);
 
@@ -25,30 +30,42 @@ export const PassTest: FC<Props> = ({ params: { id } }) => {
 		isModalShown,
 		hideModal,
 	} = usePassTest(id);
+	const status = useAppSelector(selectTestsStatus);
 
 	return (
 		<div className={cx('pass-test')}>
+			{status === 'PENDING' && <LoaderBox />}
 			<header className={cx('pass-test__header')}>
 				<Heading className={cx('pass-test__heading')}>{test?.title}</Heading>
 				<Label>{test?.questions.length} вопросов</Label>
 			</header>
-			<Stack className={cx('question-list')}>
-				{test?.questions.map((question, index) => (
-					<li key={index}>
-						<Question
-							question={question}
-							handleAnswerChange={handleAnswerChange}
-							checkIfAnswerChecked={checkIfAnswerChecked}
-							getUserAnswer={getUserAnswer}
-							lastQuestion={index === test.questions.length - 1}
-						/>
-					</li>
-				))}
-			</Stack>
+			{test && test.questions.length ? (
+				<Stack className={cx('question-list')}>
+					{test?.questions.map((question, index) => (
+						<li key={index}>
+							<Question
+								question={question}
+								handleAnswerChange={handleAnswerChange}
+								checkIfAnswerChecked={checkIfAnswerChecked}
+								getUserAnswer={getUserAnswer}
+								lastQuestion={index === test.questions.length - 1}
+							/>
+						</li>
+					))}
+				</Stack>
+			) : (
+				<Subtitle style="light">Вопросы еще не созданы</Subtitle>
+			)}
 			<Panel className={cx('pass-test__panel')}>
-				<Button variant="accent" onClick={handleSubmit}>
-					Завершить
-				</Button>
+				{test && test.questions.length ? (
+					<Button variant="accent" onClick={handleSubmit}>
+						Завершить
+					</Button>
+				) : (
+					<Link level="button_accent" color="blue_reversed" href="/">
+						Вернуться к списку тестов
+					</Link>
+				)}
 			</Panel>
 			{isModalShown && <ModalResults close={hideModal} results={getUserResults()} />}
 		</div>

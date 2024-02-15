@@ -64,6 +64,9 @@ export const usePassTest = (id: string) => {
 	const handleSubmit = () => {
 		setAnswers((prev) => [
 			...prev.map((answer) => {
+				if (answer.question.question_type === 'number' && typeof answer.userAnswer !== 'number') {
+					return { ...answer, error: 'Ответ должен быть числом' };
+				}
 				if (answer.userAnswer === undefined || !String(answer.userAnswer).length) {
 					return { ...answer, error: 'На вопросы нужно отвечать' };
 				}

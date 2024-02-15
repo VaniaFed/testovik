@@ -165,6 +165,7 @@ export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
 		service: questionApi.delete,
 		params: action.payload,
 		setPending,
+		setSucceeded,
 		onFailure: setError,
 		callback: function* () {
 			yield put(deleteQuestionSuccess({ id }));

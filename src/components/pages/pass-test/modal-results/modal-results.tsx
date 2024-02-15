@@ -38,7 +38,7 @@ export const ModalResults: FC<Props> = ({ results, close, className }) => {
 			}
 			className={cx('modal-results', className)}
 			close={close}>
-			<Subtitle style="light" className={cx('modal-results__subtitle')}>
+			<Subtitle className={cx('modal-results__subtitle')}>
 				{results.wrongQuestions.length ? 'Вопросы, которые можно улучшить:' : 'Вы успешно прошли тест!'}
 			</Subtitle>
 			{results.wrongQuestions.map((question) => (
