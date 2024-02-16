@@ -61,10 +61,10 @@ import {
 } from '@/reduxjs/modules/tests/types';
 import { createAnswers, deleteAnswers, moveAnswers, updateAnswers } from '@/reduxjs/modules/tests/async-actions';
 
-export function* createTestSaga(action: CreateTestRequest) {
+export function* createTestSaga({ payload }: CreateTestRequest) {
 	yield call(request<CreateTestPayload, CreateTestSuccessPayload>, {
 		service: testApi.create,
-		params: action.payload,
+		params: payload,
 		setPending,
 		setSucceeded,
 		onSuccess: createTestSuccess,
@@ -72,10 +72,10 @@ export function* createTestSaga(action: CreateTestRequest) {
 	});
 }
 
-export function* fetchAllTestsSaga(action: FetchAllTestsRequest) {
+export function* fetchAllTestsSaga({ payload }: FetchAllTestsRequest) {
 	yield call(request<FetchAllTestsPayload, FetchAllTestsSuccessPayload>, {
 		service: testApi.getAll,
-		params: action.payload,
+		params: payload,
 		setPending,
 		setSucceeded,
 		onSuccess: fetchAllTestsSuccess,
@@ -83,8 +83,7 @@ export function* fetchAllTestsSaga(action: FetchAllTestsRequest) {
 	});
 }
 
-export function* fetchTestByIdSaga(action: FetchTestByIdRequest) {
-	const { id } = action.payload;
+export function* fetchTestByIdSaga({ payload: { id } }: FetchTestByIdRequest) {
 	yield call(request<FetchTestByIdPayload, FetchTestByIdSuccessPayload>, {
 		service: testApi.getById,
 		params: {
@@ -97,28 +96,27 @@ export function* fetchTestByIdSaga(action: FetchTestByIdRequest) {
 	});
 }
 
-export function* updateTestSaga(action: UpdateTestRequest) {
+export function* updateTestSaga({ payload }: UpdateTestRequest) {
 	yield call(request<UpdateTestPayload, UpdateTestSuccessPayload>, {
 		service: testApi.patch,
-		params: action.payload,
+		params: payload,
 		setPending,
 		onSuccess: updateTestSuccess,
 		onFailure: setError,
 	});
 }
 
-export function* deleteTestSaga(action: DeleteTestRequest) {
+export function* deleteTestSaga({ payload }: DeleteTestRequest) {
 	yield call(request<DeleteTestPayload, DeleteTestSuccessPayload>, {
 		service: testApi.delete,
-		params: action.payload,
+		params: payload,
 		setPending,
 		onSuccess: deleteTestSuccess,
 		onFailure: setError,
 	});
 }
 
-export function* createQuestionSaga(action: CreateQuestionRequest) {
-	const { testId, question } = action.payload;
+export function* createQuestionSaga({ payload: { testId, question } }: CreateQuestionRequest) {
 	yield call(request<CreateQuestionPayload, CreateQuestionSuccessPayload>, {
 		service: questionApi.create,
 		params: {
@@ -137,8 +135,8 @@ export function* createQuestionSaga(action: CreateQuestionRequest) {
 	});
 }
 
-export function* updateQuestionSaga(action: UpdateQuestionRequest) {
-	const { question, answersToAdd, answersToUpdate, answersToMove, answersToDelete } = action.payload;
+export function* updateQuestionSaga({ payload }: UpdateQuestionRequest) {
+	const { question, answersToAdd, answersToUpdate, answersToMove, answersToDelete } = payload;
 	yield call(request<Pick<UpdateQuestionPayload, 'question'>, UpdateQuestionSuccessPayload>, {
 		service: questionApi.patch,
 		params: {
@@ -159,22 +157,20 @@ export function* updateQuestionSaga(action: UpdateQuestionRequest) {
 	});
 }
 
-export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
-	const { id } = action.payload;
+export function* deleteQuestionSaga({ payload }: DeleteQuestionRequest) {
 	yield call(request<DeleteQuestionPayload, DeleteQuestionSuccessPayload>, {
 		service: questionApi.delete,
-		params: action.payload,
+		params: payload,
 		setPending,
 		setSucceeded,
 		onFailure: setError,
 		callback: function* () {
-			yield put(deleteQuestionSuccess({ id }));
+			yield put(deleteQuestionSuccess({ id: payload.id }));
 		},
 	});
 }
 
-export function* createAnswersSaga(action: CreateAnswersAction) {
-	const { questionId, answers } = action.payload;
+export function* createAnswersSaga({ payload: { questionId, answers } }: CreateAnswersAction) {
 	for (const answer of answers) {
 		yield call(createAnswerSaga, { answer, questionId });
 	}
@@ -200,15 +196,13 @@ function* createAnswerSaga(payload: CreateAnswerPayload) {
 	});
 }
 
-export function* updateAnswersSaga(action: UpdateAnswersAction) {
-	const { answers, questionId } = action.payload;
+export function* updateAnswersSaga({ payload: { questionId, answers } }: UpdateAnswersAction) {
 	for (const answer of answers) {
 		yield fork(updateAnswerSaga, { answer, questionId });
 	}
 }
 
-function* updateAnswerSaga(payload: UpdateAnswerPayload) {
-	const { answer, questionId } = payload;
+function* updateAnswerSaga({ questionId, answer }: UpdateAnswerPayload) {
 	yield call(request<{ answer: Answer }, UpdateAnswersSuccessPayload>, {
 		service: answerApi.patch,
 		params: {
@@ -221,16 +215,13 @@ function* updateAnswerSaga(payload: UpdateAnswerPayload) {
 	});
 }
 
-export function* moveAnswersSaga(action: MoveAnswersAction) {
-	const { positions, questionId } = action.payload;
-
+export function* moveAnswersSaga({ payload: { questionId, positions } }: MoveAnswersAction) {
 	for (const position of positions) {
 		yield call(moveAnswerSaga, { position, questionId });
 	}
 }
 
-function* moveAnswerSaga(payload: MoveAnswerPayload) {
-	const { position, questionId } = payload;
+function* moveAnswerSaga({ questionId, position }: MoveAnswerPayload) {
 	yield call(request<MoveAnswerPosition, null>, {
 		service: answerApi.move,
 		params: position,
@@ -242,16 +233,13 @@ function* moveAnswerSaga(payload: MoveAnswerPayload) {
 	});
 }
 
-export function* deleteAnswersSaga(action: DeleteAnswersAction) {
-	const { id: answersToDelete, questionId } = action.payload;
-
+export function* deleteAnswersSaga({ payload: { id: answersToDelete, questionId } }: DeleteAnswersAction) {
 	for (const id of answersToDelete) {
 		yield fork(deleteAnswerSaga, { id, questionId });
 	}
 }
 
-export function* deleteAnswerSaga(payload: DeleteAnswerPayload) {
-	const { id, questionId } = payload;
+export function* deleteAnswerSaga({ questionId, id }: DeleteAnswerPayload) {
 	yield call(request<{ id: number }, DeleteAnswersSuccessPayload>, {
 		service: answerApi.delete,
 		params: { id },
