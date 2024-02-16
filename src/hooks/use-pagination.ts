@@ -5,12 +5,12 @@ import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 import { useAppSelector } from '@/reduxjs/hooks';
 import { selectPagination } from '@/reduxjs/modules/tests';
 
-export const usePagination = () => {
+export const usePagination = (urlParam: string) => {
 	const pagination = useAppSelector(selectPagination);
-	const pageUrl = Number(useSearchParams().get('page')) || 1;
+	const pageUrl = Number(useSearchParams().get(urlParam)) || 1;
 	const [page, setPage] = useState(pageUrl);
 
-	useWriteToUrlParams('page', String(page));
+	useWriteToUrlParams(urlParam, String(page));
 
 	const handlePrevPageClick = useCallback(() => {
 		const current = page;

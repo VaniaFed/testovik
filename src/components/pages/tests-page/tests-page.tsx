@@ -5,15 +5,15 @@ import React, { useEffect, useState } from 'react';
 import { Filter } from '@/components/pages/tests-page/filter/filter';
 import { Sort } from '@/components/pages/tests-page/sort/sort';
 import { TestsList } from '@/components/pages/tests-page/tests-list';
-import { usePagination } from '@/components/pages/tests-page/use-pagination';
-import { useSearch } from '@/components/pages/tests-page/use-search';
-import { useSort } from '@/components/pages/tests-page/use-sort';
 import { Button } from '@/components/ui/button';
 import { ModalAction } from '@/components/ui/modal/modal-action';
 import { Pagination } from '@/components/ui/pagination';
 import { Panel } from '@/components/ui/panel';
 import { Heading } from '@/components/ui/typography/heading';
 import { useModal } from '@/hooks/use-modal';
+import { usePagination } from '@/hooks/use-pagination';
+import { useSearch } from '@/hooks/use-search';
+import { useSort } from '@/hooks/use-sort';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { User, selectUser } from '@/reduxjs/modules/auth';
 import { Test, fetchAllTests, selectAllTests } from '@/reduxjs/modules/tests';
@@ -28,9 +28,9 @@ const cx = classNames.bind(styles);
 export const TestsPage: FC<unknown> = () => {
 	const tests = useAppSelector(selectAllTests);
 	const user = useAppSelector(selectUser);
-	const { search, handleChangeSearch, handleClearSearch } = useSearch();
-	const { sort, handleChangeSort } = useSort('created_at_desc');
-	const { page, pagination, handlePrevPageClick, handleNextPageClick, handleGoToPage } = usePagination();
+	const { search, handleChangeSearch, handleClearSearch } = useSearch('search');
+	const { sort, handleChangeSort } = useSort('sort', 'created_at_desc');
+	const { page, pagination, handlePrevPageClick, handleNextPageClick, handleGoToPage } = usePagination('page');
 	const [testsPerPage] = useState(4);
 	const [isModalAddTestShown, showModalAddTest, hideModalAddTest] = useModal();
 	const [isModalPassTestShown, showModalPassTest, hideModalPassTest] = useModal();
@@ -53,7 +53,9 @@ export const TestsPage: FC<unknown> = () => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(fetchAllTests({ page: page, per: testsPerPage, sort: sort || 'created_at_desc', search }));
+		dispatch(
+			fetchAllTests({ page: search ? 1 : page, per: testsPerPage, sort: sort || 'created_at_desc', search }),
+		);
 	}, [dispatch, page, sort, search]);
 
 	return (

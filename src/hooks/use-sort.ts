@@ -5,15 +5,15 @@ import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 
 import type { SortOrder } from '@/types/common';
 
-export const useSort = (defaultSort: SortOrder) => {
-	const sortUrl = (useSearchParams().get('sort') as SortOrder) || defaultSort;
+export const useSort = (urlParam: string, defaultSort: SortOrder) => {
+	const sortUrl = (useSearchParams().get(urlParam) as SortOrder) || defaultSort;
 	const [sort, setSort] = useState<SortOrder>(sortUrl);
 
 	const handleChangeSort = () => {
 		setSort(sort === 'created_at_asc' ? 'created_at_desc' : 'created_at_asc');
 	};
 
-	useWriteToUrlParams('sort', sort);
+	useWriteToUrlParams(urlParam, sort);
 
 	return {
 		sort,

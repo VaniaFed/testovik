@@ -3,8 +3,8 @@ import { ChangeEvent, useState } from 'react';
 
 import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 
-export const useSearch = () => {
-	const searchUrl = useSearchParams().get('search') || '';
+export const useSearch = (urlParam: string) => {
+	const searchUrl = useSearchParams().get(urlParam) || '';
 	const [search, setSearch] = useState(searchUrl);
 
 	const handleChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,7 @@ export const useSearch = () => {
 		setSearch('');
 	};
 
-	useWriteToUrlParams('search', search);
+	useWriteToUrlParams(urlParam, search);
 
 	return {
 		search,
