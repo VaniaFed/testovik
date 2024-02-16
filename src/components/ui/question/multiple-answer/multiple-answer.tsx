@@ -23,18 +23,20 @@ export const MultipleAnswer: FC<Props> = ({
 }) => {
 	return (
 		<Stack className={cx('multiple-answer', className)}>
-			{question.answers.map((answer, index) => (
-				<Field id="multiple-answer" key={index}>
-					<Checkbox
-						_size="18"
-						disabled={mode === 'edit'}
-						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked!(answer.id)}
-						onChange={() => handleChange && handleChange(question.id, answer.id)}
-					>
-						{answer.text}
-					</Checkbox>
-				</Field>
-			))}
+			{question.answers.map(
+				(answer, index) =>
+					answer && (
+						<Field id="multiple-answer" key={index}>
+							<Checkbox
+								_size="18"
+								disabled={mode === 'edit'}
+								checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked!(answer.id)}
+								onChange={() => handleChange && handleChange(question.id, answer.id)}>
+								{answer.text}
+							</Checkbox>
+						</Field>
+					),
+			)}
 			{errMessage && <ErrorLabel>{errMessage}</ErrorLabel>}
 		</Stack>
 	);

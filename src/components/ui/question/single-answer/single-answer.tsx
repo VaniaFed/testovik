@@ -23,18 +23,20 @@ export const SingleAnswer: FC<Props> = ({
 }) => {
 	return (
 		<Stack className={cx('single-answer', className)}>
-			{question.answers.map((answer, index) => (
-				<Field id="single-answer" key={index}>
-					<Radio
-						name={String(question.id)}
-						disabled={mode === 'edit'}
-						checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked!(answer.id)}
-						onChange={() => handleChange && handleChange(question.id, answer.id)}
-					>
-						{answer.text}
-					</Radio>
-				</Field>
-			))}
+			{question.answers.map(
+				(answer, index) =>
+					answer && (
+						<Field id="single-answer" key={index}>
+							<Radio
+								name={String(question.id)}
+								disabled={mode === 'edit'}
+								checked={mode === 'edit' ? answer.is_right : checkIfAnswerChecked!(answer.id)}
+								onChange={() => handleChange && handleChange(question.id, answer.id)}>
+								{answer.text}
+							</Radio>
+						</Field>
+					),
+			)}
 			{errMessage && <ErrorLabel>{errMessage}</ErrorLabel>}
 		</Stack>
 	);
