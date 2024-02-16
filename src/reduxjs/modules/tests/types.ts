@@ -1,4 +1,4 @@
-import { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import type { Pagination, Status, TestSort } from '@/types/common';
 
 export type QuestionType = 'single' | 'multiple' | 'number';
@@ -31,6 +31,12 @@ export interface TestsState {
 	pagination: Pagination;
 	status: Status;
 	error: string | null;
+}
+
+export interface MoveAnswerPosition {
+	id: number;
+	source: number;
+	destination: number;
 }
 
 export interface CreateTestPayload {
@@ -121,18 +127,9 @@ export interface UpdateAnswersPayload {
 	answers: Answer[];
 }
 
-export interface UpdateAnswerPayload {
-	questionId: number;
-	answer: Answer;
-}
+export interface UpdateAnswerPayload extends CreateAnswersSuccessPayload {}
 
 export interface UpdateAnswersSuccessPayload extends CreateAnswersSuccessPayload {}
-
-export interface MoveAnswerPosition {
-	id: number;
-	source: number;
-	destination: number;
-}
 
 export interface MoveAnswersPayload {
 	questionId: number;
@@ -147,8 +144,8 @@ export interface MoveAnswerPayload {
 export interface MoveAnswersSuccessPayload extends MoveAnswerPayload {}
 
 export interface DeleteAnswersPayload {
-	questionId: number;
 	id: number[];
+	questionId: number;
 }
 
 export interface DeleteAnswerPayload {
@@ -156,10 +153,7 @@ export interface DeleteAnswerPayload {
 	questionId: number;
 }
 
-export interface DeleteAnswersSuccessPayload {
-	id: number;
-	questionId: number;
-}
+export interface DeleteAnswersSuccessPayload extends DeleteAnswerPayload {}
 
 export type CreateTestRequest = PayloadAction<CreateTestPayload>;
 export type CreateTestSuccess = PayloadAction<CreateTestSuccessPayload>;
@@ -179,7 +173,7 @@ export type UpdateQuestionSuccess = PayloadAction<UpdateQuestionSuccessPayload>;
 export type DeleteQuestionRequest = PayloadAction<DeleteQuestionPayload>;
 export type DeleteQuestionSuccess = PayloadAction<DeleteQuestionSuccessPayload>;
 
-export type CreateAnswersRequest = PayloadAction<CreateAnswersPayload>;
+export type CreateAnswersAction = PayloadAction<CreateAnswersPayload>;
 export type CreateAnswersSuccess = PayloadAction<CreateAnswersSuccessPayload>;
 export type UpdateAnswersAction = PayloadAction<UpdateAnswersPayload>;
 export type UpdateAnswersSuccess = PayloadAction<UpdateAnswersSuccessPayload>;

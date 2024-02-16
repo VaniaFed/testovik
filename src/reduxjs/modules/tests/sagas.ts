@@ -21,7 +21,7 @@ import {
 	moveAnswerSuccess,
 } from '@/reduxjs/modules/tests/actions';
 import {
-	CreateAnswersRequest,
+	CreateAnswersAction,
 	CreateQuestionRequest,
 	DeleteQuestionRequest,
 	UpdateQuestionRequest,
@@ -173,7 +173,7 @@ export function* deleteQuestionSaga(action: DeleteQuestionRequest) {
 	});
 }
 
-export function* createAnswersSaga(action: CreateAnswersRequest) {
+export function* createAnswersSaga(action: CreateAnswersAction) {
 	const { questionId, answers } = action.payload;
 	for (const answer of answers) {
 		yield call(createAnswerSaga, { answer, questionId });
