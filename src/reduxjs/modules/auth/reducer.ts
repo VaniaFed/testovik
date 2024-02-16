@@ -16,6 +16,10 @@ export const authSlice = createSlice({
 			state.status = 'PENDING';
 		},
 
+		setSucceeded(state) {
+			state.status = 'SUCCEEDED';
+		},
+
 		setError(state, action: ActionError) {
 			state.error = action.payload;
 			state.status = 'FAILED';
@@ -23,17 +27,14 @@ export const authSlice = createSlice({
 
 		fetchUserSuccess(state, action: FetchUserSuccess) {
 			state.user = action.payload.user;
-			state.status = 'SUCCEEDED';
 		},
 
 		signUpSuccess(state, action: SignUpSuccess) {
 			state.user = action.payload.user;
-			state.status = 'SUCCEEDED';
 		},
 
 		signInSuccess(state, action: SignInSuccess) {
 			state.user = action.payload.user;
-			state.status = 'SUCCEEDED';
 		},
 
 		fetchUserError(state, action: ActionError) {
@@ -42,9 +43,9 @@ export const authSlice = createSlice({
 			state.status = 'FAILED';
 		},
 
+		// eslint-disable-next-line
 		logoutSuccess(state, action: LogOutSuccess) {
 			state.user = null;
-			state.status = 'SUCCEEDED';
 		},
 	},
 });
