@@ -1,7 +1,7 @@
-import { TestSort } from '@/types/common';
+import { SortOrder } from '@/types/common';
 
 export interface Props {
-	sort: TestSort;
+	sort: SortOrder;
 	handleChangeSort: () => void;
 	className?: string;
 }

@@ -1,5 +1,4 @@
 import type { ChangeEvent } from 'react';
-import type { QuestionType } from '@/reduxjs/modules/tests';
 
 export type Status = 'IDLE' | 'PENDING' | 'FAILED' | 'SUCCEEDED';
 
@@ -9,7 +8,7 @@ export type ModalMode = 'create' | 'edit';
 
 export type TestMode = 'edit' | 'pass';
 
-export type TestSort = 'created_at_desc' | 'created_at_asc';
+export type SortOrder = 'created_at_desc' | 'created_at_asc';
 
 export interface TestPageParams {
 	params: { id: string };

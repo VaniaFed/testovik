@@ -1,5 +1,5 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Pagination, Status, TestSort } from '@/types/common';
+import type { Pagination, Status, SortOrder } from '@/types/common';
 
 export type QuestionType = 'single' | 'multiple' | 'number';
 
@@ -51,7 +51,7 @@ export interface FetchAllTestsPayload {
 	page: number;
 	per: number;
 	search: string;
-	sort: TestSort;
+	sort: SortOrder;
 }
 
 export interface FetchAllTestsSuccessPayload {

@@ -12,6 +12,10 @@ export const updateById = <T extends AbstractObjectWithId>(array: T[], id: numbe
 	return array.map((item) => (item.id === id ? { ...item, ...payload } : item));
 };
 
+export const deleteById = <T extends AbstractObjectWithId>(array: T[], id: number) => {
+	return array.filter((item) => item.id !== id);
+};
+
 export const sortItems = <T extends AbstractObjectWithId>(array: T[], id: number, position: number) => {
 	const result = [...array];
 
@@ -25,8 +29,4 @@ export const sortItems = <T extends AbstractObjectWithId>(array: T[], id: number
 	}
 
 	return result;
-};
-
-export const deleteById = <T extends AbstractObjectWithId>(array: T[], id: number) => {
-	return array.filter((item) => item.id !== id);
 };
