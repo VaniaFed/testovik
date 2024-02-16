@@ -1,12 +1,14 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Modal } from './modal';
-import { Heading } from '@/components/ui/typography/heading';
-import { Subtitle } from '@/components/ui/typography/subtitle';
-import { Paragraph } from '@/components/ui/typography/paragraph';
-import { Link } from '@/components/ui/link';
-import { Label } from '@/components/ui/typography/label';
 import { Button } from '@/components/ui/button';
+import { Link } from '@/components/ui/link';
 import { Loader } from '@/components/ui/loader';
+import { Heading } from '@/components/ui/typography/heading';
+import { Label } from '@/components/ui/typography/label';
+import { Paragraph } from '@/components/ui/typography/paragraph';
+import { Subtitle } from '@/components/ui/typography/subtitle';
+
+import { Modal } from './modal';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Modal> = {
 	component: Modal,
@@ -30,7 +32,8 @@ export const Primary: Story = {
 					<Label>Any footer content</Label>
 					<Button variant="accent">Hi</Button>
 				</>
-			}>
+			}
+		>
 			<Heading size="2">Your content here</Heading>
 		</Modal>
 	),
@@ -53,7 +56,8 @@ export const Closable: Story = {
 					<Button variant="accent">Hi</Button>
 				</>
 			}
-			close={console.log}>
+			close={console.log}
+		>
 			<Heading size="2">Your content here</Heading>
 			...some extra content...
 			<br />

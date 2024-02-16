@@ -1,7 +1,8 @@
-import { SESSION_ID_COOKIE } from '@/constants';
-import { axiosSnp } from '@/utils/axios';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+
+import { SESSION_ID_COOKIE } from '@/constants';
+import { axiosSnp } from '@/utils/axios';
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: number; position: number } }) {
 	const { id, position } = params;

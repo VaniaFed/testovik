@@ -1,4 +1,3 @@
-import { axiosProxy } from '@/utils/axios';
 import {
 	FetchUserSuccessPayload,
 	SignInPayload,
@@ -6,6 +5,7 @@ import {
 	SignUpPayload,
 	SignUpSuccessPayload,
 } from '@/reduxjs/modules/auth/types';
+import { axiosProxy } from '@/utils/axios';
 
 export const authApi = {
 	signUp: async (data: SignUpPayload) => await axiosProxy.post<SignUpSuccessPayload>('/signup', data),

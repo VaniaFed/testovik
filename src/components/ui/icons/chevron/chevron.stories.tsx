@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { Chevron } from './chevron';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Chevron> = {
 	component: Chevron,

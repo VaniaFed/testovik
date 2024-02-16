@@ -1,10 +1,13 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+
 import styles from './filter.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

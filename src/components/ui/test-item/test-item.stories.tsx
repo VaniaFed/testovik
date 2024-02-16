@@ -1,6 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { TestItem } from './test-item';
+
 import type { Test } from '@/reduxjs/modules/tests';
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof TestItem> = {
 	component: TestItem,

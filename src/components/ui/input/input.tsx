@@ -1,9 +1,12 @@
-import React, { forwardRef } from 'react';
 import classNames from 'classnames/bind';
-import styles from './input.module.scss';
-import type { Props } from './props';
+import React, { forwardRef } from 'react';
+
 import { IconButton } from '@/components/ui/icon-button';
 import { Cross } from '@/components/ui/icons/cross';
+
+import styles from './input.module.scss';
+
+import type { Props } from './props';
 
 const cx = classNames.bind(styles);
 

@@ -1,30 +1,33 @@
 import { takeLatest } from 'redux-saga/effects';
+
 import {
-	createQuestionSaga,
-	updateQuestionSaga,
-	deleteQuestionSaga,
-	createAnswersSaga,
-	deleteAnswersSaga,
-	updateAnswersSaga,
-	deleteTestSaga,
-	updateTestSaga,
-	moveAnswersSaga,
-} from '@/reduxjs/modules/tests/sagas';
-import {
+	CREATE_ANSWERS,
+	CREATE_QUESTION,
 	CREATE_TEST,
+	DELETE_ANSWERS,
+	DELETE_QUESTION,
+	DELETE_TEST,
+	EDIT_QUESTION,
 	FETCH_ALL_TESTS,
 	FETCH_TEST_BY_ID,
-	CREATE_QUESTION,
-	EDIT_QUESTION,
-	DELETE_QUESTION,
-	CREATE_ANSWERS,
-	DELETE_ANSWERS,
-	UPDATE_ANSWERS,
-	DELETE_TEST,
-	UPDATE_TEST,
 	MOVE_ANSWERS,
+	UPDATE_ANSWERS,
+	UPDATE_TEST,
 } from '@/reduxjs/modules/tests/constants';
-import { createTestSaga, fetchAllTestsSaga, fetchTestByIdSaga } from '@/reduxjs/modules/tests/sagas';
+import {
+	createAnswersSaga,
+	createQuestionSaga,
+	createTestSaga,
+	deleteAnswersSaga,
+	deleteQuestionSaga,
+	deleteTestSaga,
+	fetchAllTestsSaga,
+	fetchTestByIdSaga,
+	moveAnswersSaga,
+	updateAnswersSaga,
+	updateQuestionSaga,
+	updateTestSaga,
+} from '@/reduxjs/modules/tests/sagas';
 
 export const watcher = [
 	takeLatest(CREATE_TEST, createTestSaga),

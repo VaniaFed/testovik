@@ -1,14 +1,14 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
 
+import { Button } from '@/components/ui/button';
+import { Link } from '@/components/ui/link';
 import { Label } from '@/components/ui/typography/label';
 
 import styles from './login.module.scss';
 
-import type { FC } from 'react';
 import type { Props } from './props';
-import { Link } from '@/components/ui/link';
-import { Button } from '@/components/ui/button';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

@@ -1,11 +1,14 @@
-import React from 'react';
 import classNames from 'classnames/bind';
-import styles from './tests-list.module.scss';
+import React from 'react';
+
 import { Stack } from '@/components/layout/stack';
 import { TestItem } from '@/components/ui/test-item';
 import { Paragraph } from '@/components/ui/typography/paragraph';
-import type { FC } from 'react';
+
+import styles from './tests-list.module.scss';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

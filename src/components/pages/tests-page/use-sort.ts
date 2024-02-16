@@ -1,6 +1,8 @@
-import { useState } from 'react';
-import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 import { useSearchParams } from 'next/navigation';
+import { useState } from 'react';
+
+import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
+
 import type { SortOrder } from '@/types/common';
 
 export const useSort = (defaultSort: SortOrder) => {

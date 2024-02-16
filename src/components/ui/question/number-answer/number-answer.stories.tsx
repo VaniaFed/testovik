@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { NumberAnswer } from './number-answer';
 import { Question } from '@/reduxjs/modules/tests';
+
+import { NumberAnswer } from './number-answer';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof NumberAnswer> = {
 	component: NumberAnswer,

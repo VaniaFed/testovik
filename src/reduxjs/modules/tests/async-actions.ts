@@ -1,31 +1,33 @@
 import { createAction } from '@reduxjs/toolkit';
+
 import {
+	CREATE_ANSWERS,
+	CREATE_QUESTION,
 	CREATE_TEST,
+	DELETE_ANSWERS,
+	DELETE_QUESTION,
+	DELETE_TEST,
+	EDIT_QUESTION,
 	FETCH_ALL_TESTS,
 	FETCH_TEST_BY_ID,
-	CREATE_QUESTION,
-	DELETE_QUESTION,
-	EDIT_QUESTION,
-	CREATE_ANSWERS,
-	UPDATE_ANSWERS,
 	MOVE_ANSWERS,
-	DELETE_ANSWERS,
-	DELETE_TEST,
+	UPDATE_ANSWERS,
 	UPDATE_TEST,
 } from '@/reduxjs/modules/tests/constants';
+
 import type {
 	CreateAnswersPayload,
 	CreateQuestionPayload,
 	CreateTestPayload,
+	DeleteAnswersPayload,
+	DeleteQuestionPayload,
+	DeleteTestPayload,
 	FetchAllTestsPayload,
 	FetchTestByIdPayload,
-	DeleteTestPayload,
-	UpdateTestPayload,
-	UpdateQuestionPayload,
-	DeleteQuestionPayload,
-	UpdateAnswersPayload,
 	MoveAnswersPayload,
-	DeleteAnswersPayload,
+	UpdateAnswersPayload,
+	UpdateQuestionPayload,
+	UpdateTestPayload,
 } from '@/reduxjs/modules/tests';
 
 export const createTest = createAction<CreateTestPayload>(CREATE_TEST);

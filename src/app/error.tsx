@@ -1,14 +1,15 @@
 'use client';
 
 import classNames from 'classnames/bind';
+
+import { Button } from '@/components/ui/button';
 import { ErrorBlock } from '@/components/ui/error-block';
 import { Link } from '@/components/ui/link';
 import { Heading } from '@/components/ui/typography/heading';
+import { Label } from '@/components/ui/typography/label';
 import { Paragraph } from '@/components/ui/typography/paragraph';
 
 import styles from './error.module.scss';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/typography/label';
 
 const cx = classNames.bind(styles);
 

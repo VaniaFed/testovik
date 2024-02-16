@@ -1,10 +1,10 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
 
 import styles from './divider.module.scss';
 
-import type { FC } from 'react';
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

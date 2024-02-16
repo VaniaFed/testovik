@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import { fetchUser, selectUser, selectAuthStatus } from '@/reduxjs/modules/auth';
+import { fetchUser, selectAuthStatus, selectUser } from '@/reduxjs/modules/auth';
 
 export const useAuth = (adminOnly: boolean) => {
 	const user = useAppSelector(selectUser);

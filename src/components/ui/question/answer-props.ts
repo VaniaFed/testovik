@@ -1,5 +1,6 @@
-import type { Question } from '@/reduxjs/modules/tests';
 import { TestMode } from '@/types/common';
+
+import type { Question } from '@/reduxjs/modules/tests';
 
 export interface AnswerProps {
 	question: Question;

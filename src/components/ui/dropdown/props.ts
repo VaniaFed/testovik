@@ -1,5 +1,5 @@
-import type { FocusEvent } from 'react';
 import type { DropdownItem } from '@/types/common';
+import type { FocusEvent } from 'react';
 
 export interface Props<T = string> {
 	items: DropdownItem<T>[];

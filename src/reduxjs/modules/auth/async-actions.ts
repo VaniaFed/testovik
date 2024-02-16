@@ -1,10 +1,12 @@
 import { createAction } from '@reduxjs/toolkit';
+
 import {
 	FETCH_USER_REQUEST,
-	SIGN_UP_REQUEST,
-	SIGN_IN_REQUEST,
 	LOG_OUT_REQUEST,
+	SIGN_IN_REQUEST,
+	SIGN_UP_REQUEST,
 } from '@/reduxjs/modules/auth/constants';
+
 import type { SignInPayload, SignUpPayload } from '@/reduxjs/modules/auth/types';
 
 export const fetchUser = createAction(FETCH_USER_REQUEST);

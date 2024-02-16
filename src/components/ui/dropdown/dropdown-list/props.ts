@@ -1,5 +1,6 @@
-import type { DropdownItem } from '@/types/common';
 import { Ref } from 'react';
+
+import type { DropdownItem } from '@/types/common';
 
 export interface Props<T = string> {
 	items: DropdownItem<T>[];

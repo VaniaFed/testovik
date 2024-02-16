@@ -1,10 +1,12 @@
-import { NextResponse, type NextRequest } from 'next/server';
 import { cookies } from 'next/headers';
+import { type NextRequest, NextResponse } from 'next/server';
+
+import { SESSION_ID_COOKIE } from '@/constants';
 import { axiosSnp } from '@/utils/axios';
 import { parseSessionId } from '@/utils/parse-session-id';
-import { SESSION_ID_COOKIE } from '@/constants';
-import type { AxiosResponse } from 'axios';
+
 import type { User } from '@/reduxjs/modules/auth';
+import type { AxiosResponse } from 'axios';
 
 export async function POST(req: NextRequest) {
 	const user: User = await req.json();

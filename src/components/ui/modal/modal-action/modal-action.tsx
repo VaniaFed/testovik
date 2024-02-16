@@ -1,12 +1,15 @@
 'use client';
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
+import { Button } from '@/components/ui/button';
 import { Modal } from '@/components/ui/modal/modal';
 import { Heading } from '@/components/ui/typography/heading';
-import { Button } from '@/components/ui/button';
+
 import styles from './modal-action.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

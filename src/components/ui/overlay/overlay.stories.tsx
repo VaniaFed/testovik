@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Overlay } from './overlay';
 import { Heading } from '@/components/ui/typography/heading';
+
+import { Overlay } from './overlay';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Overlay> = {
 	component: Overlay,
@@ -20,7 +22,8 @@ export const Primary: Story = {
 				top: 0,
 				width: '100%',
 				height: '100%',
-			}}>
+			}}
+		>
 			<Overlay>
 				<div style={{ backgroundColor: 'whitesmoke', padding: '24px' }}>
 					<Heading>Content</Heading>
@@ -42,7 +45,8 @@ export const WithDarkBackground: Story = {
 				top: 0,
 				width: '100%',
 				height: '100%',
-			}}>
+			}}
+		>
 			<Overlay withDarkBackground>
 				<div style={{ backgroundColor: 'whitesmoke', padding: '24px', zIndex: 2 }}>
 					<Heading>Content</Heading>

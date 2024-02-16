@@ -1,7 +1,9 @@
 'use client';
 import React from 'react';
-import { useAuth } from '@/hooks/use-auth';
+
 import { LoaderBox } from '@/components/ui/loader-box';
+import { useAuth } from '@/hooks/use-auth';
+
 import type { FC } from 'react';
 
 interface Props {

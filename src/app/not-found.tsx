@@ -1,10 +1,11 @@
 'use client';
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { ErrorBlock } from '@/components/ui/error-block';
+import { Link } from '@/components/ui/link';
 import { Heading } from '@/components/ui/typography/heading';
 import { Paragraph } from '@/components/ui/typography/paragraph';
-import { Link } from '@/components/ui/link';
 
 import styles from './not-found.module.scss';
 

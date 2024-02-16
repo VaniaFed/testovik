@@ -1,8 +1,11 @@
-import React, { FC } from 'react';
 import classNames from 'classnames/bind';
-import { Label } from '../typography/label';
+import React, { FC } from 'react';
+
 import { ErrorLabel } from '@/components/ui/error-label';
+
 import styles from './field.module.scss';
+import { Label } from '../typography/label';
+
 import type { Props } from './props';
 
 const cx = classNames.bind(styles);

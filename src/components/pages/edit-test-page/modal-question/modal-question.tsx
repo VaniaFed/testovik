@@ -1,24 +1,27 @@
 'use client';
-import React from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import classNames from 'classnames/bind';
+import React from 'react';
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+
+import { AppendAnswerButton } from '@/components/pages/edit-test-page/modal-question/append-answer-button';
+import { useModalQuestionForm } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field } from '@/components/ui/field';
+import { Form } from '@/components/ui/form';
+import { IconButton } from '@/components/ui/icon-button';
+import { Cross } from '@/components/ui/icons/cross';
+import { DragDots } from '@/components/ui/icons/drag-dots';
+import { Input } from '@/components/ui/input';
 import { Modal } from '@/components/ui/modal/modal';
 import { Heading } from '@/components/ui/typography/heading';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
-import { Field } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Cross } from '@/components/ui/icons/cross';
-import { IconButton } from '@/components/ui/icon-button';
 import { Label } from '@/components/ui/typography/label';
-import { DragDots } from '@/components/ui/icons/drag-dots';
-import { useModalQuestionForm } from '@/components/pages/edit-test-page/modal-question/use-modal-question-form';
-import { AppendAnswerButton } from '@/components/pages/edit-test-page/modal-question/append-answer-button';
+
 import styles from './modal-question.module.scss';
-import type { FC } from 'react';
+
 import type { ModalQuestionProps } from './props';
 import type { InputChangeEvent, InputFocusEvent } from '@/types/common';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -81,7 +84,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 						/>
 					)}
 				</>
-			}>
+			}
+		>
 			<Form id="question-form" onSubmit={handleSubmit(onSubmit)} errMessage={errors.root?.message}>
 				<Field id="question-form-question" label="Вопрос" errMessage={errors.question?.message}>
 					<Input
@@ -114,7 +118,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 												<Draggable
 													key={`answers[${index}]`}
 													draggableId={`answers[${index}]`}
-													index={index}>
+													index={index}
+												>
 													{(provided) => (
 														<Field
 															className={cx('modal-question__answer')}
@@ -144,7 +149,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																					field.answerId,
 																				);
 																			}
-																		}}>
+																		}}
+																	>
 																		<Cross />
 																	</IconButton>
 																)
@@ -154,7 +160,8 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 															}
 															key={field.id}
 															innerRef={provided.innerRef}
-															{...provided.draggableProps}>
+															{...provided.draggableProps}
+														>
 															<Input
 																placeholder="Введите ответ..."
 																id={`question-form-answer-${field.id}`}

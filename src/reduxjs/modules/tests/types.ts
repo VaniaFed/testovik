@@ -1,5 +1,5 @@
+import type { Pagination, SortOrder, Status } from '@/types/common';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { Pagination, Status, SortOrder } from '@/types/common';
 
 export type QuestionType = 'single' | 'multiple' | 'number';
 

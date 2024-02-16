@@ -1,7 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Question } from './question';
-import { Question as IQuestion } from '@/reduxjs/modules/tests';
 import { Cross } from '@/components/ui/icons/cross';
+import { Question as IQuestion } from '@/reduxjs/modules/tests';
+
+import { Question } from './question';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Question> = {
 	component: Question,

@@ -1,6 +1,6 @@
-import React, { forwardRef } from 'react';
-import NextLink from 'next/link';
 import classNames from 'classnames/bind';
+import NextLink from 'next/link';
+import React, { forwardRef } from 'react';
 
 import styles from './link.module.scss';
 

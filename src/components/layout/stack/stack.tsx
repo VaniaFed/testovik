@@ -1,10 +1,10 @@
-import React, { forwardRef } from 'react';
 import classNames from 'classnames/bind';
+import React, { forwardRef } from 'react';
 
 import styles from './stack.module.scss';
 
-import type { FC } from 'react';
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -33,7 +33,8 @@ export const Stack: FC<Props> = forwardRef<HTMLUListElement, Props>(
 					className,
 				)}
 				ref={innerRef ?? ref}
-				{...rest}>
+				{...rest}
+			>
 				{children}
 			</ul>
 		);

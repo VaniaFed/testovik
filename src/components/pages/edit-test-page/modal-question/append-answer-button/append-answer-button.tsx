@@ -1,10 +1,13 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { Button } from '@/components/ui/button';
 import { PlusBold } from '@/components/ui/icons/plus-bold';
+
 import styles from './append-answer-button.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +18,8 @@ export const AppendAnswerButton: FC<Props> = ({ onAppend, className }) => {
 			type="button"
 			onClick={onAppend}
 			startIcon={<PlusBold color="white" />}
-			variant="secondary">
+			variant="secondary"
+		>
 			Добавить ответ
 		</Button>
 	);

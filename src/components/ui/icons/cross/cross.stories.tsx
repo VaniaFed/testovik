@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { Cross } from './cross';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Cross> = {
 	component: Cross,

@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Form } from './form';
+import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+
+import { Form } from './form';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Form> = {
 	component: Form,

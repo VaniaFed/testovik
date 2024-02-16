@@ -1,11 +1,11 @@
-import React from 'react';
-import Image from 'next/image';
 import classNames from 'classnames/bind';
+import Image from 'next/image';
+import React from 'react';
 
 import styles from './error-block.module.scss';
 
-import type { FC } from 'react';
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

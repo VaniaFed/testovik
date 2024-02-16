@@ -1,11 +1,14 @@
-import React from 'react';
 import classNames from 'classnames/bind';
-import styles from './question-list.module.scss';
-import type { FC } from 'react';
-import type { Props } from './props';
+import React from 'react';
+
 import { Stack } from '@/components/layout/stack';
-import { Question } from '@/components/ui/question';
 import { Button } from '@/components/ui/button';
+import { Question } from '@/components/ui/question';
+
+import styles from './question-list.module.scss';
+
+import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

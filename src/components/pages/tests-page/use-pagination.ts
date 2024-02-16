@@ -1,8 +1,9 @@
+import { useSearchParams } from 'next/navigation';
+import { useCallback, useState } from 'react';
+
 import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 import { useAppSelector } from '@/reduxjs/hooks';
 import { selectPagination } from '@/reduxjs/modules/tests';
-import { useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
 
 export const usePagination = () => {
 	const pagination = useAppSelector(selectPagination);

@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { DropdownList } from './dropdown-list';
 import { DropdownItem } from '@/types/common';
+
+import { DropdownList } from './dropdown-list';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof DropdownList> = {
 	component: DropdownList,

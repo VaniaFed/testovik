@@ -1,5 +1,5 @@
-import type { HTMLAttributes } from 'react';
 import type { ButtonVariant } from '@/types/common';
+import type { HTMLAttributes } from 'react';
 
 export interface Props extends HTMLAttributes<HTMLButtonElement> {
 	children: React.ReactNode;

@@ -1,14 +1,17 @@
 'use client';
-import React, { useRef } from 'react';
 import classNames from 'classnames/bind';
+import React, { useRef } from 'react';
+
 import { BoxContainer } from '@/components/layout/box-container';
 import { IconButton } from '@/components/ui/icon-button';
 import { Cross } from '@/components/ui/icons/cross';
-import { useClickOutside } from '@/hooks/use-click-outside';
-import styles from './modal.module.scss';
-import type { FC } from 'react';
-import type { Props } from './props';
 import { Overlay } from '@/components/ui/overlay';
+import { useClickOutside } from '@/hooks/use-click-outside';
+
+import styles from './modal.module.scss';
+
+import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

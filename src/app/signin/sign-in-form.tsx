@@ -1,15 +1,17 @@
 'use client';
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import * as yup from 'yup';
-import { Form } from '@/components/ui/form';
-import { Field } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { signIn, selectAuthStatus, selectUser } from '@/reduxjs/modules/auth';
-import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import type { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
+import { Field } from '@/components/ui/field';
+import { Form } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
+import { selectAuthStatus, selectUser, signIn } from '@/reduxjs/modules/auth';
+
+import type { FC } from 'react';
 
 const schema = yup
 	.object({

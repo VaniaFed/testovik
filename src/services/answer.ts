@@ -1,10 +1,10 @@
-import { axiosProxy } from '@/utils/axios';
 import {
-	UpdateAnswersSuccessPayload,
-	type CreateAnswerPayload,
 	Answer,
+	type CreateAnswerPayload,
 	MoveAnswerPosition,
+	UpdateAnswersSuccessPayload,
 } from '@/reduxjs/modules/tests';
+import { axiosProxy } from '@/utils/axios';
 
 export const answerApi = {
 	create: async ({ answer, questionId }: CreateAnswerPayload) =>

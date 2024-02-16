@@ -1,5 +1,7 @@
-import { IconButton } from './icon-button';
 import { PlusBold } from '@/components/ui/icons/plus-bold';
+
+import { IconButton } from './icon-button';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof IconButton> = {

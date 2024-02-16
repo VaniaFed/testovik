@@ -1,21 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { findIndexById, deleteById, updateById, findItemById, sortItems } from '@/utils/redux-helpers';
-import type { ActionError } from '@/reduxjs/common/types';
+
+import { deleteById, findIndexById, findItemById, sortItems, updateById } from '@/utils/redux-helpers';
+
 import type {
-	CreateTestSuccess,
-	FetchTestByIdSuccess,
-	FetchAllTestsSuccess,
-	UpdateTestSuccess,
-	DeleteTestSuccess,
-	CreateQuestionSuccess,
-	UpdateQuestionSuccess,
-	DeleteQuestionSuccess,
 	CreateAnswersSuccess,
-	UpdateAnswersSuccess,
-	MoveAnswersSuccess,
+	CreateQuestionSuccess,
+	CreateTestSuccess,
 	DeleteAnswersSuccess,
+	DeleteQuestionSuccess,
+	DeleteTestSuccess,
+	FetchAllTestsSuccess,
+	FetchTestByIdSuccess,
+	MoveAnswersSuccess,
 	TestsState,
+	UpdateAnswersSuccess,
+	UpdateQuestionSuccess,
+	UpdateTestSuccess,
 } from './types';
+import type { ActionError } from '@/reduxjs/common/types';
 
 const initialState: TestsState = {
 	list: [],

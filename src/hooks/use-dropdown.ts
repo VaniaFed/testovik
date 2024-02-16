@@ -1,7 +1,8 @@
-import { useState, type RefObject, useRef } from 'react';
+import { type RefObject, useRef, useState } from 'react';
+
+import { DropdownItem } from '@/types/common';
 
 import { useClickOutside } from './use-click-outside';
-import { DropdownItem } from '@/types/common';
 
 interface UseDropDown<T> {
 	isOpened: boolean;

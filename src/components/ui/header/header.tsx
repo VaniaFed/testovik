@@ -1,14 +1,17 @@
 'use client';
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { BoxContainer } from '@/components/layout/box-container';
-import { Logo } from '@/components/ui/logo';
 import { Login } from '@/components/ui/login';
+import { Logo } from '@/components/ui/logo';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { logOut, selectUser } from '@/reduxjs/modules/auth';
+
 import styles from './header.module.scss';
-import type { FC, MouseEvent } from 'react';
+
 import type { Props } from './props';
+import type { FC, MouseEvent } from 'react';
 
 const cx = classNames.bind(styles);
 

@@ -1,8 +1,9 @@
+import { cookies } from 'next/headers';
+import { NextRequest, NextResponse } from 'next/server';
+
 import { SESSION_ID_COOKIE } from '@/constants';
 import { Test } from '@/reduxjs/modules/tests';
 import { axiosSnp } from '@/utils/axios';
-import { cookies } from 'next/headers';
-import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest, { params }: { params: { id: number } }) {
 	const { id } = params;

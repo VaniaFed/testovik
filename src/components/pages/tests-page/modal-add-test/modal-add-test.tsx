@@ -1,17 +1,19 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import React from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { Field } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
+
 import { Button } from '@/components/ui/button';
-import { Heading } from '@/components/ui/typography/heading';
+import { Field } from '@/components/ui/field';
 import { Form } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { Modal } from '@/components/ui/modal/modal';
+import { Heading } from '@/components/ui/typography/heading';
 import { useAppDispatch } from '@/reduxjs/hooks';
 import { createTest } from '@/reduxjs/modules/tests';
-import type { FC } from 'react';
+
 import type { Props } from './props';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import type { FC } from 'react';
 
 const schema = yup
 	.object({

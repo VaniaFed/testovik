@@ -1,9 +1,11 @@
+import classNames from 'classnames/bind';
 import React from 'react';
 import { createPortal } from 'react-dom';
-import classNames from 'classnames/bind';
+
 import styles from './overlay.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

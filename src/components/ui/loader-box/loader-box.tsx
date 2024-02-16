@@ -1,10 +1,13 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { Loader } from '@/components/ui/loader/loader';
-import styles from './loader-box.module.scss';
-import type { FC } from 'react';
-import type { Props } from './props';
 import { Overlay } from '@/components/ui/overlay';
+
+import styles from './loader-box.module.scss';
+
+import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

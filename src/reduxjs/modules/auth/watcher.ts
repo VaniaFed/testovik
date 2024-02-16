@@ -1,4 +1,5 @@
 import { takeLatest } from 'redux-saga/effects';
+
 import {
 	FETCH_USER_REQUEST,
 	LOG_OUT_REQUEST,

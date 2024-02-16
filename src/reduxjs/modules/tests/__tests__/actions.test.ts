@@ -15,6 +15,7 @@ import {
 	updateTestSuccess,
 } from '@/reduxjs/modules/tests/actions';
 import { reducer } from '@/reduxjs/modules/tests/reducer';
+
 import type { Answer, Question, Test } from '@/reduxjs/modules/tests/types';
 
 describe('testsSlice', () => {

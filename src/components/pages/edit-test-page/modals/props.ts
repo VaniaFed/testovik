@@ -1,6 +1,7 @@
-import { QuestionType } from './../../../../reduxjs/modules/tests/types';
 import { Question, Test } from '@/reduxjs/modules/tests';
 import { DropdownItem, ModalMode } from '@/types/common';
+
+import { QuestionType } from './../../../../reduxjs/modules/tests/types';
 
 export interface Props {
 	mode: ModalMode;

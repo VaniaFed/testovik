@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { ErrorBlock } from './error-block';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ErrorBlock> = {
 	component: ErrorBlock,

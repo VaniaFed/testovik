@@ -1,16 +1,18 @@
 import { call } from 'redux-saga/effects';
+
+import request from '@/reduxjs/helpers/request';
 import {
 	fetchUserError,
 	fetchUserSuccess,
 	logoutSuccess,
+	setError,
 	setPending,
 	setSucceeded,
-	setError,
-	signUpSuccess,
 	signInSuccess,
+	signUpSuccess,
 } from '@/reduxjs/modules/auth/actions';
 import { authApi } from '@/services/auth';
-import request from '@/reduxjs/helpers/request';
+
 import type {
 	FetchUserSuccessPayload,
 	LogOutSuccessPayload,

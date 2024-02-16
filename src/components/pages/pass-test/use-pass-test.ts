@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
+
 import { TestResults } from '@/components/pages/pass-test/modal-results/props';
 import { useModal } from '@/hooks/use-modal';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import { Answer, Question, QuestionType, fetchTestById, selectCurrentTest } from '@/reduxjs/modules/tests';
-import { useEffect, useState } from 'react';
 
 // in case of multiple and single answers
 // we collect answer ids in order to determine the right ones

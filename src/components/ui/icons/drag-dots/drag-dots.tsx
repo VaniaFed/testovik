@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { IconBase } from '@/components/ui/icon-base';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 export const DragDots: FC<Props> = ({ className, ...rest }) => {
 	return (

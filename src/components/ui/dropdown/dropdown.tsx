@@ -1,12 +1,15 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
+import { Chevron } from '@/components/ui/icons/chevron';
 import { Input } from '@/components/ui/input';
 import { useDropdown } from '@/hooks/use-dropdown';
+
 import { DropdownList } from './dropdown-list/';
-import { Chevron } from '@/components/ui/icons/chevron';
 import styles from './dropdown.module.scss';
-import type { PropsWithChildren, ReactElement } from 'react';
+
 import type { Props } from './props';
+import type { PropsWithChildren, ReactElement } from 'react';
 
 const cx = classNames.bind(styles);
 

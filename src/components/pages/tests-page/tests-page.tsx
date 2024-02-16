@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import classNames from 'classnames/bind';
-import { TestsList } from '@/components/pages/tests-page/tests-list';
-import { Pagination } from '@/components/ui/pagination';
-import { ModalAddTest } from './modal-add-test';
-import { Panel } from '@/components/ui/panel';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+
 import { Filter } from '@/components/pages/tests-page/filter/filter';
-import { Heading } from '@/components/ui/typography/heading';
-import { Button } from '@/components/ui/button';
 import { Sort } from '@/components/pages/tests-page/sort/sort';
-import { ModalAction } from '@/components/ui/modal/modal-action';
-import { User, selectUser } from '@/reduxjs/modules/auth';
-import { Test, fetchAllTests, selectAllTests } from '@/reduxjs/modules/tests';
-import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import { useModal } from '@/hooks/use-modal';
+import { TestsList } from '@/components/pages/tests-page/tests-list';
 import { usePagination } from '@/components/pages/tests-page/use-pagination';
 import { useSearch } from '@/components/pages/tests-page/use-search';
 import { useSort } from '@/components/pages/tests-page/use-sort';
+import { Button } from '@/components/ui/button';
+import { ModalAction } from '@/components/ui/modal/modal-action';
+import { Pagination } from '@/components/ui/pagination';
+import { Panel } from '@/components/ui/panel';
+import { Heading } from '@/components/ui/typography/heading';
+import { useModal } from '@/hooks/use-modal';
+import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
+import { User, selectUser } from '@/reduxjs/modules/auth';
+import { Test, fetchAllTests, selectAllTests } from '@/reduxjs/modules/tests';
+
+import { ModalAddTest } from './modal-add-test';
 import styles from './tests-page.module.scss';
+
 import type { FC } from 'react';
 
 const cx = classNames.bind(styles);

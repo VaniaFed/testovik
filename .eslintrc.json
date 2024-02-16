@@ -8,7 +8,9 @@
 		"plugin:@typescript-eslint/recommended",
 		"plugin:react/recommended",
 		"plugin:@next/next/recommended",
-		"prettier"
+		"prettier",
+		"plugin:import/recommended",
+		"plugin:import/typescript"
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
@@ -19,11 +21,48 @@
 	"rules": {
 		"react/react-in-jsx-scope": 0,
 		"@typescript-eslint/no-explicit-any": 0,
-		"@typescript-eslint/no-unnecessary-type-constraint": 0
+		"@typescript-eslint/no-unnecessary-type-constraint": 0,
+		"import/no-unresolved": "error",
+		"sort-imports": [
+			"error",
+			{
+				"ignoreCase": false,
+				"ignoreDeclarationSort": true, // don"t want to sort import lines, use eslint-plugin-import instead
+				"ignoreMemberSort": false,
+				"memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+				"allowSeparatedGroups": true
+			}
+		],
+		"import/order": [
+			"error",
+			{
+				"groups": [
+					"builtin", // Built-in imports (come from NodeJS native) go first
+					"external", // <- External imports
+					"internal", // <- Absolute imports
+					["sibling", "parent"], // <- Relative imports, the sibling and parent types they can be mingled together
+					"index", // <- index imports
+					"type",
+					"unknown" // <- unknown
+				],
+				"newlines-between": "always",
+				"alphabetize": {
+					/* sort in ascending order. Options: ["ignore", "asc", "desc"] */
+					"order": "asc",
+					/* ignore case. Options: [true, false] */
+					"caseInsensitive": true
+				}
+			}
+		]
 	},
 	"settings": {
 		"react": {
 			"version": "18"
+		},
+		"import/resolver": {
+			"typescript": {
+				"project": "./tsconfig.json"
+			}
 		}
 	}
 }

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { ModalAction } from './modal-action';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof ModalAction> = {
 	component: ModalAction,

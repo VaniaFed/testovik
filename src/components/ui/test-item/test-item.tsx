@@ -1,13 +1,16 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
+import { Stack } from '@/components/layout/stack';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/components/ui/link';
 import { Heading } from '@/components/ui/typography/heading';
 import { Label } from '@/components/ui/typography/label';
-import { Link } from '@/components/ui/link';
-import { Stack } from '@/components/layout/stack';
+
 import styles from './test-item.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
-import { Button } from '@/components/ui/button';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

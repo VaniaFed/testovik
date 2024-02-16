@@ -1,9 +1,11 @@
-import { Field } from './field';
-import { Input } from '../input';
 import { IconButton } from '@/components/ui/icon-button';
 import { Cross } from '@/components/ui/icons/cross';
 import { DragDots } from '@/components/ui/icons/drag-dots';
 import { Plus } from '@/components/ui/icons/plus';
+
+import { Field } from './field';
+import { Input } from '../input';
+
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Field> = {
@@ -53,7 +55,8 @@ export const WithRightContent: Story = {
 				<IconButton>
 					<Cross />
 				</IconButton>
-			}>
+			}
+		>
 			<Input placeholder="Placeholder" />
 		</Field>
 	),
@@ -67,7 +70,8 @@ export const WithLeftContent: Story = {
 				<IconButton>
 					<DragDots size="24" />
 				</IconButton>
-			}>
+			}
+		>
 			<Input placeholder="Placeholder" />
 		</Field>
 	),
@@ -91,7 +95,8 @@ export const WithBothSidesContent: Story = {
 				<IconButton zeroSpacing>
 					<Cross />
 				</IconButton>
-			}>
+			}
+		>
 			<Input placeholder="Placeholder" />
 		</Field>
 	),

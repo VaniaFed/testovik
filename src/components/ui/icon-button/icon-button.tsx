@@ -1,8 +1,10 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import styles from './icon-button.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +26,8 @@ export const IconButton: FC<Props> = ({
 				zeroSpacing && 'icon-button_zero-spacing',
 				className,
 			)}
-			{...rest}>
+			{...rest}
+		>
 			{children}
 		</button>
 	);

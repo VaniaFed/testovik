@@ -1,7 +1,8 @@
 import * as yup from 'yup';
-import type { QuestionType } from '@/reduxjs/modules/tests';
-import type { Answer } from '@/reduxjs/modules/tests';
+
 import { AbstractObjectWithId } from '@/types/common';
+
+import type { Answer, QuestionType } from '@/reduxjs/modules/tests';
 
 const answersSchema = yup.object({
 	text: yup

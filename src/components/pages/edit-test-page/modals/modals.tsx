@@ -1,7 +1,9 @@
 import React, { forwardRef, useImperativeHandle } from 'react';
-import { useModal } from '@/hooks/use-modal';
+
 import { ModalQuestion } from '@/components/pages/edit-test-page/modal-question';
 import { ModalAction } from '@/components/ui/modal/modal-action';
+import { useModal } from '@/hooks/use-modal';
+
 import type { Props } from './props';
 
 export interface EditTestModals {

@@ -1,9 +1,12 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { Paragraph } from '@/components/ui/typography/paragraph';
+
 import styles from './form.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

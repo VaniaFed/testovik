@@ -1,5 +1,7 @@
-import { SignUpSuccess, SignInSuccess, FetchUserSuccess, LogOutSuccess } from './types';
 import { createSlice } from '@reduxjs/toolkit';
+
+import { FetchUserSuccess, LogOutSuccess, SignInSuccess, SignUpSuccess } from './types';
+
 import type { ActionError } from '@/reduxjs/common/types';
 import type { AuthState } from '@/reduxjs/modules/auth/types';
 

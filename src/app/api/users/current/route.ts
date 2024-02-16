@@ -1,7 +1,8 @@
 import { cookies } from 'next/headers';
-import { axiosSnp } from '@/utils/axios';
 import { NextResponse } from 'next/server';
+
 import { SESSION_ID_COOKIE } from '@/constants';
+import { axiosSnp } from '@/utils/axios';
 
 export async function GET() {
 	const cookie = cookies().get(SESSION_ID_COOKIE);

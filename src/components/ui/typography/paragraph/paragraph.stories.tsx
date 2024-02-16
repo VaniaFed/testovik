@@ -1,6 +1,7 @@
 // cSpell:disable
-import type { Meta, StoryObj } from '@storybook/react';
 import { Paragraph } from './paragraph';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Paragraph> = {
 	component: Paragraph,

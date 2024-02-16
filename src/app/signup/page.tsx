@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { SignUpForm } from '@/app/signup/sign-up-form';
-import { Modal } from '@/components/ui/modal';
-import { Heading } from '@/components/ui/typography/heading';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/components/ui/link';
+import { Modal } from '@/components/ui/modal';
+import { Heading } from '@/components/ui/typography/heading';
 
 const headerModal = (
 	<>

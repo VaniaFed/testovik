@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { Subtitle } from './subtitle';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Subtitle> = {
 	component: Subtitle,

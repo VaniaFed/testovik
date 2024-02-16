@@ -1,19 +1,22 @@
-import React from 'react';
 import classNames from 'classnames/bind';
-import { Panel } from '@/components/ui/panel';
-import { Button } from '@/components/ui/button';
-import { questionTypeDropdownItems } from '@/utils/data';
+import React from 'react';
+
 import { AddQuestion } from '@/components/pages/edit-test-page/add-question';
-import { QuestionList } from '@/components/pages/edit-test-page/question-list';
 import { Modals } from '@/components/pages/edit-test-page/modals';
+import { QuestionList } from '@/components/pages/edit-test-page/question-list';
 import { TestPageHeader } from '@/components/pages/edit-test-page/test-page-header';
 import { useEditTest } from '@/components/pages/edit-test-page/use-edit-test';
+import { Button } from '@/components/ui/button';
 import { LoaderBox } from '@/components/ui/loader-box';
+import { Panel } from '@/components/ui/panel';
 import { useAppSelector } from '@/reduxjs/hooks';
 import { selectTestsStatus } from '@/reduxjs/modules/tests';
+import { questionTypeDropdownItems } from '@/utils/data';
+
 import styles from './edit-test-page.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

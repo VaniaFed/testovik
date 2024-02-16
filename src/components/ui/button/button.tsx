@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react';
 import classNames from 'classnames/bind';
+import React, { forwardRef } from 'react';
 
 import styles from './button.module.scss';
 
@@ -13,7 +13,8 @@ export const Button = forwardRef<HTMLButtonElement, Props>(
 			<button
 				className={cx('button', `button_${variant}`, circle && 'button_circle', className)}
 				{...rest}
-				ref={ref}>
+				ref={ref}
+			>
 				{startIcon && startIcon}
 				<div className={cx('button__content')}>{children}</div>
 				{endIcon && endIcon}

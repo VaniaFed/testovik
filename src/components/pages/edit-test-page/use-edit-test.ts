@@ -1,3 +1,6 @@
+import { useRouter } from 'next/navigation';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+
 import { EditTestModals } from '@/components/pages/edit-test-page/modals/modals';
 import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
 import {
@@ -10,8 +13,6 @@ import {
 } from '@/reduxjs/modules/tests';
 import { ModalMode } from '@/types/common';
 import { questionTypeDropdownItems } from '@/utils/data';
-import { useRouter } from 'next/navigation';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 export const useEditTest = (testId: string) => {
 	const test = useAppSelector(selectCurrentTest);

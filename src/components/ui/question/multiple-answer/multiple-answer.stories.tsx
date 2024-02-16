@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { MultipleAnswer } from './multiple-answer';
 import { Question } from '@/reduxjs/modules/tests';
+
+import { MultipleAnswer } from './multiple-answer';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof MultipleAnswer> = {
 	component: MultipleAnswer,

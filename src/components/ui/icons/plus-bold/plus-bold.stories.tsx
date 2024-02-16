@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
 import { PlusBold } from './plus-bold';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof PlusBold> = {
 	component: PlusBold,

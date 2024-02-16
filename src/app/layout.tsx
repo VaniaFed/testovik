@@ -1,10 +1,15 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import classNames from 'classnames/bind';
+
+import type { Metadata } from 'next';
+
+import { Inter } from 'next/font/google';
+
 import { BoxContainer } from '@/components/layout/box-container';
-import { Header } from '@/components/ui/header';
 import { Footer } from '@/components/ui/footer';
+import { Header } from '@/components/ui/header';
+
 import styles from './layout.module.scss';
+
 import './globals.scss';
 import { Providers } from '@/components/utils/providers';
 

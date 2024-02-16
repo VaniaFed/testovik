@@ -1,7 +1,9 @@
-import React, { PropsWithChildren } from 'react';
 import classNames from 'classnames/bind';
-import { DropdownItem } from '../dropdown-item';
+import React, { PropsWithChildren } from 'react';
+
 import styles from './dropdown-list.module.scss';
+import { DropdownItem } from '../dropdown-item';
+
 import type { Props } from './props';
 
 const cx = classNames.bind(styles);

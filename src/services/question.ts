@@ -1,7 +1,8 @@
 import { axiosProxy } from '@/utils/axios';
+
 import type {
-	CreateQuestionSuccessPayload,
 	CreateQuestionPayload,
+	CreateQuestionSuccessPayload,
 	DeleteQuestionPayload,
 	UpdateQuestionPayload,
 	UpdateQuestionSuccessPayload,

@@ -1,21 +1,23 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useState } from 'react';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+
 import { ModalQuestionProps } from '@/components/pages/edit-test-page/modal-question/props';
 import {
+	AnswerField,
+	FormFields,
+	excludeDeletedAnswers,
 	getValidationMessage,
 	prepareAnswersToAdd,
-	excludeDeletedAnswers,
 	schema,
-	FormFields,
-	AnswerField,
 } from '@/components/pages/edit-test-page/modal-question/validation';
 import { useAppDispatch } from '@/reduxjs/hooks';
 import { createQuestion, updateQuestion } from '@/reduxjs/modules/tests';
 import { updateById } from '@/utils/redux-helpers';
-import type { OnDragEndResponder } from 'react-beautiful-dnd';
+
 import type { Answer, MoveAnswerPosition } from '@/reduxjs/modules/tests';
 import type { InputChangeEvent, InputFocusEvent } from '@/types/common';
+import type { OnDragEndResponder } from 'react-beautiful-dnd';
 
 type UseModalQuestionForm = Pick<ModalQuestionProps, 'mode' | 'question' | 'questionType' | 'testId' | 'close'>;
 

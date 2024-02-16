@@ -1,7 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import { Heading } from '@/components/ui/typography/heading';
 
 import { Stack } from './stack';
-import { Heading } from '@/components/ui/typography/heading';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof Stack> = {
 	component: Stack,

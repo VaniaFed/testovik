@@ -1,21 +1,24 @@
-import React from 'react';
 import classNames from 'classnames/bind';
-import { Heading } from '@/components/ui/typography/heading';
-import { Question } from '@/components/ui/question';
-import { Label } from '@/components/ui/typography/label';
+import React from 'react';
+
 import { Stack } from '@/components/layout/stack';
-import { Button } from '@/components/ui/button';
-import { Panel } from '@/components/ui/panel';
 import { ModalResults } from '@/components/pages/pass-test/modal-results';
 import { usePassTest } from '@/components/pages/pass-test/use-pass-test';
+import { Button } from '@/components/ui/button';
 import { Link } from '@/components/ui/link';
+import { LoaderBox } from '@/components/ui/loader-box';
+import { Panel } from '@/components/ui/panel';
+import { Question } from '@/components/ui/question';
+import { Heading } from '@/components/ui/typography/heading';
+import { Label } from '@/components/ui/typography/label';
 import { Subtitle } from '@/components/ui/typography/subtitle';
-import styles from './pass-test.module.scss';
-import type { FC } from 'react';
-import type { Props } from './props';
 import { useAppSelector } from '@/reduxjs/hooks';
 import { selectTestsStatus } from '@/reduxjs/modules/tests';
-import { LoaderBox } from '@/components/ui/loader-box';
+
+import styles from './pass-test.module.scss';
+
+import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

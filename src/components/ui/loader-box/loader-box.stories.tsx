@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { LoaderBox } from './loader-box';
+
+import type { Meta, StoryObj } from '@storybook/react';
 
 const meta: Meta<typeof LoaderBox> = {
 	component: LoaderBox,

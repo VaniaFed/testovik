@@ -1,6 +1,7 @@
 import { useSearchParams } from 'next/navigation';
-import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 import { ChangeEvent, useState } from 'react';
+
+import { useWriteToUrlParams } from '@/hooks/use-write-to-url-params';
 
 export const useSearch = () => {
 	const searchUrl = useSearchParams().get('search') || '';

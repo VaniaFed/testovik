@@ -1,10 +1,13 @@
-import React from 'react';
 import classNames from 'classnames/bind';
+import React from 'react';
+
 import { BoxContainer } from '@/components/layout/box-container';
 import { Paragraph } from '@/components/ui/typography/paragraph';
+
 import styles from './footer.module.scss';
-import type { FC } from 'react';
+
 import type { Props } from './props';
+import type { FC } from 'react';
 
 export const Footer: FC<Props> = ({ className }) => {
 	const cx = classNames.bind(styles);

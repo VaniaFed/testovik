@@ -1,14 +1,17 @@
-import React from 'react';
 import classNames from 'classnames/bind';
-import styles from './question.module.scss';
+import React from 'react';
+
 import { Stack } from '@/components/layout/stack';
-import { Heading } from '@/components/ui/typography/heading';
-import type { FC } from 'react';
-import type { Props } from './props';
 import { Divider } from '@/components/ui/divider';
-import { NumberAnswer } from '@/components/ui/question/number-answer/number-answer';
 import { MultipleAnswer } from '@/components/ui/question/multiple-answer';
+import { NumberAnswer } from '@/components/ui/question/number-answer/number-answer';
 import { SingleAnswer } from '@/components/ui/question/single-answer';
+import { Heading } from '@/components/ui/typography/heading';
+
+import styles from './question.module.scss';
+
+import type { Props } from './props';
+import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 

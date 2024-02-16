@@ -1,7 +1,9 @@
 import { cookies } from 'next/headers';
-import { axiosSnp } from '@/utils/axios';
-import { SESSION_ID_COOKIE } from '@/constants';
 import { NextRequest, NextResponse } from 'next/server';
+
+import { SESSION_ID_COOKIE } from '@/constants';
+import { axiosSnp } from '@/utils/axios';
+
 import type { Question } from '@/reduxjs/modules/tests';
 
 export async function PATCH(req: NextRequest, { params }: { params: { id: number } }) {

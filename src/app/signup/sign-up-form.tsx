@@ -1,17 +1,19 @@
 'use client';
-import React, { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import * as yup from 'yup';
-import { Form } from '@/components/ui/form';
-import { Field } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Paragraph } from '@/components/ui/typography/paragraph';
-import { signUp, selectAuthStatus, selectUser } from '@/reduxjs/modules/auth';
-import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
-import type { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/navigation';
+import React, { useEffect } from 'react';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+
+import { Checkbox } from '@/components/ui/checkbox';
+import { Field } from '@/components/ui/field';
+import { Form } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Paragraph } from '@/components/ui/typography/paragraph';
+import { useAppDispatch, useAppSelector } from '@/reduxjs/hooks';
+import { selectAuthStatus, selectUser, signUp } from '@/reduxjs/modules/auth';
+
+import type { FC } from 'react';
 
 const schema = yup
 	.object({
@@ -81,7 +83,8 @@ export const SignUpForm: FC<unknown> = () => {
 				id="form-password-confirmation"
 				label="Подтвердите пароль"
 				required
-				errMessage={errors.password_confirmation?.message as string}>
+				errMessage={errors.password_confirmation?.message as string}
+			>
 				<Input
 					id="form-password-confirmation"
 					type="password"

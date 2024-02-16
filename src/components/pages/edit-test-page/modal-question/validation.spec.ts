@@ -1,10 +1,11 @@
 import {
+	AnswerField,
 	checkIfAnswerWasCreatedWhileEditing,
 	checkIfAnswerWasDeletedWhileEditing,
-	prepareAnswersToAdd,
 	excludeDeletedAnswers,
-	AnswerField,
+	prepareAnswersToAdd,
 } from '@/components/pages/edit-test-page/modal-question/validation';
+
 import type { Answer } from '@/reduxjs/modules/tests';
 
 describe('add/edit/delete answer logic', () => {

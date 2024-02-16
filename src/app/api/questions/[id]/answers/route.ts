@@ -1,7 +1,9 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
-import { axiosSnp } from '@/utils/axios';
+
 import { SESSION_ID_COOKIE } from '@/constants';
+import { axiosSnp } from '@/utils/axios';
+
 import type { Answer } from '@/reduxjs/modules/tests';
 
 export async function POST(req: NextRequest, { params }: { params: { id: number } }) {
