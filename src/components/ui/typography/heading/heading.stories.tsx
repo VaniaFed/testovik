@@ -1,20 +1,23 @@
-import React from 'react';
-
 import { Heading } from './heading';
 
-import type { ComponentStory, Meta } from '@storybook/react';
-import type { Props } from './props';
+import type { Meta, StoryObj } from '@storybook/react';
 
-const meta: Meta = {
-	title: 'Heading',
+const meta: Meta<typeof Heading> = {
 	component: Heading,
 };
 
-export default meta;
+type Story = StoryObj<typeof Heading>;
 
-export const H1: ComponentStory<typeof Heading> = (args: Props) => <Heading {...args}>H1</Heading>;
-export const H2: ComponentStory<typeof Heading> = (args: Props) => (
-	<Heading size="2" {...args}>
-		H2
-	</Heading>
-);
+export const H1: Story = {
+	render: () => <Heading size="1">Size 1</Heading>,
+};
+
+export const H2: Story = {
+	render: () => <Heading size="2">Size 2</Heading>,
+};
+
+export const H3: Story = {
+	render: () => <Heading size="3">Size 3</Heading>,
+};
+
+export default meta;

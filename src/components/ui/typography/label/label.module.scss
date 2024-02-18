@@ -1,21 +1,30 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+@mixin label {
+	position: relative;
+	font-size: 16px;
+	font-weight: 500;
+
+	@include media-mobile {
+		font-size: 14px;
+	}
+}
 
 .label {
-  position: relative;
-  font-size: 20px;
-  font-weight: 500;
+	@include label;
 
-  @include media-mobile {
-    font-size: 16px;
-  }
+	&_small {
+		font-size: 12px;
+		font-weight: 400;
+	}
 }
 
 .label_required {
-  &::after {
-    content: url("/src/static/required.svg");
-    position: absolute;
-    top: -12px;
-    right: -12px;
-  }
+	&::after {
+		content: url('/required.svg');
+		position: absolute;
+		top: -9px;
+		right: -9px;
+	}
 }

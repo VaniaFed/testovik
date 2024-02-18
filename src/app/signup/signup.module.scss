@@ -1,0 +1,8 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.signup {
+	@include media-mobile {
+		height: 100%;
+	}
+}

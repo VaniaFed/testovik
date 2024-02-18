@@ -1,15 +1,19 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
+@import '/src/utils/variables';
+@import '/src/utils/media';
 
 .field {
-  &__label {
-    display: inline-block;
-    margin-bottom: 8px;
-  }
+	&__label {
+		display: inline-block;
+		margin-bottom: 12px;
+	}
 
-  &__error {
-    margin-top: 8px;
-    margin-left: 8px;
-    color: $color-red;
-  }
+	&__content {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+	}
+
+	&__error {
+		margin-top: 12px;
+	}
 }

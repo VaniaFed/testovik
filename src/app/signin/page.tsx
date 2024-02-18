@@ -1,26 +1,32 @@
-import axios from "axios";
+import { SignInForm } from '@/app/signin/sign-in-form';
+import { Button } from '@/components/ui/button';
+import { Link } from '@/components/ui/link';
+import { Modal } from '@/components/ui/modal';
+import { Heading } from '@/components/ui/typography/heading';
 
-interface SignUpData {
-  username: string;
-  password: string;
-  password_confirmation: string;
-  is_admin: boolean;
-}
+import styles from './signin.module.scss';
 
-const signUp = async (data: SignUpData) => {
-  await axios.post("https://interns-test-fe.snp.agency/api/v1/signup", data, {
-    headers: {
-      "scope-key": "Rm36-GQ.Z(%rFfwAu:LvY7",
-    },
-  });
-};
+const headerModal = (
+	<>
+		<Heading size="1">Вход</Heading>
+	</>
+);
+
+const footerModal = (
+	<>
+		<Button variant="accent" form="sign-up-form">
+			Войти
+		</Button>
+		<Link href="/signup" level="label">
+			Зарегистрироваться
+		</Link>
+	</>
+);
 
 export default function SignInPage() {
-  return (
-    <div>
-      <h1>Sign up</h1>
-      <p>Данные введены. Регистрируемся?</p>
-      {/* <button onClick={() => signUp({ username })}>Зарегаться</button> */}
-    </div>
-  );
+	return (
+		<Modal header={headerModal} footer={footerModal} overlayContentClassName={styles.signin}>
+			<SignInForm />
+		</Modal>
+	);
 }

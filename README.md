@@ -1,4 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Testovik
+
+## Overview
+
+Testovik is a project for creating and passing tests, developed during the [Salt & Pepper's](https://snp.agency/ru) internship.
+
+### Two roles
+
+There are two roles to work with:
+
+-   admin that creates and modifies the tests
+-   user that passes the tests
+
+You can choose your role during signing up process.
+
+All the routes are protected from unauthorized users, so you need to sign in before either creating or passing tests.
+
+## Home page
+
+When you are logged in, you will see a list of tests to pass, or edit if you are an admin:
+
+![List of tests](/assets/home.png)
+
+## Redux architecture
+
+There is a modular structure for redux features.
+Which means that...
+
+1. strict module boundaries
+2.
+3.
+
+### Motivation
+
+-   You can select which functions are public in file index.ts, so users of the module won't use internal-only functions.
+-   When the project is growing up, it's getting harder to navigate through large amount of files. When you need to either make a fix or add a new feature, you know that everything you need is grouped inside one specified folder.
+
+Inspired by:
+[Three Rules For Structuring (Redux) Applications](https://jaysoo.ca/2016/02/28/organizing-redux-application/)
+
+## Authentication
+
+## Data fetching
+
+## Proxying
 
 ## Getting Started
 
@@ -13,24 +57,3 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

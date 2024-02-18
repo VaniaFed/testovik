@@ -1,0 +1,15 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.pass-test {
+	&__header {
+		margin-bottom: 36px;
+	}
+	&__heading {
+		margin-bottom: 6px;
+	}
+
+	&__panel {
+		margin-top: 24px;
+	}
+}

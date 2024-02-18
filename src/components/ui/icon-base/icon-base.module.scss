@@ -1,0 +1,34 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.icon-base {
+	fill: $color-black;
+
+	&_size_18 {
+		width: 18px;
+		height: 18px;
+	}
+
+	&_size_24 {
+		width: 24px;
+		height: 24px;
+	}
+
+	&_size_32 {
+		width: 32px;
+		height: 32px;
+	}
+
+	&_size_64 {
+		width: 64px;
+		height: 64px;
+	}
+
+	&_color_black {
+		fill: $color-black;
+	}
+
+	&_color_white {
+		fill: $color-white;
+	}
+}

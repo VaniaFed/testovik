@@ -1,0 +1,68 @@
+/* stylelint-disable no-descending-specificity */
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.checkbox {
+	display: flex;
+	align-items: center;
+	column-gap: 12px;
+	cursor: pointer;
+
+	@include media-laptop {
+		column-gap: 11px;
+	}
+
+	@include media-mobile {
+		column-gap: 10px;
+	}
+
+	&_invalid {
+		outline: 3px solid $color-red;
+		outline-offset: 4px;
+	}
+}
+
+.checkbox__input {
+	display: none;
+
+	&:checked + .fake-control::after {
+		content: url('/checkbox-checked.svg');
+
+		@include media-mobile {
+			content: url('/checkbox-checked-mb.svg');
+		}
+	}
+}
+
+.fake-control {
+	position: relative;
+	display: block;
+
+	&::after {
+		content: url('/checkbox.svg');
+
+		@include media-mobile {
+			content: url('/checkbox-mb.svg');
+		}
+	}
+
+	&_size_24 {
+		width: 24px;
+		height: 24px;
+
+		@include media-mobile {
+			width: 18px;
+			height: 18px;
+		}
+	}
+
+	&_size_18 {
+		width: 18px;
+		height: 18px;
+
+		@include media-mobile {
+			width: 18px;
+			height: 18px;
+		}
+	}
+}

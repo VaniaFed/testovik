@@ -1,7 +1,8 @@
 export interface Props {
 	header: React.ReactNode;
-	children: React.ReactNode;
 	footer: React.ReactNode;
-	closeModal: () => void;
+	children?: React.ReactNode;
+	close?: () => void;
 	className?: string;
+	overlayContentClassName?: string;
 }

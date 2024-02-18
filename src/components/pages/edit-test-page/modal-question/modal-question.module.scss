@@ -1,0 +1,25 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.modal-question {
+	&__content {
+		@include media-mobile {
+			height: 100%;
+		}
+	}
+
+	&__button {
+		@include media-mobile {
+			width: 100%;
+			white-space: nowrap;
+		}
+	}
+
+	&__answer {
+		margin-bottom: 18px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}

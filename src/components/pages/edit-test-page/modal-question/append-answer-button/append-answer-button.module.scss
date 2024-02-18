@@ -1,0 +1,10 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.append-answer-button {
+	&__plus {
+		@include media-mobile {
+			display: none;
+		}
+	}
+}

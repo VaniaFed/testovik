@@ -1,0 +1,16 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.dropdown-list {
+	position: absolute;
+	right: 0;
+	left: 0;
+	z-index: 1;
+	overflow: hidden;
+	overflow-y: visible;
+	max-height: 300px;
+	padding: 2px;
+	background: $color-white;
+	box-shadow: 8px 8px 24px -6px rgba($color-gray, 0.25);
+	transition: all 0.3s ease;
+}

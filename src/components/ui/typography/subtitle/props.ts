@@ -1,5 +1,5 @@
 export interface Props {
 	children: React.ReactNode;
-	light?: boolean;
+	style?: 'light' | 'medium';
 	className?: string;
 }

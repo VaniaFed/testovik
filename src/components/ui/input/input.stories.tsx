@@ -1,19 +1,35 @@
-import React from 'react';
-
 import { Input } from './input';
 
-import type { Meta, ComponentStory } from '@storybook/react';
-import type { Props } from './props';
+import type { Meta, StoryObj } from '@storybook/react';
 
-const meta: Meta = {
-	title: 'Input',
+const meta: Meta<typeof Input> = {
 	component: Input,
 };
 
-export default meta;
+type Story = StoryObj<typeof Input>;
 
-export const Default: ComponentStory<typeof Input> = (args: Props) => <Input {...args} />;
-Default.args = {
-	className: '',
-	placeholder: 'Enter value',
+export const Default: Story = {
+	render: () => <Input placeholder="Default input" />,
 };
+
+export const DefaultWithValue: Story = {
+	render: () => <Input solid placeholder="Default input" value="Input value" />,
+};
+
+export const DefaultInvalid: Story = {
+	render: () => <Input placeholder="Default input" isInvalid />,
+};
+
+export const Solid: Story = {
+	render: () => <Input solid placeholder="Solid input" />,
+};
+
+export const SolidWithValue: Story = {
+	render: () => <Input solid placeholder="Solid input" value="Input value" />,
+};
+
+export const SolidInvalid: Story = {
+	render: () => <Input solid placeholder="Solid input" isInvalid />,
+};
+
+export default meta;

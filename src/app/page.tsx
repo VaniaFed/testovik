@@ -1,20 +1,11 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import axios from "axios";
+'use client';
+import { TestsPage as _TestsPage } from '@/components/pages/tests-page';
+import { Auth } from '@/components/utils/auth';
 
-const fetchTests = async () => {
-  const tests = await axios("https://interns-test-fe.snp.agency/api/v1/tests", {
-    headers: {
-      "scope-key": "Rm36-GQ.Z(%rFfwAu:LvY7",
-    },
-  });
-  return tests.data;
-};
-
-export default function Home() {
-  const tests = fetchTests();
-  console.log(tests);
-  console.log("hi");
-
-  return <h1>Тесты</h1>;
+export default function TestsPage() {
+	return (
+		<Auth>
+			<_TestsPage />
+		</Auth>
+	);
 }

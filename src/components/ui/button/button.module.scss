@@ -1,66 +1,162 @@
-@import "/src/utils/variables";
-@import "/src/utils/media";
-@import "/src/components/ui/typography/paragraph/paragraph.module";
+@import '/src/utils/variables';
+@import '/src/utils/media';
+@import '/src/components/ui/typography/paragraph/paragraph.module';
+
+@mixin button {
+	@include paragraph;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	min-height: 40px;
+	font-weight: 600;
+	padding: 0.4rem 1.5rem;
+	background-color: $color-white;
+	color: $color-black;
+	border: none;
+	border-radius: 7px;
+	cursor: pointer;
+
+	@include media-mobile {
+		padding: 0.4rem 1.3rem;
+	}
+}
 
 .button {
-  @include paragraph;
-  font-weight: 600;
-  padding: 5px 20px;
-  background-color: $color-white;
-  color: $color-black;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+	@include button;
+}
+
+@mixin button_accent {
+	background-color: $color-accent;
+	color: $color-white;
+
+	&:hover {
+		background-color: $color-link-hover;
+	}
+
+	&:active {
+		background-color: $color-link-active;
+	}
+}
+
+.button_accent {
+	@include button_accent;
+}
+
+@mixin button_positive {
+	background-color: $color-green;
+	color: $color-white;
+
+	&:hover {
+		background-color: $color-green-hover;
+	}
+
+	&:active {
+		background-color: $color-green-active;
+	}
 }
 
 .button_positive {
-  background-color: $color-green;
-  color: $color-white;
+	@include button_positive;
+}
 
-  &:hover {
-    background-color: $color-green-hover;
-  }
+@mixin button_attention {
+	background-color: $color-orange;
+	color: $color-white;
 
-  &:active {
-    background-color: $color-green-active;
-  }
+	&:hover {
+		background-color: $color-orange-hover;
+	}
+
+	&:active {
+		background-color: $color-orange-active;
+	}
 }
 
 .button_attention {
-  background-color: $color-orange;
-  color: $color-white;
+	@include button_attention;
+}
 
-  &:hover {
-    background-color: $color-orange-hover;
-  }
+@mixin button_negative {
+	background-color: $color-red;
+	color: $color-white;
 
-  &:active {
-    background-color: $color-orange-active;
-  }
+	&:hover {
+		background-color: $color-red-hover;
+	}
+
+	&:active {
+		background-color: $color-red-active;
+	}
 }
 
 .button_negative {
-  background-color: transparent;
-  color: $color-red;
-
-  &:hover {
-    color: $color-red-hover;
-  }
-
-  &:active {
-    color: $color-red-active;
-  }
+	@include button_negative;
 }
 
 .button_secondary {
-  background-color: $color-gray;
-  color: $color-white;
+	background-color: $color-gray;
+	color: $color-white;
 
-  &:hover {
-    background-color: $color-gray-hover;
-  }
+	&:hover {
+		background-color: $color-gray-hover;
+	}
 
-  &:active {
-    background-color: $color-gray-active;
-  }
+	&:active {
+		background-color: $color-gray-active;
+	}
+}
+
+.button_text {
+	&_black {
+		min-height: fit-content;
+		background: transparent;
+		padding: 0;
+		color: $color-black;
+
+		&:hover {
+			color: $color-link-hover;
+		}
+
+		&:active {
+			color: $color-link-active;
+		}
+	}
+
+	&_accent {
+		min-height: fit-content;
+		background: transparent;
+		padding: 0;
+		color: $color-accent;
+
+		&:hover {
+			color: $color-link-hover;
+		}
+
+		&:active {
+			color: $color-link-active;
+		}
+	}
+
+	&_negative {
+		min-height: fit-content;
+		background: transparent;
+		padding: 0;
+		color: $color-red;
+
+		&:hover {
+			color: $color-red-hover;
+		}
+
+		&:active {
+			color: $color-red-active;
+		}
+	}
+
+	&_circle {
+		justify-content: center;
+		width: 42px;
+		height: 42px;
+		padding: 0;
+		border-radius: 50%;
+	}
 }

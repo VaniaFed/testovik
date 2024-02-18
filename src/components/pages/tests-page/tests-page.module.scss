@@ -1,0 +1,42 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.tests-page {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__title {
+		margin-top: 24px;
+		margin-bottom: 30px;
+	}
+
+	&__sort {
+		margin-bottom: 24px;
+	}
+
+	&__list {
+		overflow-y: auto;
+		flex-grow: 1;
+		height: 360px;
+	}
+
+	&__pagination {
+		justify-content: center;
+		margin-top: 24px;
+
+		@include media-mobile {
+			justify-content: flex-start;
+			overflow-x: auto;
+		}
+	}
+
+	&__panel {
+		margin-top: 24px;
+	}
+}
