@@ -17,7 +17,6 @@ export const Input = forwardRef<HTMLInputElement, Props>(
 				<input
 					className={cx('input', solid && 'input_solid', isInvalid && 'input_invalid', className)}
 					defaultValue={defaultValue}
-					// @ts-expect-error: internal react problem with value type
 					value={value}
 					{...rest}
 					ref={ref}
