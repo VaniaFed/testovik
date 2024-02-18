@@ -1,12 +1,9 @@
 import { RefObject, useEffect, useState } from 'react';
 
-export const useOverflow = (contentRef?: RefObject<HTMLElement>) => {
+export const useOverflow = (contentRef?: RefObject<HTMLElement>, isClient?: boolean) => {
 	if (!contentRef) {
 		return { isOverflowed: false };
 	}
-
-	const [isClient, setIsClient] = useState(false);
-	useEffect(() => setIsClient(true), []);
 
 	const [isOverflowed, setIsOverflowed] = useState(false);
 	const contentHeight = contentRef?.current?.offsetHeight;
