@@ -62,6 +62,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 	return (
 		<Modal
 			className={cx('modal-question', className)}
+			overlayContentClassName={cx('modal-question__content')}
 			close={close}
 			header={<Heading size="1">{headerTitle}</Heading>}
 			footer={
@@ -84,8 +85,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 						/>
 					)}
 				</>
-			}
-		>
+			}>
 			<Form id="question-form" onSubmit={handleSubmit(onSubmit)} errMessage={errors.root?.message}>
 				<Field id="question-form-question" label="Вопрос" errMessage={errors.question?.message}>
 					<Input
@@ -118,8 +118,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 												<Draggable
 													key={`answers[${index}]`}
 													draggableId={`answers[${index}]`}
-													index={index}
-												>
+													index={index}>
 													{(provided) => (
 														<Field
 															className={cx('modal-question__answer')}
@@ -149,8 +148,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 																					field.answerId,
 																				);
 																			}
-																		}}
-																	>
+																		}}>
 																		<Cross />
 																	</IconButton>
 																)
@@ -160,8 +158,7 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 															}
 															key={field.id}
 															innerRef={provided.innerRef}
-															{...provided.draggableProps}
-														>
+															{...provided.draggableProps}>
 															<Input
 																placeholder="Введите ответ..."
 																id={`question-form-answer-${field.id}`}

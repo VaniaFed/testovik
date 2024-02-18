@@ -15,12 +15,16 @@ import type { FC } from 'react';
 
 const cx = classNames.bind(styles);
 
-export const Modal: FC<Props> = ({ header, children, footer, close, className }) => {
+export const Modal: FC<Props> = ({ header, children, footer, close, className, overlayContentClassName }) => {
 	const ref = useRef<HTMLDivElement>(null);
 	useClickOutside(ref, close);
 
 	return (
-		<Overlay className={cx('modal', className)} withDarkBackground>
+		<Overlay
+			className={cx('modal', className)}
+			overlayContentClassName={overlayContentClassName}
+			withDarkBackground
+			contentRef={ref}>
 			<BoxContainer className={cx('modal__container')}>
 				<div className={cx('modal__inner')} ref={ref}>
 					{close && (

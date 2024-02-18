@@ -5,6 +5,10 @@
 	padding: 0;
 	border: none;
 
+	// @include media-tablet {
+	// display: block;
+	// }
+
 	&__close-btn {
 		position: absolute;
 		top: 40px;
@@ -55,12 +59,12 @@
 
 	&__content {
 		overflow-y: auto;
-		max-height: 660px;
+		max-height: 480px;
 		margin-top: 18px;
 		padding-bottom: 6px;
 
 		@include media-tablet {
-			height: 100%;
+			max-height: max-content;
 		}
 	}
 

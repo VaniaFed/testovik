@@ -4,4 +4,5 @@ export interface Props {
 	children?: React.ReactNode;
 	close?: () => void;
 	className?: string;
+	overlayContentClassName?: string;
 }

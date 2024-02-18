@@ -2,6 +2,12 @@
 @import '/src/utils/media';
 
 .modal-question {
+	&__content {
+		@include media-mobile {
+			height: 100%;
+		}
+	}
+
 	&__answer {
 		margin-bottom: 18px;
 
