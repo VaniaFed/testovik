@@ -1,0 +1,17 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.no-access {
+	height: 100%;
+
+	&__text {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		max-width: 400px;
+	}
+
+	&__link {
+		width: fit-content;
+	}
+}

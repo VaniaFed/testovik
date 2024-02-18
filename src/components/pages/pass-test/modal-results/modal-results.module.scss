@@ -1,0 +1,12 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.modal-results {
+	&__header {
+		margin-bottom: 12px;
+	}
+
+	&__subtitle {
+		margin-bottom: 12px;
+	}
+}

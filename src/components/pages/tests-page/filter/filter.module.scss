@@ -1,0 +1,9 @@
+@import '/src/components/ui/typography/heading/heading.module';
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.filter {
+	&__label {
+		@include h3;
+	}
+}

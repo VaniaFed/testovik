@@ -1,0 +1,43 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+@import '/src/components/ui/button//button.module.scss';
+
+.icon-button {
+	@include button;
+	background: none;
+	padding: 0.4rem 0.8rem;
+
+	&_accent {
+		@include button_accent;
+	}
+
+	&_positive {
+		@include button_positive;
+	}
+
+	&_attention {
+		@include button_attention;
+	}
+
+	&_negative {
+		@include button_negative;
+	}
+
+	&_zero-spacing {
+		min-height: fit-content;
+		padding: 0;
+	}
+
+	&_circle {
+		justify-content: center;
+		width: 42px;
+		height: 42px;
+		padding: 0;
+		border-radius: 50%;
+	}
+
+	&:disabled {
+		cursor: default;
+		opacity: 0.5;
+	}
+}

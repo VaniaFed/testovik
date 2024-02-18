@@ -1,0 +1,25 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.login {
+	display: flex;
+	gap: 42px;
+
+	@include media-tablet {
+		gap: 24px;
+	}
+
+	&__user {
+		display: flex;
+		align-items: center;
+		gap: 18px;
+	}
+
+	&__role {
+		color: $color-gray;
+
+		@include media-mobile {
+			display: none;
+		}
+	}
+}

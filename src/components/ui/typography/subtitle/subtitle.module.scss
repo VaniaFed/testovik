@@ -1,0 +1,18 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.subtitle {
+	font-size: 16px;
+	color: $color-subtitle;
+
+	@include media-mobile {
+		font-size: 14px;
+	}
+
+	&_light {
+		font-weight: 500;
+	}
+	&_medium {
+		font-weight: 600;
+	}
+}

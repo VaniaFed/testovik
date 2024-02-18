@@ -1,0 +1,16 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.edit-test-page {
+	&__header {
+		margin-bottom: 36px;
+	}
+
+	&__question-list {
+		margin-bottom: 24px;
+	}
+
+	&__question-add {
+		margin-bottom: 24px;
+	}
+}

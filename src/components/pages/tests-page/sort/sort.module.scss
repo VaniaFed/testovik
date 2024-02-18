@@ -1,0 +1,18 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.sort {
+	width: fit-content;
+
+	&:hover svg {
+		fill: $color-link-hover;
+	}
+
+	&:active svg {
+		fill: $color-link-active;
+	}
+
+	&-icon_reversed {
+		transform: rotateY(180deg);
+	}
+}

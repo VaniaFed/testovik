@@ -1,0 +1,8 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+
+.divider {
+	height: 1px;
+	width: 100%;
+	background: $color-divider;
+}

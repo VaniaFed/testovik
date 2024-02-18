@@ -1,0 +1,162 @@
+@import '/src/utils/variables';
+@import '/src/utils/media';
+@import '/src/components/ui/typography/heading/heading.module';
+@import '/src/components/ui/button/button.module';
+@import '/src/components/ui/typography/paragraph/paragraph.module';
+@import '/src/components/ui/typography/label/label.module';
+
+.link {
+	display: inline-block;
+	text-decoration: none;
+	cursor: pointer;
+
+	@include media-mobile {
+		word-wrap: break-word;
+	}
+}
+
+.link_level_h1 {
+	@include h1;
+
+	&::after {
+		height: 6px;
+	}
+}
+
+.link_level_h2 {
+	@include h2;
+
+	&::after {
+		height: 4px;
+	}
+}
+
+.link_level_h3 {
+	@include h3;
+
+	&::after {
+		height: 4px;
+	}
+}
+
+.link_level_paragraph {
+	@include paragraph;
+
+	&::after {
+		height: 1px;
+	}
+}
+
+.link_level_label {
+	@include label;
+
+	&::after {
+		height: 4px;
+	}
+}
+
+.link_level_button_accent {
+	@include button;
+	@include button_accent;
+}
+
+.link_color_black {
+	color: $color-black;
+	fill: $color-black;
+
+	&:hover {
+		color: $color-link-hover;
+	}
+
+	&:active {
+		color: $color-link-active;
+	}
+
+	&::after {
+		background: none;
+	}
+
+	&:hover::after {
+		background: $color-gray;
+	}
+
+	&:active::after {
+		background: $color-link-active;
+	}
+}
+
+.link_color_blue {
+	color: $color-link;
+	fill: $color-black;
+
+	&:hover {
+		color: $color-link-hover;
+	}
+
+	&:active {
+		color: $color-link-active;
+	}
+
+	&::after {
+		background: none;
+	}
+
+	&:hover::after {
+		color: $color-link-hover;
+	}
+
+	&:active::after {
+		color: $color-link-active;
+	}
+}
+
+.link_color_blue-reversed {
+	color: $color-white;
+	fill: $color-link;
+}
+
+.link_underline {
+	position: relative;
+	&::after {
+		content: '';
+		position: absolute;
+		bottom: -12px;
+		display: block;
+		width: 100%;
+		height: 2px;
+	}
+}
+
+@mixin link_icon {
+	position: relative;
+	margin-left: 36px;
+
+	@include media-mobile {
+		margin-left: 25px;
+	}
+
+	&::before {
+		position: absolute;
+		left: -36px;
+
+		@include media-mobile {
+			left: -25px;
+		}
+	}
+}
+
+.link_icon_go {
+	@include link_icon;
+
+	&::before {
+		content: url('/chevron-right.svg');
+	}
+}
+
+.link_icon_edit {
+	@include link_icon;
+
+	&::before {
+		content: url('/edit.svg');
+	}
+}
