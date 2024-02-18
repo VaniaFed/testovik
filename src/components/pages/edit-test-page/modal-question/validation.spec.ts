@@ -114,7 +114,7 @@ describe('add/edit/delete answer logic', () => {
 			{
 				text: '2',
 				is_right: true,
-				position: undefined,
+				position: null,
 			},
 			{
 				text: '2.5',
