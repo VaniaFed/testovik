@@ -6,6 +6,8 @@ import { Link } from '@/components/ui/link';
 import { Modal } from '@/components/ui/modal';
 import { Heading } from '@/components/ui/typography/heading';
 
+import styles from './signup.module.scss';
+
 const headerModal = (
 	<>
 		<Heading size="1">Регистрация</Heading>
@@ -25,7 +27,7 @@ const footerModal = (
 
 export default function SignUpPage() {
 	return (
-		<Modal header={headerModal} footer={footerModal}>
+		<Modal header={headerModal} footer={footerModal} overlayContentClassName={styles.signup}>
 			<SignUpForm />
 		</Modal>
 	);

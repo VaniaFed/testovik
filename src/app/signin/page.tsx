@@ -4,6 +4,8 @@ import { Link } from '@/components/ui/link';
 import { Modal } from '@/components/ui/modal';
 import { Heading } from '@/components/ui/typography/heading';
 
+import styles from './signin.module.scss';
+
 const headerModal = (
 	<>
 		<Heading size="1">Вход</Heading>
@@ -23,7 +25,7 @@ const footerModal = (
 
 export default function SignInPage() {
 	return (
-		<Modal header={headerModal} footer={footerModal}>
+		<Modal header={headerModal} footer={footerModal} overlayContentClassName={styles.signin}>
 			<SignInForm />
 		</Modal>
 	);

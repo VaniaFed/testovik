@@ -8,6 +8,13 @@
 		}
 	}
 
+	&__button {
+		@include media-mobile {
+			width: 100%;
+			white-space: nowrap;
+		}
+	}
+
 	&__answer {
 		margin-bottom: 18px;
 

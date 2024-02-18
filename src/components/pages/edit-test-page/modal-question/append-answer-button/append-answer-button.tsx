@@ -17,7 +17,7 @@ export const AppendAnswerButton: FC<Props> = ({ onAppend, className }) => {
 			className={cx('append-answer-button', className)}
 			type="button"
 			onClick={onAppend}
-			startIcon={<PlusBold color="white" />}
+			startIcon={<PlusBold color="white" className={cx('append-answer-button__plus')} />}
 			variant="secondary"
 		>
 			Добавить ответ

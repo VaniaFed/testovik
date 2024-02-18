@@ -67,11 +67,12 @@ export const ModalQuestion: FC<ModalQuestionProps> = ({
 			header={<Heading size="1">{headerTitle}</Heading>}
 			footer={
 				<>
-					<Button variant="accent" form="question-form">
+					<Button variant="accent" form="question-form" className={cx('modal-question__button')}>
 						{mode === 'create' ? 'Добавить' : 'Изменить'}
 					</Button>
 					{questionType !== 'number' && (
 						<AppendAnswerButton
+							className={cx('modal-question__button')}
 							onAppend={() =>
 								append({
 									text: '',
